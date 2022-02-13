@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "152281192090",
+    "firebase_url": "https://rentalwheels-5651a.firebaseio.com",
+    "project_id": "rentalwheels-5651a",
+    "storage_bucket": "rentalwheels-5651a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152281192090:android:90fdcee32ef8e09bb7b123",
+        "android_client_info": {
+          "package_name": "com.example.rentalwheels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152281192090-obiqp5mt1gp47s1c0l2l4u3cblo4hdq4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rentalwheels",
+            "certificate_hash": "1333ab5d5a059c3bb7e788f14d177eaa308d2e31"
+          }
+        },
+        {
+          "client_id": "152281192090-edbjrn6cl9oke437njuist0hhff7okfh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNbatZ4qWs5pqo8K0ZMu4VoE9Gja1CPT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152281192090-edbjrn6cl9oke437njuist0hhff7okfh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "152281192090-181gsbg94enoj2ucga5oo53jhk41lacd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rentalwheels"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

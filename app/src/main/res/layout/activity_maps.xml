@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MapsActivity">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/greetings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semibold"
+        android:text="@+id/greetings"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:textColor="#0ACC11"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/profile"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:src="@drawable/userprof" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select your preferred car"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textSize="20sp"
+        android:textColor = "?android:textColorPrimary"
+        android:layout_marginTop="520dp"
+        android:fontFamily="@font/bold"/>
+
+
+    <HorizontalScrollView
+        android:id="@+id/labour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="550dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card"
+                android:layout_width="170dp"
+                android:layout_height="180dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:checkable="true"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="90"
+                            android:fontFamily="@font/bold"
+                            android:text="AUDI"
+                            android:textColor = "?android:textColorPrimary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="0dp"
+                            android:src="@drawable/iaudi"/>
+
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:scaleType="fitStart"
+                        android:src="@drawable/audi"/>
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card1"
+                android:layout_width="170dp"
+                android:layout_height="180dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:checkable="true"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="90"
+                            android:fontFamily="@font/bold"
+                            android:text="BMW"
+                            android:textColor = "?android:textColorPrimary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="30sp"
+                            android:layout_marginEnd="0dp"
+                            android:src="@drawable/ibmw"/>
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="140dp"
+                        android:layout_height="90dp"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/bmww"/>
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card2"
+                android:layout_width="170dp"
+                android:layout_height="180dp"
+                app:cardCornerRadius="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:checkable="true"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="90"
+                            android:fontFamily="@font/bold"
+                            android:text="LANDCRUISER"
+                            android:textColor = "?android:textColorPrimary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="40sp"
+                            android:layout_marginEnd="0dp"
+                            android:src="@drawable/itoyota"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/landcruiser"/>
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>

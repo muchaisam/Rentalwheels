@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PlaceorderActivity">
+
+    <LinearLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/backbtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="6dp"
+            android:src="@drawable/backbtn" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Place Order"
+            android:textColor="?android:textColorPrimary"
+            android:fontFamily="@font/bold"
+            android:textSize="17sp" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_more_vert_black_24dp" />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/material"
+        android:layout_below="@+id/topbar"
+        android:paddingTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/book24"
+        android:hint="Document Details"
+        android:textColor = "?android:textColorPrimary"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:enabled="false"
+            android:inputType="none"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/docdetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/material"
+        android:fontFamily="@font/regular"
+        android:hint="Enter the respective details"
+        android:textColor = "?android:textColorPrimary"
+        android:inputType="number" />
+
+    <RadioGroup
+        android:id="@+id/radioService"
+        android:layout_below="@+id/docdetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/Audi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:checked="true"
+            android:onClick="clickradioButton"
+            android:text="Audi"
+            android:textColor = "?android:textColorPrimary"
+            android:fontFamily="@font/bold"/>
+
+        <RadioButton
+            android:id="@+id/BMW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:onClick="clickradioButton"
+            android:text="BMW"
+            android:textColor = "?android:textColorPrimary"
+            android:fontFamily="@font/bold"/>
+
+        <RadioButton
+            android:id="@+id/LandCruiser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:onClick="clickradioButton"
+            android:text="LandCruiser"
+            android:textColor = "?android:textColorPrimary"
+            android:fontFamily="@font/bold"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioService"
+        android:orientation="horizontal"
+        android:paddingTop="15dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:fontFamily="@font/semibold"
+            android:gravity="left"
+            android:textColor = "?android:textColorPrimary"
+            android:text="Hour/s"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:fontFamily="@font/semibold"
+            android:gravity="right"
+            android:text="Hour rates"
+            android:textColor = "?android:textColorPrimary"
+            android:textSize="16sp"
+
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:fontFamily="@font/semibold"
+            android:gravity="right"
+            android:text="Price"
+            android:textColor = "?android:textColorPrimary"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/topDecBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/minus"
+                android:onClick="topDec" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/car" />
+
+            <ImageView
+                android:id="@+id/topIncBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/add"
+                android:onClick="topInc" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/topQty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="right"
+            android:text="0"
+            android:textColor = "?android:textColorPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/topPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_weight="0.2"
+            android:gravity="right"
+            android:text="0"
+            android:textColor = "?android:textColorPrimary"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_below="@id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:gravity="left"
+                android:text="Day/s"
+                android:textColor = "?android:textColorPrimary"
+                android:fontFamily="@font/semibold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="right"
+                android:text="Days"
+                android:textColor = "?android:textColorPrimary"
+                android:fontFamily="@font/semibold"
+                android:textSize="16sp"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="right"
+                android:text="Price"
+                android:textColor = "?android:textColorPrimary"
+                android:fontFamily="@font/semibold"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/lowerDecBtn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/minus"
+                    android:onClick="lowerDec" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/car" />
+
+                <ImageView
+                    android:id="@+id/lowerIncBtn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/add"
+                    android:onClick="lowerInc"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lowerQty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="right"
+                android:text="0"
+                android:textColor = "?android:textColorPrimary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/lowerPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="0.2"
+                android:gravity="right"
+                android:text="0"
+                android:textColor = "?android:textColorPrimary"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout7"
+        android:fontFamily="@font/bold"
+        android:padding="10dp"
+        android:text="Select Date"
+        android:textColor = "?android:textColorPrimary"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/datebutton"
+        style="?android:spinnerStyle"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview"
+        android:layout_marginStart="70dp"
+        android:onClick="openDatePicker"
+        android:padding="10dp"
+        android:text="Select date"
+        android:textColor="#0ACC11"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datebutton"
+        android:fontFamily="@font/bold"
+        android:padding="10dp"
+        android:text="Select Time"
+        android:textColor = "?android:textColorPrimary"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/timeview"
+        style="?android:spinnerStyle"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview1"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="0dp"
+        android:padding="10dp"
+        android:text="Select Time"
+        android:textColor="#0ACC11"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/checkout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/circularbluebordersolid"
+        android:fontFamily="@font/regular"
+        android:text="Proceed to Checkout" />
+
+
+</RelativeLayout>

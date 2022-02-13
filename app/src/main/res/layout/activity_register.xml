@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <LinearLayout
+        android:id="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textmobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:textColor = "?android:textColorPrimary"
+            android:layout_marginTop="55dp"
+            android:text="@string/mobilen"
+            android:fontFamily="@font/bold"
+            android:textStyle="bold"
+            android:textSize="23sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/mobiledigit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:hint="@string/digits"
+                android:textColor = "?android:textColorPrimary"
+                android:inputType="phone"
+                android:textSize="18sp"
+                android:autofillHints="@string/digits" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="50dp"
+                android:src="@drawable/ic_phoneblack"
+                app:tint="@color/purple_500" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginBottom="26dp"
+        android:elevation="1dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="18.5dp"
+        android:paddingBottom="18.5dp"
+        android:text="@string/next"
+        android:textAllCaps="true"
+        android:background="@drawable/circularbluebordersolid"
+        android:fontFamily="@font/bold"
+        android:textSize="12sp" />
+
+</RelativeLayout>

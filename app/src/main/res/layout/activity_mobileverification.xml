@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Mobileverification">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Otp Verification"
+            android:textColor = "?android:textColorPrimary"
+            android:fontFamily="@font/semibold"
+            android:layout_marginTop="65dp"
+            android:textSize="23sp"
+            android:layout_marginStart="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="48dp"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:inputType="phone"
+                android:id="@+id/editTextCode"
+                android:layout_marginRight="34dp"
+                android:layout_marginEnd="34dp"
+                android:hint="@string/nos"
+                android:textColor = "?android:textColorPrimary"
+                android:fontFamily="@font/semibold"
+                android:layout_marginTop="48dp"
+                android:layout_marginLeft="34dp"
+                android:layout_marginStart="34dp" />
+
+
+
+        </LinearLayout>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#9f9e9e"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="44dp" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:background="@drawable/circularbluebordersolid"
+        android:textSize="13sp"
+        android:id="@+id/tv_otpcode"
+        android:gravity="center_horizontal"
+        android:paddingTop="15.5dp"
+        android:paddingBottom="15.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:textAllCaps="true"
+        android:elevation="1dp" />
+
+
+
+
+</RelativeLayout>

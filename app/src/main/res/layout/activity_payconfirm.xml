@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/purple_200"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    android:layout_gravity="center_vertical"
+    tools:context=".PayconfirmActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:src="@drawable/car"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order Confirmed"
+            android:textSize="24sp"
+            android:textColor="?android:textColorPrimary"
+            android:textAlignment="center"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_check_circle_24"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="18sp"
+            android:text="Your order has been successfully placed. Thank you for choosing us."
+            android:textAlignment="center"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/okay_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="100dp"
+            app:backgroundTint="@null"
+            android:background="@drawable/blue_rounded_shape"
+            android:text="Proceed"
+            android:textColor="?android:textColorPrimary" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

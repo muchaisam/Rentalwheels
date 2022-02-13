@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="2">
+
+        <ImageView
+
+            android:id="@+id/imageview"
+            android:layout_width="00dp"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/wheels" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tshirts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hours"
+                        android:fontFamily="@font/semibold"/>
+
+                    <TextView
+                        android:id="@+id/jeans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Days"
+                        android:fontFamily="@font/semibold"/>
+
+
+                    <TextView
+                        android:id="@+id/towel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Service Charge"
+                        android:fontFamily="@font/semibold"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/hourss"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor = "?android:textColorPrimary"
+                        android:text="0" />
+
+                    <TextView
+                        android:id="@+id/dayss"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor = "?android:textColorPrimary"
+                        android:text="0" />
+
+
+                    <TextView
+                        android:id="@+id/bedsheetsqty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:text="Total"
+                    android:fontFamily="@font/semibold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:id="@+id/cart_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="0"
+                    android:textColor = "?android:textColorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/spacer"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/cart"/>
+
+    <LinearLayout
+        android:id="@+id/removelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spacer"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/edit_cart_items"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:paddingStart="10dp"
+            android:textColor = "?android:textColorPrimary"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp"
+            android:text="Edit Cart"
+            android:fontFamily="@font/semibold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/delete_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/cancel_24" />
+
+    </LinearLayout>
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/removelayout" />
+</RelativeLayout>
