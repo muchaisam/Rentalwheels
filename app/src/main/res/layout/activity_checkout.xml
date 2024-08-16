@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CheckoutActivity">
+    tools:context=".modules.CheckoutActivity">
 
     <LinearLayout
         android:id="@+id/header"
@@ -31,9 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Checkout"
-            android:textColor = "?android:textColorPrimary"
+
             android:textStyle="bold"
-            android:fontFamily="@font/bold"
             android:textSize="21sp" />
 
         <Space
@@ -56,7 +55,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="Cart is Empty !"
-        android:fontFamily="@font/semibold"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="gone" />
 
@@ -74,7 +72,6 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:text="999"
-            android:fontFamily="@font/semibold"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <Button
@@ -85,7 +82,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="Checkout"
-            android:fontFamily="@font/regular"
+
             android:textColor="#fff" />
 
 
