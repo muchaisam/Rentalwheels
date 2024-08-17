@@ -82,6 +82,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## 📞 Contact
 
-Your Name - [@smuchai10](https://twitter.com/smuchai10) 
+Muchai - [@smuchai10](https://twitter.com/smuchai10) 
 
 Project Link: [https://github.com/muchaisam/RentalWheels](https://github.com/muchaisam/RentalWheels)
