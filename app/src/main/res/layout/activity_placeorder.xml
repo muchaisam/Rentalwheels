@@ -7,7 +7,7 @@
     android:paddingEnd="10dp"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PlaceorderActivity">
+    tools:context=".modules.PlaceorderActivity">
 
     <LinearLayout
         android:id="@+id/topbar"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="Place Order"
             android:textColor="?android:textColorPrimary"
-            android:fontFamily="@font/bold"
+
             android:textSize="17sp" />
 
         <Space
@@ -58,14 +58,14 @@
         android:layout_height="wrap_content"
         app:startIconDrawable="@drawable/book24"
         android:hint="Document Details"
-        android:textColor = "?android:textColorPrimary"
+
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
 
         <AutoCompleteTextView
             android:id="@+id/autoComplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
+
             android:enabled="false"
             android:inputType="none"/>
 
@@ -76,9 +76,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/material"
-        android:fontFamily="@font/regular"
+
         android:hint="Enter the respective details"
-        android:textColor = "?android:textColorPrimary"
+
         android:inputType="number" />
 
     <RadioGroup
@@ -97,8 +97,8 @@
             android:checked="true"
             android:onClick="clickradioButton"
             android:text="Audi"
-            android:textColor = "?android:textColorPrimary"
-            android:fontFamily="@font/bold"/>
+
+           />
 
         <RadioButton
             android:id="@+id/BMW"
@@ -107,8 +107,8 @@
             android:layout_marginEnd="8dp"
             android:onClick="clickradioButton"
             android:text="BMW"
-            android:textColor = "?android:textColorPrimary"
-            android:fontFamily="@font/bold"/>
+
+           />
 
         <RadioButton
             android:id="@+id/LandCruiser"
@@ -117,8 +117,8 @@
             android:layout_marginEnd="8dp"
             android:onClick="clickradioButton"
             android:text="LandCruiser"
-            android:textColor = "?android:textColorPrimary"
-            android:fontFamily="@font/bold"/>
+
+           />
     </RadioGroup>
 
     <LinearLayout
@@ -133,9 +133,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.35"
-            android:fontFamily="@font/semibold"
+
             android:gravity="left"
-            android:textColor = "?android:textColorPrimary"
+
             android:text="Hour/s"
             android:textSize="16sp" />
 
@@ -143,10 +143,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:fontFamily="@font/semibold"
+
             android:gravity="right"
             android:text="Hour rates"
-            android:textColor = "?android:textColorPrimary"
+
             android:textSize="16sp"
 
             />
@@ -155,10 +155,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:fontFamily="@font/semibold"
+
             android:gravity="right"
             android:text="Price"
-            android:textColor = "?android:textColorPrimary"
+
             android:textSize="16sp" />
 
 
@@ -194,7 +194,7 @@
                 android:id="@+id/topIncBtn"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@drawable/add"
+                android:background="@drawable/add_circle"
                 android:onClick="topInc" />
 
 
@@ -207,7 +207,7 @@
             android:layout_weight="0.2"
             android:gravity="right"
             android:text="0"
-            android:textColor = "?android:textColorPrimary"
+
             android:textSize="16sp" />
 
         <TextView
@@ -218,7 +218,7 @@
             android:layout_weight="0.2"
             android:gravity="right"
             android:text="0"
-            android:textColor = "?android:textColorPrimary"
+
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -242,8 +242,8 @@
                 android:layout_weight="0.35"
                 android:gravity="left"
                 android:text="Day/s"
-                android:textColor = "?android:textColorPrimary"
-                android:fontFamily="@font/semibold"
+
+
                 android:textSize="16sp" />
 
             <TextView
@@ -252,8 +252,8 @@
                 android:layout_weight="0.2"
                 android:gravity="right"
                 android:text="Days"
-                android:textColor = "?android:textColorPrimary"
-                android:fontFamily="@font/semibold"
+
+
                 android:textSize="16sp"
 
                 />
@@ -264,8 +264,8 @@
                 android:layout_weight="0.2"
                 android:gravity="right"
                 android:text="Price"
-                android:textColor = "?android:textColorPrimary"
-                android:fontFamily="@font/semibold"
+
+
                 android:textSize="16sp" />
 
 
@@ -299,7 +299,7 @@
                     android:id="@+id/lowerIncBtn"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/add"
+                    android:background="@drawable/add_circle"
                     android:onClick="lowerInc"/>
 
 
@@ -312,7 +312,7 @@
                 android:layout_weight="0.2"
                 android:gravity="right"
                 android:text="0"
-                android:textColor = "?android:textColorPrimary"
+
                 android:textSize="16sp" />
 
             <TextView
@@ -323,7 +323,7 @@
                 android:layout_weight="0.2"
                 android:gravity="right"
                 android:text="0"
-                android:textColor = "?android:textColorPrimary"
+
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -335,10 +335,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearLayout7"
-        android:fontFamily="@font/bold"
+
         android:padding="10dp"
         android:text="Select Date"
-        android:textColor = "?android:textColorPrimary"
+
         android:textSize="17sp" />
 
     <Button
@@ -359,10 +359,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/datebutton"
-        android:fontFamily="@font/bold"
+
         android:padding="10dp"
         android:text="Select Time"
-        android:textColor = "?android:textColorPrimary"
+
         android:textSize="17sp" />
 
     <TextView
@@ -385,7 +385,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="1dp"
         android:background="@drawable/circularbluebordersolid"
-        android:fontFamily="@font/regular"
+
         android:text="Proceed to Checkout" />
 
 

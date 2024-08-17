@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.rentalwheels">
+    xmlns:tools="http://schemas.android.com/tools">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -21,34 +20,14 @@
         android:theme="@style/Theme.RentalWheels"
         tools:replace="android:icon">
         <activity
-            android:name=".PayconfirmActivity"
+            android:name=".ux.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".PaymentActivity"
-            android:exported="true" />
+            android:name=".HomeActivity"
+            android:exported="false" />
         <activity
-            android:name=".Moredetails"
-            android:exported="true" />
-        <activity
-            android:name=".Mobileverification"
-            android:exported="true" />
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="true" />
-        <activity
-            android:name=".CheckoutActivity"
-            android:exported="true" />
-        <activity
-            android:name=".PlaceorderActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Moreinfo"
-            android:exported="true" />
-        <activity
-            android:name=".SplashActivity"
+            android:name=".MainActivity"
+            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,6 +35,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".modules.PayconfirmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".modules.PaymentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".auth.RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".modules.CheckoutActivity"
+            android:exported="true" />
+        <activity
+            android:name=".modules.PlaceorderActivity"
+            android:exported="true" />
+        <activity
+            android:name=".modules.Moreinfo"
+            android:exported="true" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -67,11 +67,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".MapsActivity"
-            android:exported="true"
-            android:label="@string/title_activity_maps" />
     </application>
 
 </manifest>
