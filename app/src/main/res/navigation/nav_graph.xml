@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/homeFragment"
+    android:id="@+id/nav_graph.xml">
+
+    <activity
+        android:id="@+id/onboardingActivity"
+        android:name="com.example.rentalwheels.ux.OnboardingActivity"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/activity_onboarding" />
+
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.rentalwheels.auth.LoginActivity"
+        android:label="fragment_login"
+        tools:layout="@layout/activity_login" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.rentalwheels.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+
+
+    <fragment
+        android:id="@+id/browseFragment"
+        android:name="com.example.rentalwheels.fragments.BrowseFragment"
+        android:label="fragment_browse"
+        tools:layout="@layout/fragment_browse" />
+
+    <fragment
+        android:id="@+id/bookingsFragment"
+        android:name="com.example.rentalwheels.fragments.BookingsFragment"
+        android:label="fragment_bookings"
+        tools:layout="@layout/fragment_bookings" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.rentalwheels.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+
+</navigation>
