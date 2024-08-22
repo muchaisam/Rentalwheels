@@ -19,10 +19,10 @@
     <string name="pick_place">Choose a place</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="very_weak">#FF6B6B</string>
-    <string name="weak">#FFA46B</string>
-    <string name="moderate">#FFD56B</string>
-    <string name="strong">#C6FF6B</string>
-    <string name="very_strong">#6BFF7A</string>
+    <string name="very_weak">Very weak</string>
+    <string name="weak">Weak</string>
+    <string name="moderate">Moderate</string>
+    <string name="strong">Strong</string>
+    <string name="very_strong">Very Strong</string>
     <string name="unknown_strength"> </string>
 </resources>
