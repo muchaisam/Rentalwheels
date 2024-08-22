@@ -203,15 +203,15 @@ class RegisterActivity : AppCompatActivity() {
                     visibility = View.GONE
                 } else {
                     visibility = View.VISIBLE
-                    val strengthColor = getPasswordStrength(s.toString())
-                    text = "Password strength: ${resources.getString(strengthColor)}"
-                    setTextColor(ContextCompat.getColor(this@RegisterActivity, strengthColor))
+                    val (strengthTextId, strengthColorId) = getPasswordStrength(s.toString())
+                    text = "Password strength: ${resources.getString(strengthTextId)}"
+                    setTextColor(ContextCompat.getColor(this@RegisterActivity, strengthColorId))
                 }
             }
         }
     }
 
-    private fun getPasswordStrength(password: String): Int {
+    private fun getPasswordStrength(password: String): Pair<Int, Int> {
         var strengthPoints = 0
         if (password.length >= 8) strengthPoints++
         if (password.matches("(?=.*[a-z]).*".toRegex())) strengthPoints++
@@ -220,12 +220,12 @@ class RegisterActivity : AppCompatActivity() {
         if (password.matches("(?=.*[@$!%*?&#]).*".toRegex())) strengthPoints++
 
         return when (strengthPoints) {
-            0, 1 -> R.string.very_weak
-            2 -> R.string.weak
-            3 -> R.string.moderate
-            4 -> R.string.strong
-            5 -> R.string.very_strong
-            else -> R.string.unknown_strength
+            0, 1 -> Pair(R.string.very_weak, R.color.very_weak_password)
+            2 -> Pair(R.string.weak, R.color.weak_password)
+            3 -> Pair(R.string.moderate, R.color.moderate_password)
+            4 -> Pair(R.string.strong, R.color.strong_password)
+            5 -> Pair(R.string.very_strong, R.color.very_strong_password)
+            else -> Pair(R.string.unknown_strength, R.color.unknown_strength_password)
         }
     }
 
