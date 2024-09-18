@@ -47,7 +47,7 @@
                         app:boxBackgroundMode="filled"
                         android:layout_marginEnd="10dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:hintTextColor="@color/primary"
+                        app:hintTextColor="@color/secondary"
                         app:layout_constraintEnd_toStartOf="@+id/input_layout2"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintHorizontal_weight="1"
@@ -70,7 +70,7 @@
                         android:layout_marginStart="10dp"
                         app:boxBackgroundMode="filled"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:hintTextColor="@color/primary"
+                        app:hintTextColor="@color/secondary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toEndOf="@+id/input_layout1"
@@ -95,7 +95,7 @@
                     app:boxBackgroundMode="filled"
                     android:layout_marginTop="25dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:hintTextColor="@color/primary"
+                    app:hintTextColor="@color/secondary"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -109,7 +109,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:hint="Phone"
-                    app:hintTextColor="@color/primary"
+                    app:hintTextColor="@color/secondary"
                     android:layout_marginTop="25dp"
                     app:boxBackgroundMode="filled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -128,10 +128,10 @@
                     android:layout_width="match_parent"
                     android:hint="Password"
                     android:layout_marginTop="25dp"
-                    app:hintTextColor="@color/primary"
+                    app:hintTextColor="@color/secondary"
                     app:boxBackgroundMode="filled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="@color/primary"
+                    app:boxStrokeColor="@color/secondary"
                     app:passwordToggleEnabled="true"
                     android:layout_height="wrap_content">
 
@@ -155,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:hint="Confirm Password"
                     android:layout_marginTop="25dp"
-                    app:hintTextColor="@color/primary"
+                    app:hintTextColor="@color/secondary"
                     app:boxBackgroundMode="filled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:passwordToggleEnabled="true"
