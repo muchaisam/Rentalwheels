@@ -12,9 +12,10 @@
     <color name="black">#FF000000</color>
 
 
-    <color name="very_weak">#FF6B6B</color>
-    <color name="weak">#FFA46B</color>
-    <color name="moderate">#FFD56B</color>
-    <color name="strong">#C6FF6B</color>
-    <color name="very_strong">#6BFF7A</color>
+    <color name="very_weak_password">#FF0000</color>
+    <color name="weak_password">#FF6B6B</color>
+    <color name="moderate_password">#FFA500</color>
+    <color name="strong_password">#4CAF50</color>
+    <color name="very_strong_password">#008000</color>
+    <color name="unknown_strength_password">#808080</color>
 </resources>

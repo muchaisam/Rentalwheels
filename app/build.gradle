@@ -9,7 +9,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.rentalwheels"
+        applicationId "com.msdc.rentalwheels"
         minSdk 31
         targetSdk 33
         versionCode 1
@@ -35,7 +35,7 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    namespace 'com.example.rentalwheels'
+    namespace 'com.msdc.rentalwheels'
 }
 
 dependencies {
@@ -98,6 +98,10 @@ dependencies {
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version_ktx"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version_ktx"
+
+
+    //circleimageview
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 
 }

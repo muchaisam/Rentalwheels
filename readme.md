@@ -58,6 +58,16 @@ git clone https://github.com/muchaisam/RentalWheels.git
 - `BookingsFragment`: Shows user's current and past bookings
 - `ProfileFragment`: User profile management and settings
 
+
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td><img src="https://github.com/muchaisam/Rentalwheels/blob/main/screenshots/home.png" alt="App Homepage screenshot" width="300"/></td>
+    <td><img src="https://github.com/muchaisam/Rentalwheels/blob/main/screenshots/Booking.png" alt="Booking Screenshot" width="300"/></td>
+  </tr>
+</table>
+
 ## 🧪 Testing
 
 The project includes both unit tests and instrumentation tests:

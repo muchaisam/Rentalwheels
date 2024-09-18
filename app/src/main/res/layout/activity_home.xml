@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         app:itemIconTint="@drawable/selector"
         app:labelVisibilityMode="labeled"
-        app:itemBackground="@color/white"
+        app:itemBackground="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_alignParentBottom="true"
         app:itemTextColor="@drawable/selector"
