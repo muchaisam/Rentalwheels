@@ -4,19 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.msdc.rentalwheels.HomeActivity
-import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.databinding.ActivityLoginBinding
-import com.msdc.rentalwheels.ux.BlurredProgressDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.msdc.rentalwheels.HomeActivity
+import com.msdc.rentalwheels.R
+import com.msdc.rentalwheels.databinding.ActivityLoginBinding
+import com.msdc.rentalwheels.ux.BlurredProgressDialog
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
     private lateinit var progressDialog: BlurredProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initializeComponents() {
         firebaseAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
         progressDialog = BlurredProgressDialog(this, R.style.CustomProgressDialogTheme)
     }
 
@@ -89,11 +92,45 @@ class LoginActivity : AppCompatActivity() {
         val user = firebaseAuth.currentUser
         user?.let {
             if (it.isEmailVerified) {
-                navigateToHome()
+                fetchUserDataFromFirestore(it.uid)
             } else {
                 showToast("Please verify your email address.")
                 sendVerificationEmail(it)
             }
+        }
+    }
+
+    private fun fetchUserDataFromFirestore(uid: String) {
+        firestore.collection("users").document(uid)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val firstName = document.getString("firstName") ?: "User"
+                    val lastName = document.getString("lastName") ?: ""
+                    val email = document.getString("email") ?: ""
+                    val phone = document.getString("phoneNumber") ?: ""
+
+                    // Save user data to SharedPreferences
+                    saveUserDataToSharedPreferences(firstName, lastName, email, phone)
+
+                    navigateToHome()
+                } else {
+                    showToast("User data not found. Please try again.")
+                }
+            }
+            .addOnFailureListener { e ->
+                showToast("Failed to fetch user data: ${e.message}")
+            }
+    }
+
+    private fun saveUserDataToSharedPreferences(firstName: String, lastName: String, email: String, phone: String) {
+        val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putString(FIRST_NAME, firstName)
+            putString(LAST_NAME, lastName)
+            putString(USER_EMAIL, email)
+            putString(USER_PHONE, phone)
+            apply()
         }
     }
 
@@ -132,5 +169,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val SHARED_PREFS = "shared_prefs"
+        const val FIRST_NAME = "first_name"
+        const val LAST_NAME = "last_name"
+        const val USER_EMAIL = "user_email"
+        const val USER_PHONE = "user_mobile"
     }
 }
