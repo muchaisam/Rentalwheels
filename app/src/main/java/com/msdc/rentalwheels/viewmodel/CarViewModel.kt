@@ -58,6 +58,39 @@ class CarViewModel(private val repository: CarRepository) : ViewModel() {
         }
     }
 
+    fun refreshData() {
+        viewModelScope.launch {
+            _uiState.value = UiState.Loading
+            try {
+                // Fetch fresh data from your repository
+                val categories = repository.getCategories().first()
+                val recommendedCars = repository.getRecommendedCars().first()
+                val cars = repository.getCars().first()
+                val deals = repository.getDeals().first()
+
+                _uiState.value = UiState.Success(
+                    categories = categories,
+                    recommendedCars = recommendedCars,
+                    cars = cars,
+                    deals = deals
+                )
+            } catch (e: Exception) {
+                _uiState.value = UiState.Error("Failed to refresh data: ${e.message}")
+            }
+        }
+    }
+
+    fun loadMoreCars() {
+        viewModelScope.launch {
+            // Implement logic to load more cars
+            // Update the uiState with the new cars
+        }
+    }
+
+    fun clearCarDetails() {
+        _carDetailState.value = CarDetailState.Initial
+    }
+
 
     sealed class UiState {
         object Loading : UiState()
