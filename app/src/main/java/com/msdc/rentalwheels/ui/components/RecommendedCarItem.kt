@@ -1,7 +1,7 @@
 package com.msdc.rentalwheels.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,9 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.msdc.rentalwheels.data.model.Car
 
@@ -23,8 +23,9 @@ import com.msdc.rentalwheels.data.model.Car
 fun RecommendedCarItem(car: Car) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
+            .width(200.dp)
+            .height(220.dp)
+            .padding(8.dp)
     ) {
         Column {
             AsyncImage(
@@ -34,12 +35,16 @@ fun RecommendedCarItem(car: Car) {
                     .build(),
                 contentDescription = "${car.brand} ${car.model}",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
+                    .width(200.dp)
+                    .height(140.dp),
                 contentScale = ContentScale.Crop
             )
             Column(modifier = Modifier.padding(8.dp)) {
-                Text("${car.brand} ${car.model}", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    "${car.brand} ${car.model}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 1
+                )
                 Text(
                     "Ksh ${car.dailyRate}/Day",
                     style = MaterialTheme.typography.bodyMedium,
