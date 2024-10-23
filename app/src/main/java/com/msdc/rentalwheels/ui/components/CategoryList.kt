@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -16,9 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Category
 
+
 @Composable
 fun CategoryList(categories: List<Category>) {
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()  // Added wrapContentHeight
+            .padding(16.dp)
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -32,6 +39,7 @@ fun CategoryList(categories: List<Category>) {
         }
         Spacer(modifier = Modifier.height(16.dp))
         LazyRow(
+            modifier = Modifier.wrapContentHeight(),  // Added wrapContentHeight
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(categories) { category ->
