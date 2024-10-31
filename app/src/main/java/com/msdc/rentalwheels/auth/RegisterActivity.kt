@@ -10,22 +10,21 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.msdc.rentalwheels.HomeActivity
-import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.databinding.ActivityRegisterBinding
-import com.msdc.rentalwheels.ux.BlurredProgressDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.msdc.rentalwheels.HomeActivity
+import com.msdc.rentalwheels.R
+import com.msdc.rentalwheels.databinding.ActivityRegisterBinding
+import com.msdc.rentalwheels.ux.BlurredProgressDialog
 import timber.log.Timber
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
+    private lateinit var firestore: FirebaseFirestore
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var progressDialog: BlurredProgressDialog
 
@@ -49,7 +48,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun initializeComponents() {
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
+        firestore = FirebaseFirestore.getInstance()
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
         progressDialog = BlurredProgressDialog(this, R.style.CustomProgressDialogTheme)
     }
@@ -152,7 +151,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun saveUserToFirestore(uid: String, email: String, firstName: String, lastName: String, phone: String) {
-        val db = FirebaseFirestore.getInstance()
         val userDetails = hashMapOf(
             "email" to email,
             "firstName" to firstName,
@@ -160,24 +158,28 @@ class RegisterActivity : AppCompatActivity() {
             "phoneNumber" to phone
         )
 
-        db.collection("users").document(uid)
+        firestore.collection("users").document(uid)
             .set(userDetails)
             .addOnSuccessListener {
-                Timber.d("User details added successfully")
+                Timber.d("User details added successfully to Firestore")
+                progressDialog.dismiss()
+                showToast("Registration successful! Please check your email for verification.")
+                startActivity(Intent(this, HomeActivity::class.java))
             }
             .addOnFailureListener { e ->
-                Timber.w(e, "Error adding user details")
+                progressDialog.dismiss()
+                Timber.w(e, "Error adding user details to Firestore")
+                showToast("Failed to save user details. Please try again.")
             }
     }
 
     private fun sendVerificationEmail(user: FirebaseUser) {
         user.sendEmailVerification()
             .addOnCompleteListener { verificationTask ->
-                progressDialog.dismiss()
                 if (verificationTask.isSuccessful) {
-                    showToast("Registration successful! Please check your email for verification.")
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    Timber.d("Verification email sent successfully")
                 } else {
+                    Timber.w(verificationTask.exception, "Failed to send verification email")
                     showToast("Failed to send verification email: ${verificationTask.exception?.message}")
                 }
             }

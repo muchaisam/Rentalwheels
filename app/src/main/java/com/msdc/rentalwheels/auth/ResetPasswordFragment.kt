@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -42,6 +43,7 @@ class ResetPasswordFragment : BottomSheetDialogFragment() {
         setStyle(DialogFragment.STYLE_NORMAL, R.style.SheetDialog)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
