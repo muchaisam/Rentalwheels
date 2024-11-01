@@ -7,12 +7,16 @@ import com.msdc.rentalwheels.data.model.Car
 import com.msdc.rentalwheels.data.model.Category
 import com.msdc.rentalwheels.data.model.Deal
 import com.msdc.rentalwheels.data.repository.CarRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CarViewModel(private val repository: CarRepository) : ViewModel() {
+@HiltViewModel
+class CarViewModel @Inject constructor(private val repository: CarRepository)
+    : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState: StateFlow<UiState> = _uiState
 
