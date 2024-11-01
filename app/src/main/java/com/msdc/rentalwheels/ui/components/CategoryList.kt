@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Category
-
+import com.msdc.rentalwheels.ui.theme.Typography
 
 @Composable
 fun CategoryList(categories: List<Category>) {
@@ -30,11 +30,11 @@ fun CategoryList(categories: List<Category>) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Car Categories", style = MaterialTheme.typography.titleLarge)
+            Text("Car Categories", style = Typography.titleLarge)
             Text(
                 "See All >",
                 color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.labelLarge
+                style = Typography.labelLarge
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
