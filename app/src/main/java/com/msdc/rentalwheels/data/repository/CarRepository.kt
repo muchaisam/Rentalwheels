@@ -8,8 +8,11 @@ import com.msdc.rentalwheels.data.model.Deal
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CarRepository(private val firestore: FirebaseFirestore) {
+@Singleton
+class CarRepository @Inject constructor(private val firestore: FirebaseFirestore) {
     fun getCars(limit: Long = 10, lastDocumentId: String? = null): Flow<List<Car>> = flow {
         val query = firestore.collection("cars")
             .orderBy("brand")
