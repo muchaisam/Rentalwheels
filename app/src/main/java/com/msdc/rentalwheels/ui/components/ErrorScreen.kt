@@ -12,18 +12,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.Typography
 
 @Composable
 fun ErrorScreen(message: String) {
     Box(
         modifier = Modifier
-            .fillMaxWidth(1f)
-            .fillMaxHeight(1f),
+            .fillMaxWidth()
+            .fillMaxHeight(),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = message,
-            style = MaterialTheme.typography.headlineSmall,
+            style = Typography.headlineSmall,
             color = MaterialTheme.colorScheme.error,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(16.dp)
