@@ -54,11 +54,10 @@ dependencies {
     val composeVersion = "1.5.4"
     val lifecycleVersion = "2.7.0"
     val roomVersion = "2.6.1"
-    val hiltVersion = "2.48.1"
+    val hiltVersion = "2.48"
     val retrofitVersion = "2.9.0"
     val okhttpVersion = "4.12.0"
     val navVersion = "2.7.6"
-    val coilVersion = "2.5.0"
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:28.4.1"))
@@ -101,7 +100,7 @@ dependencies {
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha10")
+    implementation("androidx.navigation:navigation-compose:2.8.3")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // CircleImageView
@@ -117,7 +116,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
-    implementation("io.coil-kt:coil-compose:$coilVersion")
+    implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("androidx.compose.runtime:runtime-android:1.7.3")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
 
@@ -155,6 +154,15 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.1.0")
 
     implementation("androidx.compose.runtime:runtime-livedata:1.3.3")
+
+    //accompanist
+    implementation("com.google.accompanist:accompanist-placeholder-material:0.32.0")
+
+    //shimmer
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.1")
+
+    implementation("androidx.compose.material:material-icons-core")
+    implementation("androidx.compose.material:material-icons-extended:")
 }
 
 secrets {
