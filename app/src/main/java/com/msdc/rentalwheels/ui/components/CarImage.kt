@@ -28,7 +28,9 @@ fun CarImage(imageUrl: String) {
         Image(
             painter = rememberImagePainter(imageUrl),
             contentDescription = "Car Image",
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(),
             contentScale = ContentScale.Crop
         )
         Box(
