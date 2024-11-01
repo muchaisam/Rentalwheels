@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
+import com.msdc.rentalwheels.ui.theme.Typography
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -42,12 +42,12 @@ fun RecommendedCarItem(car: Car) {
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(
                     "${car.brand} ${car.model}",
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = Typography.bodyLarge,
                     maxLines = 1
                 )
                 Text(
                     "Ksh ${car.dailyRate}/Day",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = Typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
             }

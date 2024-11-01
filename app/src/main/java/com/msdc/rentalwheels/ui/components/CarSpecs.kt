@@ -9,8 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
+import com.msdc.rentalwheels.ui.theme.Typography
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -22,7 +21,7 @@ import com.msdc.rentalwheels.data.model.Car
 fun CarSpecs(car: Car) {
     Row(
         modifier = Modifier
-            .fillMaxWidth(1f)
+            .fillMaxWidth()
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -47,7 +46,7 @@ fun SpecItem(title: String, value: String) {
             modifier = Modifier.size(24.dp)
         )
         Text(text = value, fontWeight = FontWeight.Bold)
-        Text(text = title, style = MaterialTheme.typography.bodySmall)
+        Text(text = title, style = Typography.bodySmall)
     }
 }
 
@@ -56,7 +55,7 @@ fun CarDescription(description: String) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text(
             text = "Description",
-            style = MaterialTheme.typography.titleMedium,
+            style = Typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(8.dp))

@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
+import com.msdc.rentalwheels.ui.theme.Typography
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -69,18 +69,18 @@ fun CarItem(car: Car, onCarClick: (String) -> Unit) {
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
-                    Text("${car.brand} ${car.model}", style = MaterialTheme.typography.titleMedium)
-                    Text("${car.year} • ${car.category}", style = MaterialTheme.typography.bodyMedium)
+                    Text("${car.brand} ${car.model}", style = Typography.titleMedium)
+                    Text("${car.year} • ${car.category}", style = Typography.bodyMedium)
                     Text(
                         "Ksh ${car.dailyRate}/Day",
-                        style = MaterialTheme.typography.titleSmall,
+                        style = Typography.titleSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
             if (isExpanded) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(car.description, style = MaterialTheme.typography.bodyMedium)
+                Text(car.description, style = Typography.bodyMedium)
             }
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import com.msdc.rentalwheels.ui.theme.Typography
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.msdc.rentalwheels.data.model.Category
@@ -32,11 +33,15 @@ fun CategoryItem(category: Category) {
                 .build(),
             contentDescription = category.name,
             modifier = Modifier
-                .size(80.dp)
+                .width(80.dp)
+                .height(80.dp)
                 .clip(CircleShape),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            onError = {
+                // Log error or show placeholder
+            }
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(category.name, style = MaterialTheme.typography.bodyMedium)
+        Text(category.name, style = Typography.bodyMedium)
     }
 }
