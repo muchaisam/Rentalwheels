@@ -30,6 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.msdc.rentalwheels.data.model.Deal
 import kotlinx.coroutines.delay
+import com.msdc.rentalwheels.ui.theme.Typography
 
 
 @Composable
@@ -69,12 +70,12 @@ fun PromotionBanner(deals: List<Deal>) {
             ) {
                 Text(
                     currentDeal?.title ?: "No active deals",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = Typography.titleMedium,
                     color = Color.White
                 )
                 Text(
                     currentDeal?.description ?: "",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = Typography.bodyMedium,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.height(8.dp))
