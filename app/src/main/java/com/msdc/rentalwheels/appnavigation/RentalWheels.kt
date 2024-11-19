@@ -1,7 +1,11 @@
 package com.msdc.rentalwheels.appnavigation
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Typography
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,12 +19,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.msdc.rentalwheels.ui.screens.BookingsScreen
 import com.msdc.rentalwheels.ui.screens.BrowseScreen
-import com.msdc.rentalwheels.ui.screens.DetailedCarScreen
 import com.msdc.rentalwheels.ui.screens.HomeScreen
 import com.msdc.rentalwheels.ui.screens.SettingsScreen
 import com.msdc.rentalwheels.ui.theme.ThemeMode
 import com.msdc.rentalwheels.ui.theme.ThemeState
 import com.msdc.rentalwheels.ui.theme.rememberThemeState
+import com.msdc.rentalwheels.utils.CarDetailRoute
 import com.msdc.rentalwheels.viewmodel.CarViewModel
 
 
@@ -62,29 +66,23 @@ fun RentalWheelsApp(
             ) {
                 composable(Screen.Home.route) {
                     HomeScreen(
-                        uiState = uiState,
-                        carDetailState = carDetailState,
+                        viewModel = viewModel,
                         onCarClick = { carId -> viewModel.loadCarDetails(carId) },
-                        onLoadMore = { viewModel.loadMoreCars() },
-                        onBackClick = { viewModel.clearCarDetails() },
-                        onRefresh = { viewModel.refreshData() },
-                        onSearch = {  }
+                    )
+                }
+                composable(
+                    route = "car_detail/{carId}",
+                    arguments = listOf(navArgument("carId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val carId = backStackEntry.arguments?.getString("carId") ?: return@composable
+                    CarDetailRoute(
+                        carId = carId,
+                        onBackClick = { navController.popBackStack() }
                     )
                 }
                 composable(Screen.Browse.route) {
                     BrowseScreen()
                 }
-//                composable(
-//                    route = "${Screen.DetailedCarScreen.route}/{placeId}",
-//                    arguments = listOf(navArgument("placeId") { type = NavType.StringType })
-//                ) { backStackEntry ->
-//                    val placeId = backStackEntry.arguments?.getString("placeId")
-//                        ?: return@composable
-//
-//                    DetailedCarScreen(
-//
-//                    )
-//                }
                 composable(Screen.Bookings.route) {
                     BookingsScreen()
                 }
