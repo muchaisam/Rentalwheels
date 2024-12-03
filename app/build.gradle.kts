@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     kotlin("android")
     kotlin("kapt")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
@@ -51,6 +51,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.palette:palette-ktx:1.0.0")
     val composeVersion = "1.5.4"
     val lifecycleVersion = "2.7.0"
     val roomVersion = "2.6.1"
