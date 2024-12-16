@@ -1,7 +1,6 @@
 package com.msdc.rentalwheels.fragments
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -11,33 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.msdc.rentalwheels.BuildConfig
-import com.msdc.rentalwheels.R
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.net.PlacesClient
-import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.msdc.rentalwheels.data.repository.CarRepository
+import com.msdc.rentalwheels.R
 import com.msdc.rentalwheels.databinding.FragmentHomeBinding
-import com.msdc.rentalwheels.ui.screens.CarRentalApp
 import com.msdc.rentalwheels.viewmodel.CarViewModel
-import java.util.*
+import java.util.Calendar
 
 class HomeFragment : Fragment(), OnMapReadyCallback {
 
@@ -74,8 +61,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         setupGreetings()
-        setupViewModel()
-        setupComposeView()
     }
 
     private fun setupGreetings() {
@@ -106,30 +91,34 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun setupViewModel() {
-        val firestore = FirebaseFirestore.getInstance()
-        val repository = CarRepository(firestore)
-        val factory = CarViewModel.Factory(repository)
-        viewModel = ViewModelProvider(this, factory)[CarViewModel::class.java]
-    }
+//    @OptIn(ExperimentalStdlibApi::class)
+//    private fun setupViewModel() {
+//        val firestore = FirebaseFirestore.getInstance()
+//        val repository = CarRepository(firestore)
+//        val dispatcher = CoroutineDispatcher
+//        val factory = CarViewModel.Factory(repository, dispatcher)
+//        viewModel = ViewModelProvider(this, factory)[CarViewModel::class.java]
+//    }
+//
+//    private fun setupComposeView() {
+//        binding.composeView.apply {
+//            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+//            setContent {
+//                val uiState by viewModel.uiState.collectAsState()
+//                val carDetailState by viewModel.carDetailState.collectAsState()
+//
+//                HomeScreen(
+//                    viewModel = viewModel
+//                    onCarClick = { carId -> viewModel.loadCarDetails(carId) },
+//                    onLoadMore = { viewModel.loadMoreCars() },
+//                    onBackClick = { viewModel.clearCarDetails() },
+//                    onRefresh = { viewModel.refreshData() },
+//                    onSearch = {  }
+//                )
+//            }
+//            }
+//    }
 
-    private fun setupComposeView() {
-        binding.composeView.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                val uiState = viewModel.uiState.collectAsState()
-                val carDetailState = viewModel.carDetailState.collectAsState()
-
-                CarRentalApp(
-                    uiState = uiState.value,
-                    carDetailState = carDetailState.value,
-                    onCarClick = { carId -> viewModel.loadCarDetails(carId) },
-                    onLoadMore = { viewModel },
-                    onBackClick = { /* Handle back navigation */ }
-                )
-            }
-        }
-    }
 
 
     override fun onMapReady(googleMap: GoogleMap) {
