@@ -1,39 +1,22 @@
 package com.msdc.rentalwheels.ui.components.home
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.outlined.BookmarkBorder
-import androidx.compose.material.icons.outlined.LocalGasStation
-import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.Speed
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.msdc.rentalwheels.data.model.Car
 
 @Composable
@@ -46,9 +29,12 @@ fun CarCard(
 
     Card(
         onClick = onClick,
-        modifier = modifier.height(300.dp),
+        modifier = modifier
+            .defaultMinSize(minHeight = 320.dp)
+            .padding(vertical = 8.dp)
+            .animateContentSize(),
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column {
             // Image Section
@@ -57,61 +43,42 @@ fun CarCard(
                     .fillMaxWidth()
                     .height(180.dp)
             ) {
-                NetworkImage(
-                    imageUrl = car.imageUrl,
+                AsyncImage(
+                    model = car.imageUrl,
                     contentDescription = "${car.brand} ${car.model}",
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
                 )
 
-                // Bookmark Icon
+                // Bookmark Button
                 IconButton(
                     onClick = { isBookmarked = !isBookmarked },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp)
-                        .size(32.dp)
+                        .size(48.dp)
                         .background(
-                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
+                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),
                             shape = CircleShape
                         )
                 ) {
                     Icon(
-                        imageVector = if (isBookmarked) {
-                            Icons.Filled.Bookmark
-                        } else {
-                            Icons.Outlined.BookmarkBorder
-                        },
-                        contentDescription = "Bookmark",
-                        tint = if (isBookmarked) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurface
-                        }
-                    )
-                }
-
-                // Fuel Type Badge
-                Surface(
-                    color = MaterialTheme.colorScheme.secondaryContainer,
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(8.dp),
-                    shape = MaterialTheme.shapes.small
-                ) {
-                    Text(
-                        text = car.fuelType,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                        style = MaterialTheme.typography.labelMedium
+                        imageVector = if (isBookmarked) Icons.Filled.Bookmark
+                        else Icons.Outlined.BookmarkBorder,
+                        contentDescription = if (isBookmarked) "Remove from bookmarks"
+                        else "Add to bookmarks",
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }
 
-            // Car Details Section
+            // Content Section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                // Brand and Year
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -119,46 +86,106 @@ fun CarCard(
                 ) {
                     Column {
                         Text(
-                            text = "${car.brand} ${car.model}",
+                            text = car.brand,
                             style = MaterialTheme.typography.titleMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "${car.year}",
+                            text = car.model,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
+                    Text(
+                        text = car.year.toString(),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
 
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Price Section
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = "Ksh ${car.dailyRate}/day",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
+                    Text(
+                        text = car.dailyRate.toString(),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-                // Car Features Row
+                // Car Features
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    CarFeatureChip(
-                        icon = Icons.Outlined.Settings,
-                        text = car.transmission
-                    )
-                    CarFeatureChip(
-                        icon = Icons.Outlined.Speed,
-                        text = "${car.mileage}km"
-                    )
-                    CarFeatureChip(
+
+                    FeatureItem(
                         icon = Icons.Outlined.LocalGasStation,
-                        text = car.engine
+                        text = car.fuelType
+                    )
+                    FeatureItem(
+                        icon = Icons.Outlined.Speed,
+                        text = car.transmission
                     )
                 }
             }
         }
     }
+}
+
+@Composable
+private fun FeatureItem(
+    icon: ImageVector,
+    text: String
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(16.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CarCardPreview() {
+    val previewCar = Car(
+        brand = "Tesla",
+        model = "Model 3",
+        year = 2023,
+        price = 45000,
+        dailyRate = 150,
+        fuelType = "Electric",
+        transmission = "Auto",
+        imageUrl = ""
+    )
+    CarCard(
+        car = previewCar,
+        onClick = {},
+        modifier = Modifier.width(320.dp)
+    )
 }
