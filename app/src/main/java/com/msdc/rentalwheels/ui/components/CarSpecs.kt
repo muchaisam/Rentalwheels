@@ -1,64 +1,127 @@
 package com.msdc.rentalwheels.ui.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material.icons.rounded.LocalGasStation
+import androidx.compose.material.icons.rounded.Speed
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.msdc.rentalwheels.ui.theme.Typography
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
-import com.msdc.rentalwheels.R
 import com.msdc.rentalwheels.data.model.Car
+import com.msdc.rentalwheels.ui.theme.Typography
 
 @Composable
-fun CarSpecs(car: Car) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+fun CarSpecs(
+    car: Car,
+    modifier: Modifier = Modifier
+) {
+    ElevatedCard(
+        modifier = modifier,
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
-        SpecItem(title = "Engine", value = car.engine)
-        SpecItem(title = "Transmission", value = car.transmission)
-        SpecItem(title = "Fuel Type", value = car.fuelType)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            SpecItem(
+                icon = Icons.Rounded.Speed,
+                label = "Transmission",
+                value = car.transmission
+            )
+            VerticalDivider()
+            SpecItem(
+                icon = Icons.Rounded.LocalGasStation,
+                label = "Fuel Type",
+                value = car.fuelType
+            )
+            VerticalDivider()
+
+        }
     }
 }
 
 @Composable
-fun SpecItem(title: String, value: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+private fun SpecItem(
+    icon: ImageVector,
+    label: String,
+    value: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Icon(
-            painter = painterResource(
-                id = when (title) {
-                    "Engine" -> R.drawable.engine
-                    "Transmission" -> R.drawable.ic_transmission
-                    else -> R.drawable.ic_fuel
-                }
-            ),
-            contentDescription = title,
-            modifier = Modifier.size(24.dp)
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
         )
-        Text(text = value, fontWeight = FontWeight.Bold)
-        Text(text = title, style = Typography.bodySmall)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = label,
+            style = Typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = value,
+            style = Typography.titleMedium
+        )
     }
 }
 
+
 @Composable
-fun CarDescription(description: String) {
-    Column(modifier = Modifier.padding(16.dp)) {
+fun CarDescription(
+    description: String,
+    modifier: Modifier = Modifier
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(modifier = modifier) {
         Text(
-            text = "Description",
-            style = Typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            text = "About this car",
+            style = Typography.titleLarge,
+            modifier = Modifier.padding(bottom = 8.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = description)
+
+        Text(
+            text = description,
+            style = Typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = if (expanded) Int.MAX_VALUE else 3,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.clickable { expanded = !expanded }
+        )
+
+        if (!expanded && description.length > 150) {
+            TextButton(onClick = { expanded = true }) {
+                Text("Read more")
+            }
+        }
     }
 }

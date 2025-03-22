@@ -2,7 +2,6 @@ package com.msdc.rentalwheels.ui.theme
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import com.msdc.rentalwheels.ui.theme.ThemeMode
 
 class ThemeState(
     initialThemeMode: ThemeMode = ThemeMode.Light

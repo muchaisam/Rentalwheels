@@ -5,12 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.msdc.rentalwheels.models.UserData
+import com.msdc.rentalwheels.uistates.Result
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.msdc.rentalwheels.uistates.Result
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 @HiltViewModel

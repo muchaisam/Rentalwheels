@@ -1,43 +1,53 @@
 package com.msdc.rentalwheels.ui.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.ui.theme.Typography
-import com.msdc.rentalwheels.R
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun CarFeatures(features: List<String>) {
-    Column(modifier = Modifier.padding(16.dp)) {
+fun CarFeatures(
+    features: List<String>,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
         Text(
-            text = "Best Features",
-            style = Typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            text = "Features",
+            style = Typography.titleLarge,
+            modifier = Modifier.padding(bottom = 8.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        features.forEach { feature ->
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_check), // Replace with your check icon
-                    contentDescription = "Feature",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(24.dp)
+
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            features.forEach { feature ->
+                AssistChip(
+                    onClick = { },
+                    label = { Text(feature) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Rounded.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = feature)
             }
-            Spacer(modifier = Modifier.height(4.dp))
         }
     }
 }

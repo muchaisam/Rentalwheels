@@ -14,9 +14,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.msdc.rentalwheels.ui.theme.Typography
 import coil.request.ImageRequest
 import com.msdc.rentalwheels.data.model.Car
+import com.msdc.rentalwheels.ui.theme.Typography
 
 @Composable
 fun FeaturedCar(car: Car) {

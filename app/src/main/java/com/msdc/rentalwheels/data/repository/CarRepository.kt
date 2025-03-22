@@ -5,9 +5,10 @@ import com.google.firebase.firestore.Query
 import com.msdc.rentalwheels.data.model.Car
 import com.msdc.rentalwheels.data.model.Category
 import com.msdc.rentalwheels.data.model.Deal
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,12 +39,19 @@ class CarRepository @Inject constructor(private val firestore: FirebaseFirestore
         emit(deals)
     }
 
+    // In repository
     fun getCategories(): Flow<List<Category>> = flow {
-        val snapshot = firestore.collection("categories")
-            .get()
-            .await()
-        val categories = snapshot.toObjects(Category::class.java)
-        emit(categories)
+        try {
+            val snapshot = firestore.collection("categories")
+                .get()
+                .await()
+            val categories = snapshot.toObjects(Category::class.java)
+
+            emit(categories)
+        } catch (e: Exception) {
+            Timber.tag("CategoryRepo").e(e, "Error fetching categories")
+            emit(emptyList())
+        }
     }
 
     fun getRecommendedCars(limit: Long = 5): Flow<List<Car>> = flow {
@@ -62,5 +70,23 @@ class CarRepository @Inject constructor(private val firestore: FirebaseFirestore
         val carDoc = firestore.collection("cars").document(carId).get().await()
         val car = carDoc.toObject(Car::class.java)
         emit(car)
+    }
+
+    fun getCarsByFuelType(fuelType: String): Flow<List<Car>> = flow {
+        val snapshot = firestore.collection("cars")
+            .whereEqualTo("fuelType", fuelType)
+            .get()
+            .await()
+        val cars = snapshot.toObjects(Car::class.java)
+        emit(cars)
+    }
+
+    fun getCarsByYear(year: Int): Flow<List<Car>> = flow {
+        val snapshot = firestore.collection("cars")
+            .whereEqualTo("year", year)
+            .get()
+            .await()
+        val cars = snapshot.toObjects(Car::class.java)
+        emit(cars)
     }
 }

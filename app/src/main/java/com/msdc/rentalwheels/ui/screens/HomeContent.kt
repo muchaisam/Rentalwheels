@@ -1,35 +1,42 @@
 package com.msdc.rentalwheels.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.*
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
 import com.msdc.rentalwheels.data.model.Category
 import com.msdc.rentalwheels.data.model.Deal
-import com.msdc.rentalwheels.ui.components.CarItem
+import com.msdc.rentalwheels.ui.components.CategoryItem
 import com.msdc.rentalwheels.ui.components.CategoryList
 import com.msdc.rentalwheels.ui.components.ErrorScreen
 import com.msdc.rentalwheels.ui.components.LoadingScreen
 import com.msdc.rentalwheels.ui.components.PromotionBanner
-import com.msdc.rentalwheels.viewmodel.CarViewModel
-import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.msdc.rentalwheels.ui.components.RecommendedCarItem
 import com.msdc.rentalwheels.ui.theme.Typography
-import com.msdc.rentalwheels.ui.utils.PullRefreshIndicator
+import com.msdc.rentalwheels.viewmodel.CarViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,86 +84,95 @@ fun SuccessScreen(
     isRefreshing: Boolean,
     scrollBehavior: TopAppBarScrollBehavior
 ) {
+    val safeCategories = categories.orEmpty().filterNotNull()
+    val safeRecommendedCars = recommendedCars.orEmpty().filterNotNull()
+    val safeCars = cars.orEmpty().filterNotNull()
+    val safeDeals = deals.orEmpty().filterNotNull()
+
     val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        LazyColumn(
+        Box(
             modifier = Modifier
-                .height(1600.dp)
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
-            contentPadding = PaddingValues(bottom = 16.dp)
+                .fillMaxSize()
+                .pullRefresh(pullRefreshState)
         ) {
-            if (deals.isNotEmpty()) {
-                item(key = "deals") {
-                    PromotionBanner(deals = deals)
-                }
-            }
-
-            if (categories.isNotEmpty()) {
-                item(key = "categories") {
-                    CategoryList(categories = categories)
-                }
-            }
-
-            if (recommendedCars.isNotEmpty()) {
-                item(key = "recommendedTitle") {
-                    Text(
-                        "Recommended Cars",
-                        style = Typography.titleLarge,
-                        modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
-                    )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                contentPadding = PaddingValues(bottom = 16.dp)
+            ) {
+                // Deals section
+                if (safeDeals.isNotEmpty()) {
+                    item(key = "deals") {
+                        PromotionBanner(deals = safeDeals)
+                    }
                 }
 
-                item(key = "recommendedCars") {
-                    LazyRow(
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(recommendedCars) { car ->
-                            RecommendedCarItem(car)
+                // Categories section
+                if (safeCategories.isNotEmpty()) {
+                    item(key = "categories") {
+                        CategoryList(categories = safeCategories)
+                    }
+                }
+
+                // Recommended cars section
+                if (safeRecommendedCars.isNotEmpty()) {
+                    item(key = "recommendedCarsHeader") {
+                        Text(
+                            "Recommended Cars",
+                            modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp),
+                            style = Typography.bodyMedium
+                        )
+                    }
+
+                    item(key = "recommendedCarsList") {
+                        LazyRow(
+                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(180.dp)
+                        ) {
+                            items(
+                                items = safeRecommendedCars,
+                                key = { car -> car.id ?: car.hashCode().toString() }
+                            ) { car ->
+                                RecommendedCarItem(car = car)
+                            }
+                        }
+                    }
+                }
+
+                // Add spacer inside an item block
+                item(key = "spacer") {
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                if (categories.isNotEmpty()) {
+                    item(key = "categoriesScroll") {
+                        LazyRow(
+                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(120.dp)
+                        ) {
+                            items(
+                                items = categories,
+                                key = { category -> category.id ?: category.hashCode().toString() }  // Add proper key if possible
+                            ) { category ->
+                                CategoryItem(category)
+                            }
                         }
                     }
                 }
             }
-
-            items(
-                items = cars,
-                key = { it.id }
-            ) { car ->
-                CarItem(car = car, onCarClick = onCarClick)
-            }
-
-            if (cars.isNotEmpty()) {
-                item {
-                    Button(
-                        onClick = onLoadMore,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Text("Load More")
-                    }
-                }
-            }
-
-            loadMoreError?.let {
-                item {
-                    Text(
-                        text = it,
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-            }
         }
 
-        PullRefreshIndicator(
-            refreshing = isRefreshing,
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
 
         if (isLoadingCarDetails) {
             Box(
@@ -168,5 +184,31 @@ fun SuccessScreen(
                 CircularProgressIndicator()
             }
         }
+    }
+}
+
+@Composable
+private fun ErrorFallback(
+    message: String,
+    height: androidx.compose.ui.unit.Dp = 80.dp,
+    width: Float = 1f
+) {
+    Box(
+        modifier = Modifier
+            .height(height)
+            .fillMaxWidth(width)
+            .padding(4.dp)
+            .background(
+                MaterialTheme.colorScheme.errorContainer,
+                shape = MaterialTheme.shapes.small
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            message,
+            modifier = Modifier.padding(8.dp),
+            color = MaterialTheme.colorScheme.onErrorContainer,
+            style = Typography.bodyMedium
+        )
     }
 }

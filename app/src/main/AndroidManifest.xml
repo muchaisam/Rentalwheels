@@ -12,10 +12,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".RentalWheels"
         android:allowBackup="true"
-        android:icon="@mipmap/launc"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/launc"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RentalWheels"
         tools:replace="android:icon">
@@ -38,22 +39,7 @@
             android:name=".auth.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".modules.PayconfirmActivity"
-            android:exported="false" />
-        <activity
-            android:name=".modules.PaymentActivity"
-            android:exported="true" />
-        <activity
             android:name=".auth.RegisterActivity"
-            android:exported="true" />
-        <activity
-            android:name=".modules.CheckoutActivity"
-            android:exported="true" />
-        <activity
-            android:name=".modules.PlaceorderActivity"
-            android:exported="true" />
-        <activity
-            android:name=".modules.Moreinfo"
             android:exported="true" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
