@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.msdc.rentalwheels.data.model.Car
+import com.msdc.rentalwheels.ui.theme.Typography
 
 @Composable
 fun CarCard(
@@ -87,13 +88,13 @@ fun CarCard(
                     Column {
                         Text(
                             text = car.brand,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = Typography.titleMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
                             text = car.model,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = Typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
@@ -101,7 +102,7 @@ fun CarCard(
                     }
                     Text(
                         text = car.year.toString(),
-                        style = MaterialTheme.typography.bodyMedium
+                        style = Typography.bodyMedium
                     )
                 }
 
@@ -115,12 +116,12 @@ fun CarCard(
                 ) {
                     Text(
                         text = "Ksh ${car.dailyRate}/day",
-                        style = MaterialTheme.typography.titleMedium,
+                        style = Typography.titleMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         text = car.dailyRate.toString(),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = Typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -164,7 +165,7 @@ private fun FeatureItem(
         )
         Text(
             text = text,
-            style = MaterialTheme.typography.bodySmall,
+            style = Typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
