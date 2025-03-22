@@ -1,5 +1,6 @@
 package com.msdc.rentalwheels.data.repository
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.msdc.rentalwheels.data.model.Car
@@ -8,6 +9,7 @@ import com.msdc.rentalwheels.data.model.Deal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,12 +40,19 @@ class CarRepository @Inject constructor(private val firestore: FirebaseFirestore
         emit(deals)
     }
 
+    // In repository
     fun getCategories(): Flow<List<Category>> = flow {
-        val snapshot = firestore.collection("categories")
-            .get()
-            .await()
-        val categories = snapshot.toObjects(Category::class.java)
-        emit(categories)
+        try {
+            val snapshot = firestore.collection("categories")
+                .get()
+                .await()
+            val categories = snapshot.toObjects(Category::class.java)
+
+            emit(categories)
+        } catch (e: Exception) {
+            Timber.tag("CategoryRepo").e(e, "Error fetching categories")
+            emit(emptyList())
+        }
     }
 
     fun getRecommendedCars(limit: Long = 5): Flow<List<Car>> = flow {
