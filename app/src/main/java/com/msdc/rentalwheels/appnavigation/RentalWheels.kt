@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.msdc.rentalwheels.ui.screens.BookingsScreen
@@ -44,19 +45,33 @@ fun RentalWheelsApp(
     val uiState by viewModel.uiState.collectAsState()
     val carDetailState by viewModel.carDetailState.collectAsState()
 
+    // Track current route to decide when to show bottom navigation
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    // Check if current screen should show bottom navigation
+    val shouldShowBottomBar = when {
+        currentRoute?.startsWith("car_detail/") == true -> false
+        // Add other screens that should hide the bottom bar here
+        else -> true
+    }
+
     MaterialTheme(
         colorScheme = colors,
         typography = Typography()
     ) {
         Scaffold(
             bottomBar = {
-                BottomNavigation(
-                    currentDestination = navController.currentDestination,
-                    onNavigate = { screen ->
-                        navController.navigate(screen.route)
-                    },
-                    themeState = themeState
-                )
+                // Only show bottom navigation when shouldShowBottomBar is true
+                if (shouldShowBottomBar) {
+                    BottomNavigation(
+                        currentDestination = navController.currentDestination,
+                        onNavigate = { screen ->
+                            navController.navigate(screen.route)
+                        },
+                        themeState = themeState
+                    )
+                }
             }
         ) { paddingValues ->
             NavHost(
@@ -67,17 +82,20 @@ fun RentalWheelsApp(
                 composable(Screen.Home.route) {
                     HomeScreen(
                         viewModel = viewModel,
-                        onCarClick = { carId -> viewModel.loadCarDetails(carId) },
+                        onCarClick = { carId ->
+                            // Navigate to car detail screen
+                            navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
+                        }
                     )
                 }
                 composable(
-                    route = "car_detail/{carId}",
+                    route = Screen.DetailedCarScreen.route,
                     arguments = listOf(navArgument("carId") { type = NavType.StringType })
                 ) { backStackEntry ->
-                    val carId = backStackEntry.arguments?.getString("carId") ?: return@composable
+                    val carId = backStackEntry.arguments?.getString("carId") ?: ""
                     CarDetailRoute(
                         carId = carId,
-                        onBackClick = { navController.popBackStack() }
+                        onBackClick = { navController.navigateUp() }
                     )
                 }
                 composable(Screen.Browse.route) {
