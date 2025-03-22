@@ -1,17 +1,44 @@
 package com.msdc.rentalwheels.appnavigation
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.ZeroCornerSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,18 +48,18 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.*
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.ui.theme.ThemeMode
 import com.msdc.rentalwheels.ui.theme.ThemeState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,9 +70,10 @@ fun BottomNavigation(
     themeState: ThemeState
 ) {
     val themeMode by themeState.themeMode
-    // Define colors using MaterialTheme
+
+    // Custom selected color FF6600
+    val selectedColor = Color(0xFFFF6600)
     val unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
-    val selectedColor = MaterialTheme.colorScheme.primary
 
     var previousIndex by remember { mutableStateOf(0) }
     val currentIndex = remember(currentDestination) {
@@ -54,7 +82,14 @@ fun BottomNavigation(
             Screen.Browse.route -> 1
             Screen.Bookings.route -> 2
             Screen.Settings.route -> 3
-            else -> 0
+            else -> 0 // Default to Home tab
+        }
+    }
+
+    // Ensure Home is selected by default if no route is specified
+    LaunchedEffect(currentDestination) {
+        if (currentDestination?.route == null) {
+            onNavigate(Screen.Home)
         }
     }
 
@@ -104,9 +139,9 @@ fun BottomNavigation(
             bottomEnd = ZeroCornerSize
         ),
         modifier = Modifier
-            .fillMaxWidth().padding(horizontal = 4.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp)
             .drawBehind {
-                // Use the captured color variable instead of accessing MaterialTheme directly
                 drawLine(
                     color = dividerColor,
                     start = Offset(0f, 0f),
@@ -128,7 +163,9 @@ fun BottomNavigation(
             verticalAlignment = Alignment.CenterVertically
         ) {
             navigationItems.forEachIndexed { index, item ->
-                val selected = currentDestination?.route == item.route
+                // FIX 1: Check the current route directly against the item's route
+                val selected = currentDestination?.route == item.route ||
+                        (currentDestination?.route == null && index == 0) // Select Home by default
                 val haptic = LocalHapticFeedback.current
 
                 EnhancedNavigationItem(
@@ -139,18 +176,18 @@ fun BottomNavigation(
                     selectedIconTint = selectedColor,
                     unselectedIconTint = unselectedColor,
                     onSelected = {
-                        if (!selected) {
-                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                            onNavigate(
-                                when (index) {
-                                    0 -> Screen.Home
-                                    1 -> Screen.Browse
-                                    2 -> Screen.Bookings
-                                    3 -> Screen.Settings
-                                    else -> Screen.Home
-                                }
-                            )
-                        }
+                        // FIX 2: Always allow navigation, even to the current tab
+                        // This fixes the issue where you couldn't return to Home
+                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        onNavigate(
+                            when (index) {
+                                0 -> Screen.Home
+                                1 -> Screen.Browse
+                                2 -> Screen.Bookings
+                                3 -> Screen.Settings
+                                else -> Screen.Home
+                            }
+                        )
                     }
                 )
             }
@@ -173,23 +210,18 @@ private fun EnhancedNavigationItem(
 
     val animatedIconScale by animateFloatAsState(
         targetValue = if (selected) 1.2f else 1f,
-        animationSpec = tween(300)
+        animationSpec = tween(300),
+        label = "IconScale"
     )
     val animatedTextSize by animateFloatAsState(
         targetValue = if (selected) 14f else 12f,
-        animationSpec = tween(300)
+        animationSpec = tween(300),
+        label = "TextSize"
     )
     val animatedElevation by animateDpAsState(
         targetValue = if (selected) 4.dp else 0.dp,
-        animationSpec = tween(300)
-    )
-
-    val animatedScale by animateFloatAsState(
-        targetValue = if (selected) 1.5f else 1f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        )
+        animationSpec = tween(300),
+        label = "Elevation"
     )
 
     Column(
@@ -202,7 +234,7 @@ private fun EnhancedNavigationItem(
                 selected = selected,
                 onClick = onSelected,
                 interactionSource = interactionSource,
-                indication = null
+                indication = LocalIndication.current
             )
             .semantics {
                 this.contentDescription = if (selected) {
@@ -211,6 +243,7 @@ private fun EnhancedNavigationItem(
                     contentDesc
                 }
                 this.selected = selected
+                this.role = Role.Tab
             }
             .padding(horizontal = 4.dp, vertical = 8.dp)
     ) {
@@ -225,7 +258,7 @@ private fun EnhancedNavigationItem(
                     .padding(bottom = 4.dp)
                     .size(width = 16.dp, height = 2.dp)
                     .clip(MaterialTheme.shapes.small)
-                    .background(MaterialTheme.colorScheme.primary)
+                    .background(selectedIconTint)
             )
         }
 
