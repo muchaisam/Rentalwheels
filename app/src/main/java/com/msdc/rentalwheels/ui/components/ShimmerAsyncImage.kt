@@ -33,12 +33,12 @@ fun ShimmerAsyncImage(
                 is AsyncImagePainter.State.Loading -> {
                     isLoading = true
                     isError = false
-                    ShimmerEffect(modifier = Modifier.matchParentSize())
+                    ShimmerEffect()
                 }
                 is AsyncImagePainter.State.Error -> {
                     isLoading = false
                     isError = true
-                    ShimmerEffect(modifier = Modifier.matchParentSize())
+                    ShimmerEffect()
                 }
                 else -> {
                     isLoading = false
