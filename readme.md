@@ -63,7 +63,7 @@ git clone https://github.com/muchaisam/RentalWheels.git
 
 <table>
   <tr>
-    <td><img src="https://github.com/muchaisam/Rentalwheels/blob/main/screenshots/Home.png" alt="App Homepage screenshot" width="300"/></td>
+    <td><img src="https://github.com/muchaisam/Rentalwheels/blob/main/screenshots/home.png" alt="App Homepage screenshot" width="300"/></td>
     <td><img src="https://github.com/muchaisam/Rentalwheels/blob/main/screenshots/CarDetailScreen.png" alt="CarDetail Screen" width="300"/></td>
   </tr>
 </table>
