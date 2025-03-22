@@ -14,7 +14,6 @@ import com.msdc.rentalwheels.ux.OnboardingActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class MainActivity : AppCompatActivity() {
 
