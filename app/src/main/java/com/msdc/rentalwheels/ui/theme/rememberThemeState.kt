@@ -1,13 +1,12 @@
 package com.msdc.rentalwheels.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 
 @Composable
 fun rememberThemeState(
-    initialThemeMode: ThemeMode = ThemeMode.Light
+    initialTheme: ThemeMode = if (isSystemInDarkTheme()) ThemeMode.Dark else ThemeMode.Light
 ): ThemeState {
-    return remember {
-        ThemeState(initialThemeMode)
-    }
+    return remember { ThemeState(initialTheme) }
 }
