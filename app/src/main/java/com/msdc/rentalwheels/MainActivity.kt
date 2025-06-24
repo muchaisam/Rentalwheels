@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
-import com.msdc.rentalwheels.auth.RegisterActivity
-import com.msdc.rentalwheels.ux.OnboardingActivity
+import com.msdc.rentalwheels.ui.auth.RegisterActivity
+import com.msdc.rentalwheels.ui.onboarding.OnboardingActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -55,16 +55,17 @@ class MainActivity : AppCompatActivity() {
         return cm.getNetworkCapabilities(cm.activeNetwork)?.let {
             it.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
                     it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-        } ?: false
+        }
+                ?: false
     }
 
     private fun showNoInternetDialog() {
         androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("No Internet Connection")
-            .setMessage("Please check your internet connection and try again.")
-            .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
-            .setCancelable(false)
-            .show()
+                .setTitle("No Internet Connection")
+                .setMessage("Please check your internet connection and try again.")
+                .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
+                .setCancelable(false)
+                .show()
     }
 
     private fun checkAndNavigateToOnboarding() {
