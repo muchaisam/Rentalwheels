@@ -247,7 +247,8 @@ fun RecommendedCarsSection(
                     ScrollIndicator(isStart = false) {
                         coroutineScope.launch {
                             // Scroll to last visible item that's completely visible
-                            val lastVisibleItem = lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()
+                            val lastVisibleItem =
+                                lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()
                             lastVisibleItem?.index?.let { index ->
                                 lazyListState.animateScrollToItem(
                                     index.coerceAtMost(cars.size - 1)
@@ -511,7 +512,8 @@ private fun calculateCurrentItemOffset(
 
     // Calculate the center position of the item
     val itemCenter = itemInfo.offset + (itemInfo.size / 2)
-    val viewportCenter = layoutInfo.viewportStartOffset + (layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset) / 2
+    val viewportCenter =
+        layoutInfo.viewportStartOffset + (layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset) / 2
 
     // Convert offset to a value between -1 and 1
     return (itemCenter - viewportCenter) / itemWidthDp.value
