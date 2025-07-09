@@ -61,7 +61,8 @@ class ResetPasswordFragment : BottomSheetDialogFragment() {
             val email = inputEmail.text.toString().trim()
 
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(context, "Please enter your registered email id", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please enter your registered email id", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
@@ -70,9 +71,17 @@ class ResetPasswordFragment : BottomSheetDialogFragment() {
             GlobalScope.launch(Dispatchers.Main) {
                 try {
                     Firebase.auth.sendPasswordResetEmail(email).await()
-                    Toast.makeText(context, "Check your email/spam folder for your password reset link!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Check your email/spam folder for your password reset link!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } catch (e: Exception) {
-                    Toast.makeText(context, "Failed to send reset email link. Please try again!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Failed to send reset email link. Please try again!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 progressBar.dismiss()
