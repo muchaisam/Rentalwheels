@@ -56,16 +56,16 @@ class MainActivity : AppCompatActivity() {
             it.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
                     it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
         }
-                ?: false
+            ?: false
     }
 
     private fun showNoInternetDialog() {
         androidx.appcompat.app.AlertDialog.Builder(this)
-                .setTitle("No Internet Connection")
-                .setMessage("Please check your internet connection and try again.")
-                .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
-                .setCancelable(false)
-                .show()
+            .setTitle("No Internet Connection")
+            .setMessage("Please check your internet connection and try again.")
+            .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
+            .setCancelable(false)
+            .show()
     }
 
     private fun checkAndNavigateToOnboarding() {
