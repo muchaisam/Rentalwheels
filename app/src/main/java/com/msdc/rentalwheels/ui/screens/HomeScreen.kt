@@ -26,7 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.msdc.rentalwheels.ui.components.AnimatedBackground
 import com.msdc.rentalwheels.ui.components.CategoryList
 import com.msdc.rentalwheels.ui.components.ErrorScreen
 import com.msdc.rentalwheels.ui.components.LoadingScreen
@@ -44,51 +43,54 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
     val listState = rememberLazyListState()
 
     val pullRefreshState =
-            rememberPullRefreshState(
-                    refreshing = isRefreshing,
-                    onRefresh = {
-                        isRefreshing = true
-                        viewModel.loadInitialData()
-                        isRefreshing = false
-                    }
-            )
+        rememberPullRefreshState(
+            refreshing = isRefreshing,
+            onRefresh = {
+                isRefreshing = true
+                viewModel.loadInitialData()
+                isRefreshing = false
+            }
+        )
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Animated Background
-        AnimatedBackground()
-
         // Pull-to-refresh wrapper
-        Box(modifier = Modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .pullRefresh(pullRefreshState)
+        ) {
             when (val state = homeState) {
                 is HomeScreenState.Loading -> {
                     AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
                         LoadingScreen()
                     }
                 }
+
                 is HomeScreenState.Error -> {
                     AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
                         ErrorScreen(message = state.message)
                     }
                 }
+
                 is HomeScreenState.Success -> {
                     AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
                         LazyColumn(
-                                state = listState,
-                                modifier = Modifier.fillMaxSize(),
-                                contentPadding =
-                                        PaddingValues(
-                                                start = 16.dp,
-                                                end = 16.dp,
-                                                top = 8.dp,
-                                                bottom = 100.dp // Extra space for bottom navigation
-                                        )
+                            state = listState,
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding =
+                            PaddingValues(
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = 8.dp,
+                                bottom = 100.dp // Extra space for bottom navigation
+                            )
                         ) {
                             // Deals Section
                             if (state.deals.isNotEmpty()) {
                                 item {
                                     PromotionBanner(
-                                            deals = state.deals,
-                                            modifier = Modifier.padding(vertical = 8.dp)
+                                        deals = state.deals,
+                                        modifier = Modifier.padding(vertical = 8.dp)
                                     )
                                 }
                             }
@@ -97,8 +99,8 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
                             if (state.categories.isNotEmpty()) {
                                 item {
                                     CategoryList(
-                                            categories = state.categories,
-                                            modifier = Modifier.padding(vertical = 8.dp)
+                                        categories = state.categories,
+                                        modifier = Modifier.padding(vertical = 8.dp)
                                     )
                                 }
                             }
@@ -107,9 +109,9 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
                             if (state.recommendedCars.isNotEmpty()) {
                                 item {
                                     RecommendedCarsSection(
-                                            cars = state.recommendedCars,
-                                            onCarClick = onCarClick,
-                                            modifier = Modifier.padding(vertical = 8.dp)
+                                        cars = state.recommendedCars,
+                                        onCarClick = onCarClick,
+                                        modifier = Modifier.padding(vertical = 8.dp)
                                     )
                                 }
                             }
@@ -117,20 +119,20 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
                             // Cars by Fuel Type Section
                             item {
                                 FilterableCarList(
-                                        carsByFilter = state.carsByFuelType,
-                                        filterName = "Fuel Type",
-                                        onCarClick = onCarClick,
-                                        modifier = Modifier.padding(vertical = 8.dp)
+                                    carsByFilter = state.carsByFuelType,
+                                    filterName = "Fuel Type",
+                                    onCarClick = onCarClick,
+                                    modifier = Modifier.padding(vertical = 8.dp)
                                 )
                             }
 
                             // Cars by Year Section
                             item {
                                 FilterableCarList(
-                                        carsByFilter = state.carsByYear,
-                                        filterName = "Year",
-                                        onCarClick = onCarClick,
-                                        modifier = Modifier.padding(vertical = 8.dp)
+                                    carsByFilter = state.carsByYear,
+                                    filterName = "Year",
+                                    onCarClick = onCarClick,
+                                    modifier = Modifier.padding(vertical = 8.dp)
                                 )
                             }
 
@@ -144,11 +146,11 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
 
         // Pull refresh indicator
         PullRefreshIndicator(
-                refreshing = isRefreshing,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter),
-                backgroundColor = MaterialTheme.colorScheme.surface,
-                contentColor = MaterialTheme.colorScheme.primary
+            refreshing = isRefreshing,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter),
+            backgroundColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.primary
         )
     }
 }
