@@ -1,7 +1,6 @@
 package com.msdc.rentalwheels.data.model
 
 
-
 data class Deal(
     val id: String = "",
     val carId: String = "",
