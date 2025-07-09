@@ -187,19 +187,23 @@ fun FilterableCarList(
                     isLoading -> {
                         LoadingState()
                     }
+
                     error != null -> {
                         ErrorState(error = error)
                     }
+
                     displayedCars.isEmpty() -> {
                         EmptyState()
                     }
+
                     else -> {
                         // Animated content area
                         Column(
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             // Animating car items appearing with staggered effect
-                            val maxItems = if (expanded) displayedCars.size else minOf(4, displayedCars.size)
+                            val maxItems =
+                                if (expanded) displayedCars.size else minOf(4, displayedCars.size)
 
                             displayedCars.take(maxItems).forEachIndexed { index, car ->
                                 key(car.id) {
@@ -223,7 +227,9 @@ fun FilterableCarList(
                                                 .shadow(
                                                     elevation = 2.dp,
                                                     shape = MaterialTheme.shapes.medium,
-                                                    spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                                                    spotColor = MaterialTheme.colorScheme.primary.copy(
+                                                        alpha = 0.1f
+                                                    )
                                                 )
                                                 .clip(MaterialTheme.shapes.medium)
                                         )

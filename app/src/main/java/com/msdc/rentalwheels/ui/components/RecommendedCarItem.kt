@@ -15,19 +15,20 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.msdc.rentalwheels.data.model.Car
+import com.msdc.rentalwheels.data.model.brand
 import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.utils.CurrencyUtils
 
 @Composable
 fun RecommendedCarItem(car: Car) {
-    Card(
-        modifier = Modifier
-            .width(220.dp)
-            .height(200.dp)
-            .padding(8.dp)
-    ) {
+    Card(modifier = Modifier
+        .width(220.dp)
+        .height(200.dp)
+        .padding(8.dp)) {
         Column {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
+                model =
+                ImageRequest.Builder(LocalContext.current)
                     .data(car.imageUrl)
                     .crossfade(true)
                     .build(),
@@ -38,13 +39,9 @@ fun RecommendedCarItem(car: Car) {
                 contentScale = ContentScale.Crop
             )
             Column(modifier = Modifier.padding(8.dp)) {
+                Text("${car.brand} ${car.model}", style = Typography.bodyLarge, maxLines = 1)
                 Text(
-                    "${car.brand} ${car.model}",
-                    style = Typography.bodyLarge,
-                    maxLines = 1
-                )
-                Text(
-                    "Ksh {car.dailyRate}/Day",
+                    CurrencyUtils.formatDailyRate(car.dailyRate),
                     style = Typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

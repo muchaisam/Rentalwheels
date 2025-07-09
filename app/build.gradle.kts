@@ -127,8 +127,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-
+    debugImplementation("androidx.compose.ui:ui-test-manifest")    // Kotlin Standard Library
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0")
+    
     // Paging
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("androidx.paging:paging-compose:3.2.1")

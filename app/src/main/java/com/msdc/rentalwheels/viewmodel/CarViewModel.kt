@@ -97,7 +97,8 @@ class CarViewModel @Inject constructor(
                     _carDetailState.value = CarDetailState.Error("Car not found")
                 }
             } catch (e: Exception) {
-                _carDetailState.value = CarDetailState.Error(e.message ?: "An unknown error occurred")
+                _carDetailState.value =
+                    CarDetailState.Error(e.message ?: "An unknown error occurred")
             }
         }
     }
@@ -145,11 +146,15 @@ class CarViewModel @Inject constructor(
             val deals: List<Deal>,
             val loadMoreError: String? = null
         ) : UiState()
+
         data class Error(val message: String) : UiState()
     }
 
 
-    class Factory(private val repository: CarRepository, private val dispatchers: CoroutineDispatcher) : ViewModelProvider.Factory {
+    class Factory(
+        private val repository: CarRepository,
+        private val dispatchers: CoroutineDispatcher
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(CarViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")

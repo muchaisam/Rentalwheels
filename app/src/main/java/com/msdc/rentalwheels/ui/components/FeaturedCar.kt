@@ -14,20 +14,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.msdc.rentalwheels.data.model.Car
+import com.msdc.rentalwheels.data.model.brand
 import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.utils.CurrencyUtils
 
 @Composable
 fun FeaturedCar(car: Car) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(320.dp)
-    ) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .height(320.dp)) {
         Column {
-            ShimmerAsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
+            AsyncImage(
+                model =
+                ImageRequest.Builder(LocalContext.current)
                     .data(car.imageUrl)
                     .crossfade(true)
                     .build(),
@@ -39,9 +41,14 @@ fun FeaturedCar(car: Car) {
             )
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("Featured: ${car.brand} ${car.model}", style = Typography.titleLarge)
-                Text(car.description, style = Typography.bodyMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 Text(
-                    "Ksh ${car.dailyRate}/Day",
+                    car.description,
+                    style = Typography.bodyMedium,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    CurrencyUtils.formatDailyRate(car.dailyRate),
                     style = Typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

@@ -95,6 +95,7 @@ fun CategoryItem(
                         )
                         shouldShowRetry = false
                     }
+
                     is AsyncImagePainter.State.Error -> {
                         // Show placeholder on error
                         Box(
@@ -117,10 +118,12 @@ fun CategoryItem(
                         }
                         shouldShowRetry = true
                     }
+
                     is AsyncImagePainter.State.Success -> {
                         SubcomposeAsyncImageContent()
                         shouldShowRetry = false
                     }
+
                     else -> {
                         SubcomposeAsyncImageContent()
                     }

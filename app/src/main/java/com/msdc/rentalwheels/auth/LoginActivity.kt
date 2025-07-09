@@ -60,18 +60,22 @@ class LoginActivity : AppCompatActivity() {
                 binding.emailinput.error = "Email cannot be empty"
                 false
             }
+
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                 binding.emailinput.error = "Invalid email format"
                 false
             }
+
             password.isEmpty() -> {
                 binding.pwdid.error = "Password cannot be empty"
                 false
             }
+
             password.length < 6 -> {
                 binding.pwdid.error = "Password must be at least 6 characters long"
                 false
             }
+
             else -> true
         }
     }
@@ -123,7 +127,12 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveUserDataToSharedPreferences(firstName: String, lastName: String, email: String, phone: String) {
+    private fun saveUserDataToSharedPreferences(
+        firstName: String,
+        lastName: String,
+        email: String,
+        phone: String
+    ) {
         val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             putString(FIRST_NAME, firstName)

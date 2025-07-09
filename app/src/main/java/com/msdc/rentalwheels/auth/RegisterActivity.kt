@@ -87,29 +87,36 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateInputs(email: String, password: String, repeatPassword: String,
-                               firstName: String, lastName: String, mobile: String): Boolean {
+    private fun validateInputs(
+        email: String, password: String, repeatPassword: String,
+        firstName: String, lastName: String, mobile: String
+    ): Boolean {
         when {
             email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                 showToast("Please enter a valid email address")
                 return false
             }
+
             password.isEmpty() || password.length < 8 -> {
                 showToast("Password must be at least 8 characters long")
                 return false
             }
+
             password != repeatPassword -> {
                 showToast("Passwords do not match")
                 return false
             }
+
             firstName.isEmpty() || lastName.isEmpty() -> {
                 showToast("Please enter your full name")
                 return false
             }
+
             mobile.isEmpty() || !android.util.Patterns.PHONE.matcher(mobile).matches() -> {
                 showToast("Please enter a valid phone number")
                 return false
             }
+
             else -> return true
         }
     }
@@ -123,8 +130,10 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun createUserWithEmailAndPassword(email: String, password: String,
-                                               firstName: String, lastName: String, phone: String) {
+    private fun createUserWithEmailAndPassword(
+        email: String, password: String,
+        firstName: String, lastName: String, phone: String
+    ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -135,7 +144,12 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun handleSuccessfulRegistration(email: String, firstName: String, lastName: String, phone: String) {
+    private fun handleSuccessfulRegistration(
+        email: String,
+        firstName: String,
+        lastName: String,
+        phone: String
+    ) {
         val user = auth.currentUser
         user?.let {
             updateUserProfile(it, lastName)
@@ -150,7 +164,13 @@ class RegisterActivity : AppCompatActivity() {
         user.updateProfile(profileUpdates)
     }
 
-    private fun saveUserToFirestore(uid: String, email: String, firstName: String, lastName: String, phone: String) {
+    private fun saveUserToFirestore(
+        uid: String,
+        email: String,
+        firstName: String,
+        lastName: String,
+        phone: String
+    ) {
         val userDetails = hashMapOf(
             "email" to email,
             "firstName" to firstName,

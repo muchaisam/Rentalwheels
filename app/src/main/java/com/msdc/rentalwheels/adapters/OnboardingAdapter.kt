@@ -9,7 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.msdc.rentalwheels.R
 
-class OnboardingAdapter(private val context: Context, private val images: IntArray, private val captions: Array<String>) :
+class OnboardingAdapter(
+    private val context: Context,
+    private val images: IntArray,
+    private val captions: Array<String>
+) :
     RecyclerView.Adapter<OnboardingAdapter.OnboardingViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnboardingViewHolder {

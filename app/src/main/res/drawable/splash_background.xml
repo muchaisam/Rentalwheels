@@ -1,19 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item>
-        <shape android:shape="rectangle">
-            <gradient
-                android:startColor="#FFFFFF"
-                android:endColor="#F3F3F3"
-                android:angle="45" />
-        </shape>
+        <color android:color="?android:textColorPrimary"/>
     </item>
-
     <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/splashimg" />
-    </item>
+        <inset
 
+            android:drawable="@drawable/rental_logo"
+            android:insetLeft="40dp"
+            android:insetRight="40dp"
+            android:insetTop="40dp"
+            android:insetBottom="40dp">
+        </inset>
+    </item>
 </layer-list>

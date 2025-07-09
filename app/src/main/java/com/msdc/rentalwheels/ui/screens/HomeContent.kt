@@ -163,7 +163,9 @@ fun SuccessScreen(
                         ) {
                             items(
                                 items = categories,
-                                key = { category -> category.id ?: category.hashCode().toString() }  // Add proper key if possible
+                                key = { category ->
+                                    category.id ?: category.hashCode().toString()
+                                }  // Add proper key if possible
                             ) { category ->
                                 CategoryItem(category)
                             }
