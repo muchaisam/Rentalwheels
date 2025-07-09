@@ -8,8 +8,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -65,7 +65,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.ui.components.AnimatedBackground
 import com.msdc.rentalwheels.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -116,13 +115,12 @@ fun LoginScreen(
             )
         )
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .imePadding()
     ) {
-        // Animated background
-        AnimatedBackground()
-
         Column(
             modifier =
             Modifier
@@ -141,11 +139,12 @@ fun LoginScreen(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(bottom = 48.dp)
-                ) {                    // App Logo
+                ) { // App Logo
                     Card(
                         modifier = Modifier.size(80.dp),
                         shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(
+                        colors =
+                        CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.primary
                         ),
                         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
@@ -155,7 +154,7 @@ fun LoginScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Image(
-                                painter = painterResource(id = R.mipmap.rental_logo),
+                                painter = painterResource(id = R.drawable.rental_logo),
                                 contentDescription = "App Logo",
                                 modifier = Modifier.size(48.dp)
                             )
