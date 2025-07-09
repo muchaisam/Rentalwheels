@@ -58,27 +58,27 @@ class RegisterActivity : ComponentActivity() {
 
             RentalWheelsTheme(themeState = themeState) {
                 Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     RegisterScreen(
-                            isLoading = isLoading,
-                            errorMessage = errorMessage,
-                            onRegisterClick = { formData ->
-                                isLoading = true
-                                errorMessage = null
-                                attemptRegistration(formData) { success, error ->
-                                    isLoading = false
-                                    if (!success) {
-                                        errorMessage = error
-                                    }
+                        isLoading = isLoading,
+                        errorMessage = errorMessage,
+                        onRegisterClick = { formData ->
+                            isLoading = true
+                            errorMessage = null
+                            attemptRegistration(formData) { success, error ->
+                                isLoading = false
+                                if (!success) {
+                                    errorMessage = error
                                 }
-                            },
-                            onLoginClick = {
-                                val intent =
-                                        Intent(this@RegisterActivity, LoginActivity::class.java)
-                                startActivity(intent)
                             }
+                        },
+                        onLoginClick = {
+                            val intent =
+                                Intent(this@RegisterActivity, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
                     )
                 }
             }
@@ -86,8 +86,8 @@ class RegisterActivity : ComponentActivity() {
     }
 
     private fun attemptRegistration(
-            formData: RegisterFormData,
-            onResult: (Boolean, String?) -> Unit
+        formData: RegisterFormData,
+        onResult: (Boolean, String?) -> Unit
     ) {
         if (!validateFormData(formData)) {
             onResult(false, "Please fill in all fields correctly")
@@ -95,42 +95,43 @@ class RegisterActivity : ComponentActivity() {
         }
 
         firebaseAuth.createUserWithEmailAndPassword(formData.email, formData.password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user = firebaseAuth.currentUser
-                        user?.let {
-                            saveUserDataToFirestore(it.uid, formData) { firestoreSuccess ->
-                                if (firestoreSuccess) {
-                                    saveUserDataToSharedPrefs(formData)
-                                    sendVerificationEmail(it) { emailSent ->
-                                        if (emailSent) {
-                                            showToast("Account created! Please verify your email.")
-                                            navigateToHome()
-                                            onResult(true, null)
-                                        } else {
-                                            onResult(
-                                                    false,
-                                                    "Account created but failed to send verification email"
-                                            )
-                                        }
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = firebaseAuth.currentUser
+                    user?.let {
+                        saveUserDataToFirestore(it.uid, formData) { firestoreSuccess ->
+                            if (firestoreSuccess) {
+                                saveUserDataToSharedPrefs(formData)
+                                sendVerificationEmail(it) { emailSent ->
+                                    if (emailSent) {
+                                        showToast("Account created! Please verify your email.")
+                                        navigateToHome()
+                                        onResult(true, null)
+                                    } else {
+                                        onResult(
+                                            false,
+                                            "Account created but failed to send verification email"
+                                        )
                                     }
-                                } else {
-                                    onResult(false, "Failed to save user data")
                                 }
+                            } else {
+                                onResult(false, "Failed to save user data")
                             }
                         }
-                                ?: onResult(false, "Registration failed")
-                    } else {
-                        val errorMsg =
-                                when (task.exception) {
-                                    is FirebaseAuthUserCollisionException ->
-                                            "An account with this email already exists"
-                                    is FirebaseAuthWeakPasswordException -> "Password is too weak"
-                                    else -> "Registration failed. Please try again."
-                                }
-                        onResult(false, errorMsg)
                     }
+                        ?: onResult(false, "Registration failed")
+                } else {
+                    val errorMsg =
+                        when (task.exception) {
+                            is FirebaseAuthUserCollisionException ->
+                                "An account with this email already exists"
+
+                            is FirebaseAuthWeakPasswordException -> "Password is too weak"
+                            else -> "Registration failed. Please try again."
+                        }
+                    onResult(false, errorMsg)
                 }
+            }
     }
 
     private fun validateFormData(formData: RegisterFormData): Boolean {
@@ -149,25 +150,25 @@ class RegisterActivity : ComponentActivity() {
     }
 
     private fun saveUserDataToFirestore(
-            uid: String,
-            formData: RegisterFormData,
-            onComplete: (Boolean) -> Unit
+        uid: String,
+        formData: RegisterFormData,
+        onComplete: (Boolean) -> Unit
     ) {
         val userData =
-                hashMapOf(
-                        "firstName" to formData.firstName,
-                        "lastName" to formData.lastName,
-                        "email" to formData.email,
-                        "phoneNumber" to formData.phone,
-                        "createdAt" to System.currentTimeMillis()
-                )
+            hashMapOf(
+                "firstName" to formData.firstName,
+                "lastName" to formData.lastName,
+                "email" to formData.email,
+                "phoneNumber" to formData.phone,
+                "createdAt" to System.currentTimeMillis()
+            )
 
         firestore
-                .collection("users")
-                .document(uid)
-                .set(userData)
-                .addOnSuccessListener { onComplete(true) }
-                .addOnFailureListener { onComplete(false) }
+            .collection("users")
+            .document(uid)
+            .set(userData)
+            .addOnSuccessListener { onComplete(true) }
+            .addOnFailureListener { onComplete(false) }
     }
 
     private fun saveUserDataToSharedPrefs(formData: RegisterFormData) {
@@ -182,8 +183,8 @@ class RegisterActivity : ComponentActivity() {
     }
 
     private fun sendVerificationEmail(
-            user: com.google.firebase.auth.FirebaseUser,
-            onComplete: (Boolean) -> Unit
+        user: com.google.firebase.auth.FirebaseUser,
+        onComplete: (Boolean) -> Unit
     ) {
         user.sendEmailVerification().addOnCompleteListener { task -> onComplete(task.isSuccessful) }
     }
