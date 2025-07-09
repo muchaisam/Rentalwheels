@@ -80,7 +80,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         // After the user finishes the onboarding process
         val sharedPref = getSharedPreferences("Onboarding", Context.MODE_PRIVATE)
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putBoolean("Shown", true)
             apply()
         }
@@ -97,7 +97,8 @@ class OnboardingActivity : AppCompatActivity() {
             indicators[i]?.setImageDrawable(
                 ContextCompat.getDrawable(
                     applicationContext, R.drawable.default_indicator
-                ))
+                )
+            )
             indicators[i]?.layoutParams = layoutParams
             indicator.addView(indicators[i])
         }
@@ -109,14 +110,24 @@ class OnboardingActivity : AppCompatActivity() {
         for (i in 0 until childCount) {
             val imageView = indicator.getChildAt(i) as ImageView
             if (i == index) {
-                imageView.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.selected_dot))
+                imageView.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.selected_dot
+                    )
+                )
             } else {
-                imageView.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.default_dot))
+                imageView.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.default_dot
+                    )
+                )
             }
         }
-        if (index == adapter.itemCount - 1){
+        if (index == adapter.itemCount - 1) {
             nextButton.text = "Get Started"
-        }else {
+        } else {
             nextButton.text = "Next"
         }
     }
