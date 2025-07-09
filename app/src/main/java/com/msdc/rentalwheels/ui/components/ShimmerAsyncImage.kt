@@ -35,11 +35,13 @@ fun ShimmerAsyncImage(
                     isError = false
                     ShimmerEffect()
                 }
+
                 is AsyncImagePainter.State.Error -> {
                     isLoading = false
                     isError = true
                     ShimmerEffect()
                 }
+
                 else -> {
                     isLoading = false
                     isError = false
