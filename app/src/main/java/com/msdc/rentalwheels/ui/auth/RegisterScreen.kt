@@ -8,8 +8,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -70,7 +70,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.ui.components.AnimatedBackground
 import com.msdc.rentalwheels.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -173,16 +172,13 @@ fun RegisterScreen(
                 MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
             )
         )
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .imePadding()) {
-        // Animated background
-        AnimatedBackground(
-            primaryColor = MaterialTheme.colorScheme.secondary,
-            secondaryColor = MaterialTheme.colorScheme.tertiary,
-            tertiaryColor = MaterialTheme.colorScheme.primary
-        )
-
+    Box(
+        modifier =
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .imePadding()
+    ) {
         Column(
             modifier =
             Modifier
@@ -206,7 +202,8 @@ fun RegisterScreen(
                     Card(
                         modifier = Modifier.size(64.dp),
                         shape = RoundedCornerShape(16.dp),
-                        colors = CardDefaults.cardColors(
+                        colors =
+                        CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.secondary
                         ),
                         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
@@ -216,7 +213,7 @@ fun RegisterScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Image(
-                                painter = painterResource(id = R.mipmap.rental_logo),
+                                painter = painterResource(id = R.drawable.rental_logo),
                                 contentDescription = "App Logo",
                                 modifier = Modifier.size(36.dp)
                             )
