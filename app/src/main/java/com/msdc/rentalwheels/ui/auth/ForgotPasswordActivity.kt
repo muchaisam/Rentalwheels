@@ -37,31 +37,31 @@ class ForgotPasswordActivity : ComponentActivity() {
 
             RentalWheelsTheme(themeState = themeState) {
                 Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     ForgotPasswordScreen(
-                            isLoading = isLoading,
-                            isEmailSent = isEmailSent,
-                            errorMessage = errorMessage,
-                            onSendResetEmail = { email ->
-                                isLoading = true
-                                errorMessage = null
-                                sendPasswordResetEmail(email) { success, error ->
-                                    isLoading = false
-                                    if (success) {
-                                        isEmailSent = true
-                                        showToast("Password reset email sent successfully!")
-                                    } else {
-                                        errorMessage = error
-                                    }
+                        isLoading = isLoading,
+                        isEmailSent = isEmailSent,
+                        errorMessage = errorMessage,
+                        onSendResetEmail = { email ->
+                            isLoading = true
+                            errorMessage = null
+                            sendPasswordResetEmail(email) { success, error ->
+                                isLoading = false
+                                if (success) {
+                                    isEmailSent = true
+                                    showToast("Password reset email sent successfully!")
+                                } else {
+                                    errorMessage = error
                                 }
-                            },
-                            onBackClick = { finish() },
-                            onRetryClick = {
-                                isEmailSent = false
-                                errorMessage = null
                             }
+                        },
+                        onBackClick = { finish() },
+                        onRetryClick = {
+                            isEmailSent = false
+                            errorMessage = null
+                        }
                     )
                 }
             }
@@ -79,13 +79,15 @@ class ForgotPasswordActivity : ComponentActivity() {
                 onResult(true, null)
             } else {
                 val errorMsg =
-                        when (task.exception?.message) {
-                            "There is no user record corresponding to this identifier. The user may have been deleted." ->
-                                    "No account found with this email address"
-                            "The email address is badly formatted." ->
-                                    "Please enter a valid email address"
-                            else -> "Failed to send reset email. Please try again."
-                        }
+                    when (task.exception?.message) {
+                        "There is no user record corresponding to this identifier. The user may have been deleted." ->
+                            "No account found with this email address"
+
+                        "The email address is badly formatted." ->
+                            "Please enter a valid email address"
+
+                        else -> "Failed to send reset email. Please try again."
+                    }
                 onResult(false, errorMsg)
             }
         }
