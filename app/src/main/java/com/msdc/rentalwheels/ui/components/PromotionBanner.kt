@@ -270,7 +270,9 @@ fun PromotionBanner(
                                                 color = if (index == currentDealIndex)
                                                     MaterialTheme.colorScheme.inversePrimary
                                                 else
-                                                    MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.5f)
+                                                    MaterialTheme.colorScheme.inversePrimary.copy(
+                                                        alpha = 0.5f
+                                                    )
                                             )
                                     )
                                 }
@@ -319,7 +321,6 @@ private fun DealImage(
         }
     )
 }
-
 
 
 @Composable
