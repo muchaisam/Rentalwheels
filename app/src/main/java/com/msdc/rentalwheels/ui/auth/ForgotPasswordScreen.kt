@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,7 +63,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.ui.components.AnimatedBackground
 import com.msdc.rentalwheels.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -104,12 +104,13 @@ fun ForgotPasswordScreen(
         label = "formScale"
     )
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .imePadding()) {
-        // Animated Background
-        AnimatedBackground()
-
+    Box(
+        modifier =
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .imePadding()
+    ) {
         // Content
         Column(
             modifier =
