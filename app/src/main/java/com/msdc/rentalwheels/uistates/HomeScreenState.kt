@@ -15,5 +15,6 @@ sealed interface HomeScreenState {
         val isLoadingMore: Boolean = false,
         val loadMoreError: String? = null
     ) : HomeScreenState
+
     data class Error(val message: String) : HomeScreenState
 }
