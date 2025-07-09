@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.msdc.rentalwheels.data.model.Car
 import com.msdc.rentalwheels.ui.screens.DetailedCarScreen
 import com.msdc.rentalwheels.viewmodel.CarDetailsViewModel
 
@@ -19,22 +20,20 @@ import com.msdc.rentalwheels.viewmodel.CarDetailsViewModel
 fun CarDetailRoute(
     carId: String,
     onBackClick: () -> Unit,
+    onBookNowClick: (Car) -> Unit = {},
     viewModel: CarDetailsViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(carId) {
-        viewModel.loadCar(carId)
-    }
+    LaunchedEffect(carId) { viewModel.loadCar(carId) }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     when {
         uiState.isLoading -> {
             Box(modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
+
         uiState.error != null -> {
             Box(modifier = Modifier.fillMaxSize()) {
                 Text(
@@ -44,10 +43,12 @@ fun CarDetailRoute(
                 )
             }
         }
+
         uiState.car != null -> {
             DetailedCarScreen(
                 car = uiState.car!!,
-                onBackClick = onBackClick
+                onBackClick = onBackClick,
+                onBookNowClick = onBookNowClick
             )
         }
     }
