@@ -43,30 +43,31 @@ class LoginActivity : ComponentActivity() {
 
             RentalWheelsTheme(themeState = themeState) {
                 Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     LoginScreen(
-                            isLoading = isLoading,
-                            errorMessage = errorMessage,
-                            onLoginClick = { email, password ->
-                                isLoading = true
-                                errorMessage = null
-                                attemptLogin(email, password) { success, error ->
-                                    isLoading = false
-                                    if (!success) {
-                                        errorMessage = error
-                                    }
+                        isLoading = isLoading,
+                        errorMessage = errorMessage,
+                        onLoginClick = { email, password ->
+                            isLoading = true
+                            errorMessage = null
+                            attemptLogin(email, password) { success, error ->
+                                isLoading = false
+                                if (!success) {
+                                    errorMessage = error
                                 }
-                            },
-                            onRegisterClick = {
-                                val intent =
-                                        Intent(this@LoginActivity, RegisterActivity::class.java)
-                                startActivity(intent)
-                            },                            onForgotPasswordClick = {
-                                val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
-                                startActivity(intent)
                             }
+                        },
+                        onRegisterClick = {
+                            val intent =
+                                Intent(this@LoginActivity, RegisterActivity::class.java)
+                            startActivity(intent)
+                        }, onForgotPasswordClick = {
+                            val intent =
+                                Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+                            startActivity(intent)
+                        }
                     )
                 }
             }
@@ -74,9 +75,9 @@ class LoginActivity : ComponentActivity() {
     }
 
     private fun attemptLogin(
-            email: String,
-            password: String,
-            onResult: (Boolean, String?) -> Unit
+        email: String,
+        password: String,
+        onResult: (Boolean, String?) -> Unit
     ) {
         if (!validateInput(email, password)) {
             onResult(false, "Invalid email or password format")
@@ -89,12 +90,13 @@ class LoginActivity : ComponentActivity() {
                 handleSuccessfulLogin(onResult)
             } else {
                 val errorMsg =
-                        when (task.exception) {
-                            is FirebaseAuthInvalidUserException ->
-                                    "No account found with this email"
-                            is FirebaseAuthInvalidCredentialsException -> "Invalid password"
-                            else -> "Login failed. Please try again."
-                        }
+                    when (task.exception) {
+                        is FirebaseAuthInvalidUserException ->
+                            "No account found with this email"
+
+                        is FirebaseAuthInvalidCredentialsException -> "Invalid password"
+                        else -> "Login failed. Please try again."
+                    }
                 onResult(false, errorMsg)
             }
         }
@@ -129,23 +131,23 @@ class LoginActivity : ComponentActivity() {
                 onResult(false, "Please verify your email address. Verification email sent.")
             }
         }
-                ?: onResult(false, "Authentication failed")
+            ?: onResult(false, "Authentication failed")
     }
 
     private fun fetchUserDataFromFirestore(uid: String, onComplete: (Boolean) -> Unit) {
         firestore
-                .collection("users")
-                .document(uid)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        // Store user data in SharedPreferences if needed
-                        onComplete(true)
-                    } else {
-                        onComplete(false)
-                    }
+            .collection("users")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Store user data in SharedPreferences if needed
+                    onComplete(true)
+                } else {
+                    onComplete(false)
                 }
-                .addOnFailureListener { onComplete(false) }
+            }
+            .addOnFailureListener { onComplete(false) }
     }
 
     private fun sendVerificationEmail(user: com.google.firebase.auth.FirebaseUser) {
