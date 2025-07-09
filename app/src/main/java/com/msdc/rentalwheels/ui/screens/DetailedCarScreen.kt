@@ -43,17 +43,20 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.msdc.rentalwheels.data.model.Car
+import com.msdc.rentalwheels.data.model.brand
 import com.msdc.rentalwheels.ui.components.CarDescription
 import com.msdc.rentalwheels.ui.components.CarFeatures
 import com.msdc.rentalwheels.ui.components.CarImage
 import com.msdc.rentalwheels.ui.components.CarSpecs
 import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.utils.CurrencyUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -62,6 +65,7 @@ import kotlinx.coroutines.withContext
 fun DetailedCarScreen(
     car: Car,
     onBackClick: () -> Unit,
+    onBookNowClick: (Car) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -76,18 +80,20 @@ fun DetailedCarScreen(
     LaunchedEffect(car.imageUrl) {
         // Extract dominant color from car image
         withContext(Dispatchers.IO) {
-            val bitmap = context.imageLoader.execute(
-                ImageRequest.Builder(context)
-                    .data(car.imageUrl)
-                    .allowHardware(false)
-                    .build()
-            ).drawable?.toBitmap()
+            val bitmap =
+                context.imageLoader
+                    .execute(
+                        ImageRequest.Builder(context)
+                            .data(car.imageUrl)
+                            .allowHardware(false)
+                            .build()
+                    )
+                    .drawable
+                    ?.toBitmap()
 
             bitmap?.let {
                 val palette = Palette.from(it).generate()
-                dominantColorState.value = Color(
-                    palette.getDominantColor(surfaceColor)
-                )
+                dominantColorState.value = Color(palette.getDominantColor(surfaceColor))
             }
         }
     }
@@ -98,20 +104,15 @@ fun DetailedCarScreen(
             LargeTopAppBar(
                 title = {
                     Column {
-                        Text(
-                            text = car.brand,
-                            style = Typography.titleMedium
-                        )
-                        Text(
-                            text = car.model,
-                            style = Typography.headlineSmall
-                        )
+                        Text(text = car.make, style = Typography.titleMedium)
+                        Text(text = car.model, style = Typography.headlineSmall)
                     }
                 },
                 navigationIcon = {
                     IconButton(
                         onClick = onBackClick,
-                        modifier = Modifier.semantics {
+                        modifier =
+                        Modifier.semantics {
                             contentDescription = "Navigate back"
                         }
                     ) {
@@ -122,25 +123,25 @@ fun DetailedCarScreen(
                     }
                 },
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.largeTopAppBarColors(
+                colors =
+                TopAppBarDefaults.largeTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
-                    scrolledContainerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
+                    scrolledContainerColor =
+                    MaterialTheme.colorScheme.surface.copy(
+                        alpha = 0.95f
+                    )
                 )
             )
         },
         containerColor = MaterialTheme.colorScheme.surface
     ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(padding)) {
             item(key = "image") {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp)
-                ) {
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)) {
                     CarImage(
                         imageUrl = car.imageUrl,
                         contentDescription = "${car.brand} ${car.model}",
@@ -149,13 +150,17 @@ fun DetailedCarScreen(
 
                     // Gradient overlay for better text visibility
                     Box(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .background(
                                 Brush.verticalGradient(
-                                    colors = listOf(
+                                    colors =
+                                    listOf(
                                         Color.Transparent,
-                                        Color.Black.copy(alpha = 0.3f)
+                                        Color.Black.copy(
+                                            alpha = 0.3f
+                                        )
                                     )
                                 )
                             )
@@ -170,7 +175,7 @@ fun DetailedCarScreen(
                         color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f)
                     ) {
                         Text(
-                            text = "Ksh ${car.dailyRate}/day",
+                            text = CurrencyUtils.formatDailyRate(car.dailyRate),
                             style = Typography.titleMedium,
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -180,19 +185,13 @@ fun DetailedCarScreen(
             }
 
             item(key = "specs") {
-                CarSpecs(
-                    car = car,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                )
+                CarSpecs(car = car, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp))
             }
 
             item(key = "description") {
-                AnimatedVisibility(
-                    visible = true,
-                    enter = fadeIn() + expandVertically()
-                ) {
+                AnimatedVisibility(visible = true, enter = fadeIn() + expandVertically()) {
                     CarDescription(
                         description = car.description,
                         modifier = Modifier.padding(horizontal = 16.dp)
@@ -203,18 +202,16 @@ fun DetailedCarScreen(
             item(key = "features") {
                 AnimatedVisibility(
                     visible = true,
-                    enter = fadeIn() + expandVertically(
-                        animationSpec = tween(
-                            durationMillis = 300,
-                            delayMillis = 100
-                        )
-                    )
-                ) {
-                    CarFeatures(
-                        features = car.features,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
+                    enter =
+                    fadeIn() +
+                            expandVertically(
+                                animationSpec =
+                                tween(
+                                    durationMillis = 300,
+                                    delayMillis = 100
+                                )
+                            )
+                ) { CarFeatures(features = car.features, modifier = Modifier.padding(16.dp)) }
             }
 
             // Add some space before the booking button
@@ -224,22 +221,26 @@ fun DetailedCarScreen(
         // Floating booking button
         Box(modifier = Modifier.fillMaxSize()) {
             FloatingActionButton(
-                onClick = { /* Handle booking */ },
+                onClick = { onBookNowClick(car) },
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.BottomEnd),
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
-            Row(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(Icons.Rounded.BookOnline, contentDescription = null)
-                Text("Book Now")
+                Row(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(Icons.Rounded.BookOnline, contentDescription = null)
+                    Text(
+                        text = "Book Now",
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
             }
         }
-            }
     }
 }
