@@ -216,9 +216,11 @@ private fun AvailableCarCard(
             }
 
             // Car Details
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 16.dp)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp)
+            ) {
                 Text(
                     text = "${car.make} ${car.model}",
                     style = MaterialTheme.typography.titleMedium,
