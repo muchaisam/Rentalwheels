@@ -22,9 +22,11 @@ import com.msdc.rentalwheels.ui.theme.Typography
 
 @Composable
 fun ErrorScreen(message: String, modifier: Modifier = Modifier, onRetry: (() -> Unit)? = null) {
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .fillMaxHeight(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight(), contentAlignment = Alignment.Center
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = message,
