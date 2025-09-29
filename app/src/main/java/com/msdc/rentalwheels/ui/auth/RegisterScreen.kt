@@ -480,19 +480,18 @@ fun RegisterScreen(
                                 }
                             )
                             LinearProgressIndicator(
-                                progress = passwordStrength,
+                                progress = { passwordStrength },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(4.dp),
-                                color =
-                                when {
+                                color = when {
                                     passwordStrength < 0.5f ->
                                         MaterialTheme.colorScheme.error
 
                                     passwordStrength < 0.75f -> Color(0xFFFF9800)
                                     else -> Color(0xFF4CAF50)
                                 },
-                                trackColor = MaterialTheme.colorScheme.surfaceVariant
+                                trackColor = MaterialTheme.colorScheme.surfaceVariant,
                             )
                         }
                     }
