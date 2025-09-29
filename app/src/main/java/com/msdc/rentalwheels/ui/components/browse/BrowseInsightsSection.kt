@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.ElectricCar
 import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -118,7 +117,7 @@ fun BrowseInsightsSection(cars: List<Car>, modifier: Modifier = Modifier) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
-                                imageVector = Icons.Default.TrendingUp,
+                                imageVector = Icons.AutoMirrored.Filled.TrendingUp,
                                 contentDescription = "Insights",
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -225,7 +224,7 @@ private fun generateInsights(cars: List<Car>): List<BrowseInsight> {
                 title = "Avg Price",
                 value = CurrencyUtils.formatToKSH(avgPrice),
                 description = "per day",
-                icon = Icons.Default.TrendingUp,
+                icon = Icons.AutoMirrored.Filled.TrendingUp,
                 color = Color(0xFF4CAF50)
             )
         )
