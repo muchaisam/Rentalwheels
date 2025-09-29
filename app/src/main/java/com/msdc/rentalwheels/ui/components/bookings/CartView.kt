@@ -20,7 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -167,9 +167,11 @@ private fun CartItemCard(
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -194,9 +196,11 @@ private fun CartItemCard(
                 }
 
                 // Car Details
-                Column(modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 16.dp)
+                ) {
                     Text(
                         text = "${cartItem.car.make} ${cartItem.car.model}",
                         style = MaterialTheme.typography.titleMedium,
@@ -238,7 +242,7 @@ private fun CartItemCard(
             }
 
             // Rental Details
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.padding(vertical = 12.dp),
                 color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
             )
