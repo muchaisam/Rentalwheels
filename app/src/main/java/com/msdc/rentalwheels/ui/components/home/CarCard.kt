@@ -198,9 +198,11 @@ fun CarCard(car: Car, onClick: () -> Unit, modifier: Modifier = Modifier) {
                 }
 
                 // Content Section
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                ) {
                     // Car Name and Year
                     Row(
                         modifier = Modifier.fillMaxWidth(),
