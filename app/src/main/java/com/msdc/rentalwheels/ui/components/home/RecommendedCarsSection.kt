@@ -36,7 +36,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Info
@@ -204,7 +203,7 @@ fun RecommendedCarsSection(
                             style = Typography.labelLarge
                         )
                         Icon(
-                            imageVector = Icons.Rounded.ArrowForward,
+                            imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
                             contentDescription = null,
                             modifier = Modifier.size(16.dp)
                         )
