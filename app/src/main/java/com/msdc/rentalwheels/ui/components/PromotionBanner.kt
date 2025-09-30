@@ -11,7 +11,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.with
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -130,7 +130,7 @@ fun PromotionBanner(
             AnimatedContent(
                 targetState = currentDealIndex,
                 transitionSpec = {
-                    fadeIn(animationSpec = tween(500)) with
+                    fadeIn(animationSpec = tween(500)) togetherWith
                             fadeOut(animationSpec = tween(500))
                 },
                 label = "Deal Transition"
@@ -176,8 +176,8 @@ fun PromotionBanner(
                     AnimatedContent(
                         targetState = currentDeal.title,
                         transitionSpec = {
-                            slideInVertically { height -> height } + fadeIn() with
-                                    slideOutVertically { height -> -height } + fadeOut()
+                            (slideInVertically { height -> height } + fadeIn()).togetherWith(
+                                slideOutVertically { height -> -height } + fadeOut())
                         },
                         label = "Title Animation"
                     ) { title ->
@@ -197,8 +197,8 @@ fun PromotionBanner(
                     AnimatedContent(
                         targetState = currentDeal.description,
                         transitionSpec = {
-                            slideInVertically { height -> height } + fadeIn() with
-                                    slideOutVertically { height -> -height } + fadeOut()
+                            (slideInVertically { height -> height } + fadeIn()).togetherWith(
+                                slideOutVertically { height -> -height } + fadeOut())
                         },
                         label = "Description Animation"
                     ) { description ->
@@ -222,7 +222,7 @@ fun PromotionBanner(
                     AnimatedContent(
                         targetState = currentDeal.discountPercentage,
                         transitionSpec = {
-                            scaleIn() + fadeIn() with scaleOut() + fadeOut()
+                            (scaleIn() + fadeIn()).togetherWith(scaleOut() + fadeOut())
                         },
                         label = "Discount Animation"
                     ) { discount ->
@@ -249,12 +249,12 @@ fun PromotionBanner(
                         ) {
                             // Linear progress indicator for current deal time
                             LinearProgressIndicator(
-                                progress = progress.value,
+                                progress = { progress.value },
                                 modifier = Modifier
                                     .width(48.dp)
                                     .height(4.dp),
                                 color = MaterialTheme.colorScheme.inversePrimary,
-                                trackColor = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.3f)
+                                trackColor = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.3f),
                             )
 
                             // Page indicator dots
