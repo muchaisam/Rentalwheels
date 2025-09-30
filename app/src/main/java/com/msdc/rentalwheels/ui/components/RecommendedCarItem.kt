@@ -21,10 +21,12 @@ import com.msdc.rentalwheels.utils.CurrencyUtils
 
 @Composable
 fun RecommendedCarItem(car: Car) {
-    Card(modifier = Modifier
-        .width(220.dp)
-        .height(200.dp)
-        .padding(8.dp)) {
+    Card(
+        modifier = Modifier
+            .width(220.dp)
+            .height(200.dp)
+            .padding(8.dp)
+    ) {
         Column {
             AsyncImage(
                 model =
