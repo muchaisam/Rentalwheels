@@ -135,13 +135,17 @@ fun DetailedCarScreen(
         },
         containerColor = MaterialTheme.colorScheme.surface
     ) { padding ->
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
             item(key = "image") {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                ) {
                     CarImage(
                         imageUrl = car.imageUrl,
                         contentDescription = "${car.brand} ${car.model}",
@@ -185,9 +189,11 @@ fun DetailedCarScreen(
             }
 
             item(key = "specs") {
-                CarSpecs(car = car, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp))
+                CarSpecs(
+                    car = car, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
             }
 
             item(key = "description") {
