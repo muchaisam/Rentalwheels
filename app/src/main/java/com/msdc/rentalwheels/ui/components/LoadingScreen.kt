@@ -34,9 +34,11 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoadingScreen() {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp),
@@ -63,9 +65,13 @@ private fun ShimmerPromotionBanner() {
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-    ) { Box(modifier = Modifier
-        .fillMaxSize()
-        .shimmerEffect()) }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .shimmerEffect()
+        )
+    }
 }
 
 @Composable
@@ -94,9 +100,13 @@ private fun ShimmerCategorySection() {
                         containerColor = MaterialTheme.colorScheme.surface
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                ) { Box(modifier = Modifier
-                    .fillMaxSize()
-                    .shimmerEffect()) }
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .shimmerEffect()
+                    )
+                }
             }
         }
     }
@@ -112,14 +122,18 @@ private fun ShimmerCarCard() {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
-        Row(modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
             // Car image shimmer
-            Box(modifier = Modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .shimmerEffect())
+            Box(
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .shimmerEffect()
+            )
 
             Spacer(modifier = Modifier.width(16.dp))
 
