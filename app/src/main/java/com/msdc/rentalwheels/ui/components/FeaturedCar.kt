@@ -23,9 +23,11 @@ import com.msdc.rentalwheels.utils.CurrencyUtils
 
 @Composable
 fun FeaturedCar(car: Car) {
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .height(320.dp)) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(320.dp)
+    ) {
         Column {
             AsyncImage(
                 model =
