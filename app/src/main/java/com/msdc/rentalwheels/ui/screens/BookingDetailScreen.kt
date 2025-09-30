@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.DirectionsCar
@@ -97,7 +96,7 @@ fun BookingDetailScreen(
                         IconButton(onClick = onBackClick) {
                             Icon(
                                 imageVector =
-                                Icons.Default.ArrowBack,
+                                Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back"
                             )
                         }
@@ -210,9 +209,11 @@ private fun BookingStatusBanner(booking: Booking) {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(modifier = Modifier
-                .size(12.dp)
-                .background(statusColor, CircleShape))
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .background(statusColor, CircleShape)
+            )
 
             Spacer(modifier = Modifier.width(12.dp))
 
