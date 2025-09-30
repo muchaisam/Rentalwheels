@@ -32,8 +32,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Lock
@@ -90,9 +88,11 @@ fun SettingsScreen(
         mutableStateOf(themePreferencesManager.getThemePreference())
     }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         when (val result = userDataState) {
             is Result.Loading -> {
                 CircularProgressIndicator(
@@ -310,7 +310,7 @@ fun SettingsScreen(
                     item {
                         SettingsSection(
                             title = "Support & About",
-                            icon = Icons.Default.Help
+                            icon = Icons.AutoMirrored.Filled.Help
                         ) {
                             SettingsItem(
                                 icon = Icons.Default.Email,
@@ -370,8 +370,7 @@ fun SettingsScreen(
                             ) {
                                 Icon(
                                     imageVector =
-                                    Icons.Default
-                                        .ExitToApp,
+                                    Icons.AutoMirrored.Filled.ExitToApp,
                                     contentDescription =
                                     "Logout",
                                     modifier =
