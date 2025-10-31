@@ -43,7 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
@@ -157,7 +157,7 @@ private fun EmptyStateCard() {
 
             Text(
                 text = "No cars found",
-                style = Typography.headlineSmall,
+                style = RentalWheelsDesignSystem.Typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(top = 16.dp)
@@ -165,7 +165,7 @@ private fun EmptyStateCard() {
 
             Text(
                 text = "Try adjusting your filters or search criteria to find more vehicles.",
-                style = Typography.bodyMedium,
+                style = RentalWheelsDesignSystem.Typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 8.dp)
