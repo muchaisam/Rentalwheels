@@ -28,7 +28,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.ui.theme.ThemeMode
 import com.msdc.rentalwheels.ui.theme.ThemeState
 
@@ -68,25 +68,28 @@ fun ThemeToggle(themeState: ThemeState, modifier: Modifier = Modifier) {
     Row(
         modifier =
         modifier
-            .background(backgroundColor, RoundedCornerShape(24.dp))
-            .border(
-                1.dp,
-                MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-                RoundedCornerShape(24.dp)
+            .background(
+                backgroundColor,
+                RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge)
             )
-            .padding(4.dp)
+            .border(
+                RentalWheelsDesignSystem.Elevation.extraSmall,
+                MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
+                RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge)
+            )
+            .padding(RentalWheelsDesignSystem.Spacing.XXS)
             .clickable {
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 themeState.toggleTheme()
             },
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Light mode icon
         Box(
             modifier =
             Modifier
-                .size(40.dp)
+                .size(RentalWheelsDesignSystem.Spacing.Huge * 0.625f)
                 .background(
                     if (!isDarkTheme) toggleColor else Color.Transparent,
                     CircleShape
@@ -103,7 +106,7 @@ fun ThemeToggle(themeState: ThemeState, modifier: Modifier = Modifier) {
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 },
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
             )
         }
 
@@ -111,7 +114,7 @@ fun ThemeToggle(themeState: ThemeState, modifier: Modifier = Modifier) {
         Box(
             modifier =
             Modifier
-                .size(40.dp)
+                .size(RentalWheelsDesignSystem.Spacing.Huge * 0.625f)
                 .background(
                     if (isDarkTheme) toggleColor else Color.Transparent,
                     CircleShape
@@ -128,7 +131,7 @@ fun ThemeToggle(themeState: ThemeState, modifier: Modifier = Modifier) {
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 },
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
             )
         }
     }
