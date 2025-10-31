@@ -32,6 +32,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -60,8 +61,8 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.R
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -112,24 +113,29 @@ fun OnboardingScreen(onGetStarted: () -> Unit, onSkip: () -> Unit) {
     val pageOffset = pagerState.currentPageOffsetFraction
 
     val colorScheme = MaterialTheme.colorScheme
-    val backgroundBrush = remember(currentPage, pageOffset, colorScheme) {
-        val currentColor =
-            onboardingPages[currentPage].primaryColor.takeIf { it != Color.Unspecified }
-                ?: colorScheme.primary
-        val nextColor = if (targetPage < onboardingPages.size) {
-            onboardingPages[targetPage].primaryColor.takeIf { it != Color.Unspecified }
-                ?: colorScheme.primary
-        } else currentColor
+    val backgroundBrush =
+        remember(currentPage, pageOffset, colorScheme) {
+            val currentColor =
+                onboardingPages[currentPage].primaryColor.takeIf { it != Color.Unspecified }
+                    ?: colorScheme.primary
+            val nextColor =
+                if (targetPage < onboardingPages.size) {
+                    onboardingPages[targetPage].primaryColor.takeIf {
+                        it != Color.Unspecified
+                    }
+                        ?: colorScheme.primary
+                } else currentColor
 
-        Brush.radialGradient(
-            colors = listOf(
-                currentColor.copy(alpha = 0.1f),
-                nextColor.copy(alpha = 0.05f),
-                colorScheme.surface
-            ),
-            radius = 1200f
-        )
-    }
+            Brush.radialGradient(
+                colors =
+                listOf(
+                    currentColor.copy(alpha = 0.1f),
+                    nextColor.copy(alpha = 0.05f),
+                    colorScheme.surface
+                ),
+                radius = 1200f
+            )
+        }
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
         Box(
@@ -142,9 +148,10 @@ fun OnboardingScreen(onGetStarted: () -> Unit, onSkip: () -> Unit) {
                 visible = currentPage < onboardingPages.size - 1,
                 enter = fadeIn() + scaleIn(),
                 exit = fadeOut() + scaleOut(),
-                modifier = Modifier
+                modifier =
+                Modifier
                     .align(Alignment.TopEnd)
-                    .padding(16.dp)
+                    .padding(RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 TextButton(
                     onClick = {
@@ -154,7 +161,7 @@ fun OnboardingScreen(onGetStarted: () -> Unit, onSkip: () -> Unit) {
                 ) {
                     Text(
                         text = "Skip",
-                        style = com.msdc.rentalwheels.ui.theme.Typography.labelLarge,
+                        style = RentalWheelsDesignSystem.Typography.labelLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -162,12 +169,13 @@ fun OnboardingScreen(onGetStarted: () -> Unit, onSkip: () -> Unit) {
 
             // Main Content
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
-                    .padding(24.dp),
+                    .padding(RentalWheelsDesignSystem.Spacing.extraLarge),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(60.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.Huge * 0.94f))
 
                 // Pager Content
                 HorizontalPager(state = pagerState, modifier = Modifier.weight(1f)) { page ->
@@ -178,7 +186,10 @@ fun OnboardingScreen(onGetStarted: () -> Unit, onSkip: () -> Unit) {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(
+                    modifier =
+                    Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f)
+                )
 
                 // Page Indicators
                 OnboardingIndicators(
@@ -187,7 +198,7 @@ fun OnboardingScreen(onGetStarted: () -> Unit, onSkip: () -> Unit) {
                     pageOffset = pageOffset
                 )
 
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.Huge * 0.75f))
 
                 // Navigation Buttons
                 OnboardingNavigation(
@@ -222,7 +233,7 @@ fun OnboardingScreen(onGetStarted: () -> Unit, onSkip: () -> Unit) {
                     }
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
             }
         }
     }
@@ -263,11 +274,15 @@ private fun OnboardingPageContent(page: OnboardingPage, isVisible: Boolean, page
     ) {
         // Hero Image Card
         Card(
-            modifier = Modifier
-                .size(320.dp)
-                .padding(16.dp),
-            shape = RoundedCornerShape(24.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),
+            modifier =
+            Modifier
+                .size(RentalWheelsDesignSystem.Spacing.Huge * 5f)
+                .padding(RentalWheelsDesignSystem.Spacing.medium),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge),
+            elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = RentalWheelsDesignSystem.Spacing.small
+            ),
             colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -281,28 +296,29 @@ private fun OnboardingPageContent(page: OnboardingPage, isVisible: Boolean, page
             )
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge * 1.67f))
 
         // Title
         Text(
             text = page.title,
-            style = com.msdc.rentalwheels.ui.theme.Typography.headlineMedium,
+            style = RentalWheelsDesignSystem.Typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.medium)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
         // Description
         Text(
             text = page.description,
-            style = com.msdc.rentalwheels.ui.theme.Typography.bodyLarge,
+            style = RentalWheelsDesignSystem.Typography.bodyLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            lineHeight = com.msdc.rentalwheels.ui.theme.Typography.bodyLarge.lineHeight,
-            modifier = Modifier.padding(horizontal = 24.dp)
+            lineHeight = RentalWheelsDesignSystem.Typography.bodyLarge.lineHeight,
+            modifier =
+            Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.extraLarge)
         )
     }
 }
@@ -312,14 +328,17 @@ private fun OnboardingIndicators(pageCount: Int, currentPage: Int, pageOffset: F
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)
     ) {
         repeat(pageCount) { index ->
             val isSelected = index == currentPage
 
             val width by
             animateDpAsState(
-                targetValue = if (isSelected) 32.dp else 8.dp,
+                targetValue =
+                if (isSelected)
+                    RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                else RentalWheelsDesignSystem.Spacing.small,
                 animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
                 label = "IndicatorWidth"
             )
@@ -335,11 +354,13 @@ private fun OnboardingIndicators(pageCount: Int, currentPage: Int, pageOffset: F
                 modifier =
                 Modifier
                     .width(width)
-                    .height(8.dp)
-                    .padding(horizontal = 2.dp)
+                    .height(RentalWheelsDesignSystem.Spacing.small)
+                    .padding(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
                     .background(
                         MaterialTheme.colorScheme.primary.copy(alpha = alpha),
-                        RoundedCornerShape(4.dp)
+                        RoundedCornerShape(
+                            RentalWheelsDesignSystem.Spacing.extraSmall
+                        )
                     )
                     .clickable(
                         interactionSource =
@@ -378,13 +399,8 @@ private fun OnboardingNavigation(
             FilledTonalButton(
                 onClick = onPrevious,
                 enabled = !isAnimating,
-                modifier = Modifier.padding(end = 8.dp)
-            ) {
-                Text(
-                    text = "Previous",
-                    style = com.msdc.rentalwheels.ui.theme.Typography.labelLarge
-                )
-            }
+                modifier = Modifier.padding(end = RentalWheelsDesignSystem.Spacing.small)
+            ) { Text(text = "Previous", style = RentalWheelsDesignSystem.Typography.labelLarge) }
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -393,14 +409,14 @@ private fun OnboardingNavigation(
         Button(
             onClick = if (isLastPage) onGetStarted else onNext,
             enabled = !isAnimating,
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier.padding(start = RentalWheelsDesignSystem.Spacing.small),
             colors =
             ButtonDefaults.buttonColors(
                 containerColor =
                 if (isLastPage) MaterialTheme.colorScheme.primary
                 else MaterialTheme.colorScheme.secondary
             ),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
         ) {
             AnimatedVisibility(
                 visible = !isLastPage,
@@ -410,14 +426,15 @@ private fun OnboardingNavigation(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "Next",
-                        style = com.msdc.rentalwheels.ui.theme.Typography.labelLarge,
+                        style = RentalWheelsDesignSystem.Typography.labelLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                         contentDescription = null,
-                        modifier = Modifier.size(18.dp)
+                        modifier =
+                        Modifier.size(RentalWheelsDesignSystem.Spacing.medium * 1.125f)
                     )
                 }
             }
@@ -431,12 +448,13 @@ private fun OnboardingNavigation(
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(18.dp)
+                        modifier =
+                        Modifier.size(RentalWheelsDesignSystem.Spacing.medium * 1.125f)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
                     Text(
                         text = "Get Started",
-                        style = com.msdc.rentalwheels.ui.theme.Typography.labelLarge,
+                        style = RentalWheelsDesignSystem.Typography.labelLarge,
                         fontWeight = FontWeight.Bold
                     )
                 }
