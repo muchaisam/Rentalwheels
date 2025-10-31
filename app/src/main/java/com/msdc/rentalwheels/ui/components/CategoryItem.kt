@@ -36,15 +36,12 @@ import coil.compose.SubcomposeAsyncImageContent
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.msdc.rentalwheels.data.model.Category
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
-fun CategoryItem(
-    category: Category,
-    onClick: () -> Unit = {}
-) {
+fun CategoryItem(category: Category, onClick: () -> Unit = {}) {
     // Define minimum touch target size for accessibility
-    val minTouchSize = 48.dp
+    val minTouchSize = 48.dp // Keep standard touch target
     val minTouchSizePx = with(LocalDensity.current) { minTouchSize.toPx() }
 
     // Category description for accessibility
@@ -52,7 +49,8 @@ fun CategoryItem(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+        modifier =
+        Modifier
             .width(100.dp)
             .semantics {
                 contentDescription = categoryDescription
@@ -65,13 +63,15 @@ fun CategoryItem(
 
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .size(80.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
             SubcomposeAsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
+                model =
+                ImageRequest.Builder(LocalContext.current)
                     .data(category.imageUrl)
                     .crossfade(true)
                     .memoryCacheKey(category.id.toString())
@@ -99,9 +99,12 @@ fun CategoryItem(
                     is AsyncImagePainter.State.Error -> {
                         // Show placeholder on error
                         Box(
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .size(80.dp)
-                                .background(MaterialTheme.colorScheme.errorContainer)
+                                .background(
+                                    MaterialTheme.colorScheme.errorContainer
+                                )
                                 .clickable {
                                     // Retry loading the image
                                     shouldShowRetry = false
@@ -131,11 +134,11 @@ fun CategoryItem(
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
         Text(
             text = category.name,
-            style = Typography.bodyMedium,
+            style = RentalWheelsDesignSystem.Typography.bodyMedium,
             textAlign = TextAlign.Center,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
