@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,13 +27,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.msdc.rentalwheels.ui.components.ErrorScreen
 import com.msdc.rentalwheels.ui.components.LoadingScreen
 import com.msdc.rentalwheels.ui.components.browse.BrowseFiltersSection
 import com.msdc.rentalwheels.ui.components.browse.BrowseSearchHeader
 import com.msdc.rentalwheels.ui.components.browse.EnhancedCarCard
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.BrowseScreenState
 import com.msdc.rentalwheels.viewmodel.BrowseViewModel
 
@@ -54,10 +53,7 @@ fun BrowseScreen(
         }
 
         is BrowseScreenState.Error -> {
-            ErrorScreen(
-                message = state.message,
-                onRetry = { viewModel.onRefreshData() }
-            )
+            ErrorScreen(message = state.message, onRetry = { viewModel.onRefreshData() })
         }
 
         is BrowseScreenState.Success -> {
@@ -65,17 +61,16 @@ fun BrowseScreen(
                 // Fixed header - no scrolling
                 BrowseSearchHeader(
                     searchQuery = state.searchQuery,
-                    onSearchQueryChange = { query ->
-                        viewModel.updateSearchQuery(query)
-                    },
+                    onSearchQueryChange = { query -> viewModel.updateSearchQuery(query) },
                     onFilterClick = { showFilters = !showFilters },
                     totalVehicles = state.totalVehicles,
                     modifier =
                     Modifier
                         .fillMaxWidth()
                         .padding(
-                            horizontal = 16.dp,
-                            vertical = 8.dp
+                            horizontal =
+                            RentalWheelsDesignSystem.Spacing.medium,
+                            vertical = RentalWheelsDesignSystem.Spacing.small
                         )
                 )
 
@@ -85,46 +80,34 @@ fun BrowseScreen(
                     enter = slideInVertically() + fadeIn(),
                     exit = slideOutVertically() + fadeOut()
                 ) {
-                    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    Column(
+                        modifier =
+                        Modifier.padding(
+                            horizontal = RentalWheelsDesignSystem.Spacing.medium
+                        )
+                    ) {
                         BrowseFiltersSection(
                             filters = state.filters,
-                            availableCategories =
-                            state.availableCategories,
-                            availableFuelTypes =
-                            state.availableFuelTypes,
-                            availableTransmissions =
-                            state.availableTransmissions,
+                            availableCategories = state.availableCategories,
+                            availableFuelTypes = state.availableFuelTypes,
+                            availableTransmissions = state.availableTransmissions,
                             onFiltersUpdate = { newFilters ->
                                 viewModel.updateFilters(newFilters)
                             }
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                     }
                 }
 
                 // Active filters display - fixed, no scrolling
-                if (state.filters != com.msdc.rentalwheels.uistates.BrowseFilters()
-                ) {
+                if (state.filters != com.msdc.rentalwheels.uistates.BrowseFilters()) {
                     ActiveFiltersDisplay(
                         filters = state.filters,
                         onRemoveFilter = { filterType ->
                             when (filterType) {
-                                "category" ->
-                                    viewModel.filterByCategory(
-                                        "All"
-                                    )
-
-                                "fuelType" ->
-                                    viewModel.filterByFuelType(
-                                        "All"
-                                    )
-
-                                "transmission" ->
-                                    viewModel
-                                        .filterByTransmission(
-                                            "All"
-                                        )
-
+                                "category" -> viewModel.filterByCategory("All")
+                                "fuelType" -> viewModel.filterByFuelType("All")
+                                "transmission" -> viewModel.filterByTransmission("All")
                                 else -> viewModel.clearFilters()
                             }
                         },
@@ -132,7 +115,10 @@ fun BrowseScreen(
                         modifier =
                         Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
+                            .padding(
+                                horizontal =
+                                RentalWheelsDesignSystem.Spacing.medium
+                            )
                     )
                 }
 
@@ -140,15 +126,14 @@ fun BrowseScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    contentPadding = PaddingValues(RentalWheelsDesignSystem.Spacing.medium),
+                    verticalArrangement =
+                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
+                    horizontalArrangement =
+                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
                 ) {
                     // Car Grid Items
-                    items(
-                        items = state.filteredCars,
-                        key = { car -> car.id }
-                    ) { car ->
+                    items(items = state.filteredCars, key = { car -> car.id }) { car ->
                         EnhancedCarCard(
                             car = car,
                             onClick = { onCarClick(car.id) },
@@ -168,16 +153,13 @@ fun BrowseScreen(
                                 modifier =
                                 Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp)
-                            ) {
-                                androidx.compose.material3
-                                    .CircularProgressIndicator(
-                                        modifier =
-                                        Modifier.align(
-                                            Alignment
-                                                .Center
-                                        )
+                                    .padding(
+                                        RentalWheelsDesignSystem.Spacing.medium
                                     )
+                            ) {
+                                androidx.compose.material3.CircularProgressIndicator(
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
                             }
                         }
                     }
@@ -204,7 +186,7 @@ private fun ActiveFiltersDisplay(
     // Simple implementation for now - can be enhanced later
     androidx.compose.material3.Text(
         text = "Active Filters Applied",
-        style = MaterialTheme.typography.bodyMedium,
-        modifier = modifier.padding(8.dp)
+        style = RentalWheelsDesignSystem.Typography.bodyMedium,
+        modifier = modifier.padding(RentalWheelsDesignSystem.Spacing.small)
     )
 }
