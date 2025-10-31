@@ -16,29 +16,30 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 // Loading state for RecommendedCarsSection
 @Composable
-fun RecommendedCarsSectionPlaceholder(
-    modifier: Modifier = Modifier
-) {
+fun RecommendedCarsSectionPlaceholder(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp)
+            .padding(vertical = RentalWheelsDesignSystem.Spacing.medium)
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = RentalWheelsDesignSystem.Spacing.medium),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
-                modifier = Modifier
-                    .width(160.dp)
-                    .height(24.dp)
+                modifier =
+                Modifier
+                    .width(RentalWheelsDesignSystem.Spacing.Huge * 2.5f)
+                    .height(RentalWheelsDesignSystem.Spacing.extraLarge)
                     .background(
                         MaterialTheme.colorScheme.surfaceVariant,
                         shape = MaterialTheme.shapes.small
@@ -46,15 +47,17 @@ fun RecommendedCarsSectionPlaceholder(
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraSmall))
 
         LazyRow(
-            contentPadding = PaddingValues(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            contentPadding =
+            PaddingValues(horizontal = RentalWheelsDesignSystem.Spacing.medium),
+            horizontalArrangement =
+            Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
         ) {
             items(3) {
                 CarCardPlaceholder(
-                    modifier = Modifier.width(280.dp)
+                    modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.Huge * 4.375f)
                 )
             }
         }
