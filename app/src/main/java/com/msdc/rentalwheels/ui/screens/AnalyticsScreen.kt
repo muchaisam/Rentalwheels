@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.LocationOn
@@ -44,10 +46,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.msdc.rentalwheels.ui.components.ErrorScreen
 import com.msdc.rentalwheels.ui.components.LoadingScreen
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.BookingAnalytics
 import com.msdc.rentalwheels.viewmodel.AnalyticsViewModel
 
@@ -69,17 +71,14 @@ fun AnalyticsScreen(
                     title = {
                         Text(
                             text = "Booking Analytics",
-                            style =
-                            MaterialTheme.typography
-                                .headlineSmall,
+                            style = RentalWheelsDesignSystem.Typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
                     },
                     navigationIcon = {
                         IconButton(onClick = onBackClick) {
                             Icon(
-                                imageVector =
-                                Icons.AutoMirrored.Filled.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back"
                             )
                         }
@@ -98,10 +97,7 @@ fun AnalyticsScreen(
                 }
 
                 is AnalyticsViewModel.AnalyticsState.Error -> {
-                    ErrorScreen(
-                        message = state.message,
-                        onRetry = { viewModel.loadAnalytics() }
-                    )
+                    ErrorScreen(message = state.message, onRetry = { viewModel.loadAnalytics() })
                 }
 
                 is AnalyticsViewModel.AnalyticsState.Success -> {
@@ -120,15 +116,15 @@ private fun AnalyticsContent(analytics: BookingAnalytics, modifier: Modifier = M
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(RentalWheelsDesignSystem.Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
     ) {
         item {
             // Overview Cards
             OverviewSection(analytics = analytics)
         }
 
-        item { Spacer(modifier = Modifier.height(8.dp)) }
+        item { Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small)) }
 
         item {
             // Monthly Spending Chart
@@ -148,23 +144,26 @@ private fun AnalyticsContent(analytics: BookingAnalytics, modifier: Modifier = M
             QuickStatsSection(analytics = analytics)
         }
 
-        item { Spacer(modifier = Modifier.height(32.dp)) }
+        item {
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f))
+        }
     }
 }
 
 @Composable
 private fun OverviewSection(analytics: BookingAnalytics) {
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)) {
         Text(
             text = "Overview",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 4.dp)
+            modifier =
+            Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.extraSmall)
         )
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
         ) {
             StatCard(
                 title = "Total Bookings",
@@ -185,7 +184,7 @@ private fun OverviewSection(analytics: BookingAnalytics) {
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
         ) {
             StatCard(
                 title = "Avg Duration",
@@ -218,19 +217,22 @@ private fun StatCard(
         modifier = modifier,
         colors =
         CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
+            containerColor = RentalWheelsDesignSystem.Colors.Surface02
         ),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
                 modifier =
                 Modifier
-                    .size(48.dp)
+                    .size(RentalWheelsDesignSystem.Spacing.Huge * 0.75f)
                     .background(color.copy(alpha = 0.1f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
@@ -238,11 +240,11 @@ private fun StatCard(
                     imageVector = icon,
                     contentDescription = null,
                     tint = color,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
             Text(
                 text = value,
@@ -270,28 +272,30 @@ private fun MonthlySpendingChart(monthlyData: Map<String, Double>, modifier: Mod
             containerColor =
             MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
         ),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
                 text = "Monthly Spending",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.medium)
             )
 
             if (monthlyData.isNotEmpty()) {
                 SimpleBarChart(
                     data = monthlyData,
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
+                        .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f)
                 )
             } else {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
-                        .height(200.dp),
+                        .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -330,7 +334,9 @@ private fun SimpleBarChart(data: Map<String, Double>, modifier: Modifier = Modif
                 topLeft = Offset(x, y),
                 size = Size(barWidth, barHeight),
                 cornerRadius =
-                androidx.compose.ui.geometry.CornerRadius(8.dp.toPx())
+                androidx.compose.ui.geometry.CornerRadius(
+                    RentalWheelsDesignSystem.CornerRadius.small.toPx()
+                )
             )
         }
     }
@@ -345,22 +351,21 @@ private fun FavoriteFeaturesSection(features: List<String>) {
             containerColor =
             MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
         ),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
                 text = "Preferred Features",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
             )
 
             if (features.isNotEmpty()) {
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(features) { feature ->
-                        FeatureChip(feature = feature)
-                    }
-                }
+                LazyRow(
+                    horizontalArrangement =
+                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+                ) { items(features) { feature -> FeatureChip(feature = feature) } }
             } else {
                 Text(
                     text = "No feature preferences available",
@@ -377,14 +382,17 @@ private fun FeatureChip(feature: String) {
     Card(
         colors =
         CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
         ),
-        shape = RoundedCornerShape(20.dp)
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
     ) {
         Text(
             text = feature,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+            modifier =
+            Modifier.padding(
+                horizontal = RentalWheelsDesignSystem.Spacing.small,
+                vertical = RentalWheelsDesignSystem.Spacing.XXS
+            ),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Medium
@@ -401,14 +409,14 @@ private fun QuickStatsSection(analytics: BookingAnalytics) {
             containerColor =
             MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
         ),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
                 text = "Quick Stats",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
             )
 
             Row(
@@ -418,10 +426,7 @@ private fun QuickStatsSection(analytics: BookingAnalytics) {
                 QuickStatItem(
                     icon = Icons.Default.LocationOn,
                     label = "Preferred Location",
-                    value =
-                    analytics.preferredPickupLocation.ifEmpty {
-                        "Various"
-                    }
+                    value = analytics.preferredPickupLocation.ifEmpty { "Various" }
                 )
 
                 QuickStatItem(
@@ -446,16 +451,12 @@ private fun QuickStatItem(icon: ImageVector, label: String, value: String) {
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraSmall))
 
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Bold
-        )
+        Text(text = value, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
 
         Text(
             text = label,
