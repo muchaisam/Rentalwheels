@@ -16,8 +16,6 @@ import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,8 +38,6 @@ import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.ThumbUp
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -67,10 +63,12 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.components.PremiumButton
+import com.msdc.rentalwheels.ui.components.PremiumButtonVariant
+import com.msdc.rentalwheels.ui.components.PremiumCarCard
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
@@ -93,7 +91,8 @@ fun RecommendedCarsSection(
     LaunchedEffect(Unit) {
         sectionAnimation.animateTo(
             targetValue = 1f,
-            animationSpec = spring(
+            animationSpec =
+            spring(
                 dampingRatio = Spring.DampingRatioLowBouncy,
                 stiffness = Spring.StiffnessLow
             )
@@ -104,13 +103,9 @@ fun RecommendedCarsSection(
     val lazyListState = rememberLazyListState()
 
     // Track if we can scroll in either direction
-    val canScrollForward by remember {
-        derivedStateOf { lazyListState.canScrollForward }
-    }
+    val canScrollForward by remember { derivedStateOf { lazyListState.canScrollForward } }
 
-    val canScrollBackward by remember {
-        derivedStateOf { lazyListState.canScrollBackward }
-    }
+    val canScrollBackward by remember { derivedStateOf { lazyListState.canScrollBackward } }
 
     // Snap fling behavior for scroll snapping
     val snapFlingBehavior = rememberSnapFlingBehavior(lazyListState)
@@ -118,112 +113,132 @@ fun RecommendedCarsSection(
     // Surface with elevation for the entire section
     Surface(
         color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 1.dp,
-        shadowElevation = 2.dp,
+        tonalElevation = RentalWheelsDesignSystem.Elevation.extraSmall,
+        shadowElevation = RentalWheelsDesignSystem.Elevation.small,
         shape = MaterialTheme.shapes.medium,
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(RentalWheelsDesignSystem.Spacing.extraSmall)
             .graphicsLayer {
                 // Entry animation
                 alpha = sectionAnimation.value
                 translationY = (1 - sectionAnimation.value) * 50
             }
             .semantics {
-                contentDescription = "Recommended cars section with ${cars.size} cars"
+                contentDescription =
+                    "Recommended cars section with ${cars.size} cars"
                 heading()
             }
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp)
+                .padding(vertical = RentalWheelsDesignSystem.Spacing.medium)
         ) {
             // Enhanced section header with animations
             Row(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(
+                        horizontal =
+                        RentalWheelsDesignSystem.Spacing
+                            .medium,
+                        vertical =
+                        RentalWheelsDesignSystem.Spacing
+                            .extraSmall
+                    ),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement =
+                    Arrangement.spacedBy(
+                        RentalWheelsDesignSystem.Spacing.extraSmall
+                    )
                 ) {
                     // Icon with primary color
                     Surface(
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                        color =
+                        MaterialTheme.colorScheme.primary.copy(
+                            alpha = 0.15f
+                        ),
                         shape = CircleShape,
-                        modifier = Modifier.size(32.dp)
+                        modifier =
+                        Modifier.size(
+                            RentalWheelsDesignSystem.Spacing.XXL
+                        )
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ThumbUp,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-                                .size(16.dp)
-                                .padding(8.dp)
+                            modifier =
+                            Modifier
+                                .size(
+                                    RentalWheelsDesignSystem
+                                        .Spacing
+                                        .medium
+                                )
+                                .padding(
+                                    RentalWheelsDesignSystem
+                                        .Spacing
+                                        .extraSmall
+                                )
                         )
                     }
 
                     // Title with primary color accent
                     Text(
                         text = "Recommended Cars",
-                        style = Typography.titleLarge,
+                        style =
+                        RentalWheelsDesignSystem.Typography
+                            .titleLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
-                // Enhanced "See All" button with improved interaction
-                val interactionSource = remember { MutableInteractionSource() }
-                val isPressed by interactionSource.collectIsPressedAsState()
-
-                Button(
+                // Premium "See All" button
+                PremiumButton(
                     onClick = onSeeAllClick,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                    ),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                    modifier = Modifier
-                        .graphicsLayer {
-                            val scale = if (isPressed) 0.95f else 1f
-                            scaleX = scale
-                            scaleY = scale
-                        },
-                    interactionSource = interactionSource
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Text(
-                            text = "See All",
-                            style = Typography.labelLarge
-                        )
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                }
+                    variant = PremiumButtonVariant.Secondary
+                ) { Text("See All") }
             }
 
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp)
+                    .padding(
+                        top =
+                        RentalWheelsDesignSystem.Spacing
+                            .extraSmall
+                    )
             ) {
                 // Left scroll indicator
                 androidx.compose.animation.AnimatedVisibility(
                     visible = canScrollBackward,
-                    enter = fadeIn() + expandHorizontally(expandFrom = Alignment.Start),
-                    exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.Start),
-                    modifier = Modifier
+                    enter =
+                    fadeIn() +
+                            expandHorizontally(
+                                expandFrom = Alignment.Start
+                            ),
+                    exit =
+                    fadeOut() +
+                            shrinkHorizontally(
+                                shrinkTowards = Alignment.Start
+                            ),
+                    modifier =
+                    Modifier
                         .align(Alignment.CenterStart)
-                        .padding(start = 4.dp)
+                        .padding(
+                            start =
+                            RentalWheelsDesignSystem
+                                .Spacing.XXS
+                        )
                         .zIndex(10f)
                 ) {
                     ScrollIndicator(isStart = true) {
@@ -236,21 +251,39 @@ fun RecommendedCarsSection(
                 // Right scroll indicator
                 androidx.compose.animation.AnimatedVisibility(
                     visible = canScrollForward,
-                    enter = fadeIn() + expandHorizontally(expandFrom = Alignment.End),
-                    exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.End),
-                    modifier = Modifier
+                    enter =
+                    fadeIn() +
+                            expandHorizontally(
+                                expandFrom = Alignment.End
+                            ),
+                    exit =
+                    fadeOut() +
+                            shrinkHorizontally(
+                                shrinkTowards = Alignment.End
+                            ),
+                    modifier =
+                    Modifier
                         .align(Alignment.CenterEnd)
-                        .padding(end = 4.dp)
+                        .padding(
+                            end =
+                            RentalWheelsDesignSystem
+                                .Spacing.XXS
+                        )
                         .zIndex(10f)
                 ) {
                     ScrollIndicator(isStart = false) {
                         coroutineScope.launch {
-                            // Scroll to last visible item that's completely visible
+                            // Scroll to last visible item that's
+                            // completely visible
                             val lastVisibleItem =
-                                lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()
+                                lazyListState.layoutInfo
+                                    .visibleItemsInfo
+                                    .lastOrNull()
                             lastVisibleItem?.index?.let { index ->
                                 lazyListState.animateScrollToItem(
-                                    index.coerceAtMost(cars.size - 1)
+                                    index.coerceAtMost(
+                                        cars.size - 1
+                                    )
                                 )
                             }
                         }
@@ -259,21 +292,35 @@ fun RecommendedCarsSection(
 
                 // Gradient overlay for scroll indication at edges
                 Row(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
-                        .height(200.dp) // Same as LazyRow height
+                        .height(
+                            RentalWheelsDesignSystem.Spacing
+                                .Huge * 3.125f
+                        ) // Same as LazyRow height
                         .zIndex(5f)
                 ) {
                     // Left fade effect
                     Box(
-                        modifier = Modifier
-                            .width(32.dp)
+                        modifier =
+                        Modifier
+                            .width(
+                                RentalWheelsDesignSystem
+                                    .Spacing.XXL
+                            )
                             .fillMaxHeight()
-                            .alpha(if (canScrollBackward) 0.7f else 0f)
+                            .alpha(
+                                if (canScrollBackward) 0.7f
+                                else 0f
+                            )
                             .background(
                                 Brush.horizontalGradient(
-                                    colors = listOf(
-                                        MaterialTheme.colorScheme.surface,
+                                    colors =
+                                    listOf(
+                                        MaterialTheme
+                                            .colorScheme
+                                            .surface,
                                         Color.Transparent
                                     )
                                 )
@@ -284,15 +331,25 @@ fun RecommendedCarsSection(
 
                     // Right fade effect
                     Box(
-                        modifier = Modifier
-                            .width(32.dp)
+                        modifier =
+                        Modifier
+                            .width(
+                                RentalWheelsDesignSystem
+                                    .Spacing.XXL
+                            )
                             .fillMaxHeight()
-                            .alpha(if (canScrollForward) 0.7f else 0f)
+                            .alpha(
+                                if (canScrollForward) 0.7f
+                                else 0f
+                            )
                             .background(
                                 Brush.horizontalGradient(
-                                    colors = listOf(
+                                    colors =
+                                    listOf(
                                         Color.Transparent,
-                                        MaterialTheme.colorScheme.surface
+                                        MaterialTheme
+                                            .colorScheme
+                                            .surface
                                     )
                                 )
                             )
@@ -309,14 +366,29 @@ fun RecommendedCarsSection(
                     // Enhanced LazyRow with card animations and scroll snapping
                     LazyRow(
                         state = lazyListState,
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        contentPadding =
+                        PaddingValues(
+                            horizontal =
+                            RentalWheelsDesignSystem
+                                .Spacing.medium
+                        ),
+                        horizontalArrangement =
+                        Arrangement.spacedBy(
+                            RentalWheelsDesignSystem.Spacing
+                                .medium
+                        ),
                         flingBehavior = snapFlingBehavior,
-                        modifier = Modifier
-                            .height(200.dp)
+                        modifier =
+                        Modifier
+                            .height(
+                                RentalWheelsDesignSystem
+                                    .Spacing.Huge *
+                                        3.125f
+                            )
                             .fillMaxWidth()
                             .semantics {
-                                contentDescription = "Scroll to see more recommended cars"
+                                contentDescription =
+                                    "Scroll to see more recommended cars"
                             }
                     ) {
                         itemsIndexed(
@@ -327,30 +399,65 @@ fun RecommendedCarsSection(
 
                             // Staggered animation for card entry
                             Box(
-                                modifier = Modifier
-                                    .graphicsLayer {
-                                        val pageOffset = calculateCurrentItemOffset(
+                                modifier =
+                                Modifier.graphicsLayer {
+                                    val pageOffset =
+                                        calculateCurrentItemOffset(
                                             lazyListState,
                                             index,
-                                            280.dp + 16.dp
+                                            RentalWheelsDesignSystem
+                                                .Spacing
+                                                .Huge *
+                                                    4.375f +
+                                                    RentalWheelsDesignSystem
+                                                        .Spacing
+                                                        .medium
                                         )
 
-                                        // Apply transformations with proper syntax
-                                        val rotation = pageOffset * 5f
-                                        val scale = 0.9f + (1f - pageOffset.absoluteValue) * 0.1f
+                                    // Apply
+                                    // transformations
+                                    // with proper
+                                    // syntax
+                                    val rotation =
+                                        pageOffset *
+                                                5f
+                                    val scale =
+                                        0.9f +
+                                                (1f -
+                                                        pageOffset
+                                                            .absoluteValue) *
+                                                0.1f
 
-                                        transformOrigin = TransformOrigin(0.5f, 0.5f)
-                                        rotationY = rotation
-                                        scaleX = scale
-                                        scaleY = scale
-                                        this.alpha = 0.5f + (1f - pageOffset.absoluteValue) * 0.5f
-                                    }
+                                    transformOrigin =
+                                        TransformOrigin(
+                                            0.5f,
+                                            0.5f
+                                        )
+                                    rotationY = rotation
+                                    scaleX = scale
+                                    scaleY = scale
+                                    this.alpha =
+                                        0.5f +
+                                                (1f -
+                                                        pageOffset
+                                                            .absoluteValue) *
+                                                0.5f
+                                }
                             ) {
-                                // Enhanced Car Card with improved elevation and interaction
-                                CarCard(
+                                // Premium Car Card with enhanced
+                                // interaction
+                                PremiumCarCard(
                                     car = car,
-                                    onClick = { onCarClick(car.id) },
-                                    modifier = Modifier.width(280.dp)
+                                    onClick = {
+                                        onCarClick(car.id)
+                                    },
+                                    modifier =
+                                    Modifier.width(
+                                        RentalWheelsDesignSystem
+                                            .Spacing
+                                            .Huge *
+                                                4.375f
+                                    )
                                 )
                             }
                         }
@@ -361,15 +468,25 @@ fun RecommendedCarsSection(
             // Scroll position indicator dots
             if (cars.isNotEmpty() && !isLoading) {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp),
+                        .padding(
+                            top =
+                            RentalWheelsDesignSystem
+                                .Spacing.medium
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     ScrollIndicatorDots(
                         itemCount = cars.size,
                         lazyListState = lazyListState,
-                        itemWidthDp = 280.dp + 16.dp // Card width + spacing
+                        itemWidthDp =
+                        RentalWheelsDesignSystem.Spacing.Huge *
+                                4.375f +
+                                RentalWheelsDesignSystem.Spacing
+                                    .medium // Card width +
+                        // spacing
                     )
                 }
             }
@@ -383,27 +500,27 @@ private fun ScrollIndicator(isStart: Boolean, onClick: () -> Unit) {
         onClick = onClick,
         shape = CircleShape,
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f),
-        tonalElevation = 2.dp,
-        shadowElevation = 4.dp,
-        modifier = Modifier.size(40.dp)
+        tonalElevation = RentalWheelsDesignSystem.Elevation.small,
+        shadowElevation = RentalWheelsDesignSystem.Elevation.medium,
+        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.XXXL)
     ) {
         Box(contentAlignment = Alignment.Center) {
             Icon(
-                imageVector = if (isStart) Icons.Rounded.ChevronLeft else Icons.Rounded.ChevronRight,
-                contentDescription = if (isStart) "Scroll to start" else "Scroll to end",
+                imageVector =
+                if (isStart) Icons.Rounded.ChevronLeft
+                else Icons.Rounded.ChevronRight,
+                contentDescription =
+                if (isStart) "Scroll to start" else "Scroll to end",
                 tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(24.dp)
+                modifier =
+                Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
             )
         }
     }
 }
 
 @Composable
-private fun ScrollIndicatorDots(
-    itemCount: Int,
-    lazyListState: LazyListState,
-    itemWidthDp: Dp
-) {
+private fun ScrollIndicatorDots(itemCount: Int, lazyListState: LazyListState, itemWidthDp: Dp) {
     val density = LocalDensity.current
     val itemWidthPx = with(density) { itemWidthDp.toPx() }
 
@@ -415,7 +532,8 @@ private fun ScrollIndicatorDots(
     val position = firstVisibleItem + (scrollOffset / itemWidthPx)
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement =
+        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall),
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 0 until itemCount) {
@@ -425,10 +543,18 @@ private fun ScrollIndicatorDots(
             val alpha = 0.3f + (1f - distanceFromCenter).coerceIn(0f, 0.7f)
 
             Box(
-                modifier = Modifier
-                    .size(8.dp * scale)
+                modifier =
+                Modifier
+                    .size(
+                        RentalWheelsDesignSystem.Spacing
+                            .extraSmall * scale
+                    )
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = alpha))
+                    .background(
+                        MaterialTheme.colorScheme.primary.copy(
+                            alpha = alpha
+                        )
+                    )
             )
         }
     }
@@ -437,30 +563,48 @@ private fun ScrollIndicatorDots(
 @Composable
 private fun CarListShimmer() {
     val infiniteTransition = rememberInfiniteTransition()
-    val alpha by infiniteTransition.animateFloat(
+    val alpha by
+    infiniteTransition.animateFloat(
         initialValue = 0.2f,
         targetValue = 0.9f,
-        animationSpec = infiniteRepeatable(
+        animationSpec =
+        infiniteRepeatable(
             animation = tween(1000, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
         )
     )
 
     LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        contentPadding =
+        PaddingValues(horizontal = RentalWheelsDesignSystem.Spacing.medium),
+        horizontalArrangement =
+        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
     ) {
         items(3) {
             Surface(
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = alpha),
-                modifier = Modifier
-                    .width(280.dp)
-                    .height(200.dp)
+                shape = MaterialTheme.shapes.large,
+                color =
+                MaterialTheme.colorScheme.surfaceVariant.copy(
+                    alpha = alpha
+                ),
+                modifier =
+                Modifier
+                    .width(
+                        RentalWheelsDesignSystem.Spacing.Huge *
+                                4.375f
+                    )
+                    .height(
+                        RentalWheelsDesignSystem.Spacing.Huge *
+                                3.125f
+                    )
                     .shadow(
-                        elevation = 2.dp,
+                        elevation =
+                        RentalWheelsDesignSystem.Elevation
+                            .small,
                         shape = MaterialTheme.shapes.medium,
-                        spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                        spotColor =
+                        MaterialTheme.colorScheme.primary
+                            .copy(alpha = 0.1f)
                     )
             ) {}
         }
@@ -470,10 +614,11 @@ private fun CarListShimmer() {
 @Composable
 private fun EmptyState() {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .padding(horizontal = 16.dp),
+            .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f)
+            .padding(horizontal = RentalWheelsDesignSystem.Spacing.medium),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -484,14 +629,17 @@ private fun EmptyState() {
                 imageVector = Icons.Rounded.Info,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.XXXL)
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(
+                modifier =
+                Modifier.height(RentalWheelsDesignSystem.Spacing.extraSmall)
+            )
 
             Text(
                 text = "No recommended cars available",
-                style = Typography.bodyLarge,
+                style = RentalWheelsDesignSystem.Typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -512,7 +660,8 @@ private fun calculateCurrentItemOffset(
     // Calculate the center position of the item
     val itemCenter = itemInfo.offset + (itemInfo.size / 2)
     val viewportCenter =
-        layoutInfo.viewportStartOffset + (layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset) / 2
+        layoutInfo.viewportStartOffset +
+                (layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset) / 2
 
     // Convert offset to a value between -1 and 1
     return (itemCenter - viewportCenter) / itemWidthDp.value
