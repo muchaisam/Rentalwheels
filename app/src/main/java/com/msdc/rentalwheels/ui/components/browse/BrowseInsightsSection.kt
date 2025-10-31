@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.ElectricCar
 import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Speed
@@ -44,7 +45,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.utils.CurrencyUtils
 import kotlinx.coroutines.delay
 
@@ -124,7 +125,7 @@ fun BrowseInsightsSection(cars: List<Car>, modifier: Modifier = Modifier) {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = "Browse Insights",
-                                style = Typography.titleMedium,
+                                style = RentalWheelsDesignSystem.Typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -192,21 +193,21 @@ private fun InsightCard(insight: BrowseInsight, modifier: Modifier = Modifier) {
 
             Text(
                 text = insight.value,
-                style = Typography.titleLarge,
+                style = RentalWheelsDesignSystem.Typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
                 text = insight.title,
-                style = Typography.bodySmall,
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Medium
             )
 
             Text(
                 text = insight.description,
-                style = Typography.labelSmall,
+                style = RentalWheelsDesignSystem.Typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
             )
         }
