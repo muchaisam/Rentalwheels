@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
 fun AnimatedBackground(
@@ -88,75 +89,100 @@ fun AnimatedBackground(
     Box(
         modifier =
         modifier
-            .fillMaxSize()
-            .background(
-                Brush.radialGradient(
-                    colors =
-                    if (isDarkTheme) {
-                        listOf(
-                            MaterialTheme.colorScheme
-                                .surface,
-                            MaterialTheme.colorScheme
-                                .surfaceVariant
-                                .copy(alpha = 0.3f),
-                            MaterialTheme.colorScheme
-                                .background
+                .fillMaxSize()
+                .background(
+                        Brush.radialGradient(
+                                colors =
+                                if (isDarkTheme) {
+                                        listOf(
+                                                MaterialTheme.colorScheme.surface,
+                                                MaterialTheme.colorScheme
+                                                        .surfaceVariant.copy(
+                                                                alpha = 0.3f
+                                                        ),
+                                                MaterialTheme.colorScheme.background
+                                        )
+                                } else {
+                                        listOf(
+                                                MaterialTheme.colorScheme.surface,
+                                                primaryColor.copy(alpha = 0.02f),
+                                                MaterialTheme.colorScheme.background
+                                        )
+                                },
+                                radius = 1200f
                         )
-                    } else {
-                        listOf(
-                            MaterialTheme.colorScheme
-                                .surface,
-                            primaryColor.copy(
-                                alpha = 0.02f
-                            ),
-                            MaterialTheme.colorScheme
-                                .background
-                        )
-                    },
-                    radius = 1200f
                 )
-            )
     ) {
         // Primary floating orb
         Box(
             modifier =
             Modifier
-                .size(if (isDarkTheme) 250.dp else 200.dp)
-                .offset(x = animatedOffset1.dp, y = 100.dp)
-                .blur(if (isDarkTheme) 80.dp else 60.dp)
-                .graphicsLayer { rotationZ = animatedRotation * 0.5f }
-                .background(
-                    primaryColor.copy(alpha = baseOpacity * 2f),
-                    CircleShape
-                )
+                    .size(
+                            if (isDarkTheme)
+                                    RentalWheelsDesignSystem.Spacing.Huge * 3.90625f
+                            else RentalWheelsDesignSystem.Spacing.Huge * 3.125f
+                    )
+                    .offset(
+                            x = animatedOffset1.dp,
+                            y = RentalWheelsDesignSystem.Spacing.Huge * 1.5625f
+                    )
+                    .blur(
+                            if (isDarkTheme)
+                                    RentalWheelsDesignSystem.Spacing.Huge * 1.25f
+                            else RentalWheelsDesignSystem.Spacing.Huge * 0.9375f
+                    )
+                    .graphicsLayer { rotationZ = animatedRotation * 0.5f }
+                    .background(
+                            primaryColor.copy(alpha = baseOpacity * 2f),
+                            CircleShape
+                    )
         )
 
         // Secondary floating orb
         Box(
             modifier =
             Modifier
-                .size(if (isDarkTheme) 180.dp else 150.dp)
-                .offset(x = animatedOffset2.dp, y = 350.dp)
-                .blur(if (isDarkTheme) 60.dp else 40.dp)
-                .graphicsLayer { rotationZ = -animatedRotation * 0.3f }
-                .background(
-                    secondaryColor.copy(alpha = baseOpacity * 1.5f),
-                    CircleShape
-                )
+                    .size(
+                            if (isDarkTheme)
+                                    RentalWheelsDesignSystem.Spacing.Huge * 2.8125f
+                            else RentalWheelsDesignSystem.Spacing.Huge * 2.34375f
+                    )
+                    .offset(
+                            x = animatedOffset2.dp,
+                            y = RentalWheelsDesignSystem.Spacing.Huge * 5.46875f
+                    )
+                    .blur(
+                            if (isDarkTheme)
+                                    RentalWheelsDesignSystem.Spacing.Huge * 0.9375f
+                            else RentalWheelsDesignSystem.Spacing.Huge * 0.625f
+                    )
+                    .graphicsLayer { rotationZ = -animatedRotation * 0.3f }
+                    .background(
+                            secondaryColor.copy(alpha = baseOpacity * 1.5f),
+                            CircleShape
+                    )
         )
 
         // Tertiary floating orb
         Box(
             modifier =
             Modifier
-                .size(if (isDarkTheme) 140.dp else 120.dp)
-                .offset(x = animatedOffset3.dp, y = 550.dp)
-                .blur(if (isDarkTheme) 70.dp else 50.dp)
-                .graphicsLayer { rotationZ = animatedRotation * 0.7f }
-                .background(
-                    tertiaryColor.copy(alpha = baseOpacity),
-                    CircleShape
-                )
+                    .size(
+                            if (isDarkTheme)
+                                    RentalWheelsDesignSystem.Spacing.Huge * 2.1875f
+                            else RentalWheelsDesignSystem.Spacing.Huge * 1.875f
+                    )
+                    .offset(
+                            x = animatedOffset3.dp,
+                            y = RentalWheelsDesignSystem.Spacing.Huge * 8.59375f
+                    )
+                    .blur(
+                            if (isDarkTheme)
+                                    RentalWheelsDesignSystem.Spacing.Huge * 1.09375f
+                            else RentalWheelsDesignSystem.Spacing.Huge * 0.78125f
+                    )
+                    .graphicsLayer { rotationZ = animatedRotation * 0.7f }
+                    .background(tertiaryColor.copy(alpha = baseOpacity), CircleShape)
         )
 
         // Additional ambient orbs for enhanced dark theme effect
@@ -164,32 +190,35 @@ fun AnimatedBackground(
             Box(
                 modifier =
                 Modifier
-                    .size(100.dp)
-                    .offset(
-                        x = (-animatedOffset1 * 0.5f).dp,
-                        y = 250.dp
-                    )
-                    .blur(40.dp)
-                    .background(
-                        MaterialTheme.colorScheme.primary.copy(
-                            alpha = baseOpacity * 0.5f
-                        ),
-                        CircleShape
-                    )
+                        .size(RentalWheelsDesignSystem.Spacing.Huge * 1.5625f)
+                        .offset(
+                                x = (-animatedOffset1 * 0.5f).dp,
+                                y = RentalWheelsDesignSystem.Spacing.Huge * 3.90625f
+                        )
+                        .blur(RentalWheelsDesignSystem.Spacing.Huge * 0.625f)
+                        .background(
+                                MaterialTheme.colorScheme.primary.copy(
+                                        alpha = baseOpacity * 0.5f
+                                ),
+                                CircleShape
+                        )
             )
 
             Box(
                 modifier =
                 Modifier
-                    .size(80.dp)
-                    .offset(x = (animatedOffset2 * 0.3f).dp, y = 450.dp)
-                    .blur(30.dp)
-                    .background(
-                        MaterialTheme.colorScheme.tertiary.copy(
-                            alpha = baseOpacity * 0.3f
-                        ),
-                        CircleShape
-                    )
+                        .size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
+                        .offset(
+                                x = (animatedOffset2 * 0.3f).dp,
+                                y = RentalWheelsDesignSystem.Spacing.Huge * 7.03125f
+                        )
+                        .blur(RentalWheelsDesignSystem.Spacing.Huge * 0.46875f)
+                        .background(
+                                MaterialTheme.colorScheme.tertiary.copy(
+                                        alpha = baseOpacity * 0.3f
+                                ),
+                                CircleShape
+                        )
             )
         }
     }
