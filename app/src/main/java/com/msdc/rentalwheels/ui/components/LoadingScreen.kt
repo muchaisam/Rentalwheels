@@ -30,7 +30,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
 fun LoadingScreen() {
@@ -41,8 +41,8 @@ fun LoadingScreen() {
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            contentPadding = PaddingValues(RentalWheelsDesignSystem.Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
         ) {
             // Header shimmer
             item { ShimmerPromotionBanner() }
@@ -59,12 +59,16 @@ fun LoadingScreen() {
 @Composable
 private fun ShimmerPromotionBanner() {
     Card(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
-            .height(200.dp),
-        shape = RoundedCornerShape(20.dp),
+            .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Box(
             modifier = Modifier
@@ -81,25 +85,32 @@ private fun ShimmerCategorySection() {
         Box(
             modifier =
             Modifier
-                .width(150.dp)
-                .height(24.dp)
-                .clip(RoundedCornerShape(8.dp))
+                .width(RentalWheelsDesignSystem.Spacing.Huge * 2.34375f)
+                .height(RentalWheelsDesignSystem.Spacing.extraLarge)
+                .clip(
+                    RoundedCornerShape(
+                        RentalWheelsDesignSystem.CornerRadius.small
+                    )
+                )
                 .shimmerEffect()
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
         // Categories row shimmer
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)) {
             repeat(3) {
                 Card(
-                    modifier = Modifier.size(100.dp),
-                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 1.5625f),
+                    shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
                     colors =
                     CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surface
                     ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    elevation =
+                    CardDefaults.cardElevation(
+                        defaultElevation = RentalWheelsDesignSystem.Elevation.small
+                    )
                 ) {
                     Box(
                         modifier = Modifier
@@ -115,40 +126,55 @@ private fun ShimmerCategorySection() {
 @Composable
 private fun ShimmerCarCard() {
     Card(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
-            .height(140.dp),
-        shape = RoundedCornerShape(20.dp),
+            .height(RentalWheelsDesignSystem.Spacing.Huge * 2.1875f),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(RentalWheelsDesignSystem.Spacing.medium)
         ) {
             // Car image shimmer
             Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                modifier =
+                Modifier
+                    .size(RentalWheelsDesignSystem.Spacing.Huge * 1.5625f)
+                    .clip(
+                        RoundedCornerShape(
+                            RentalWheelsDesignSystem.CornerRadius.small
+                        )
+                    )
                     .shimmerEffect()
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.medium))
 
             // Car details shimmer
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement =
+                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
             ) {
                 // Title
                 Box(
                     modifier =
                     Modifier
                         .fillMaxWidth(0.8f)
-                        .height(20.dp)
-                        .clip(RoundedCornerShape(6.dp))
+                        .height(RentalWheelsDesignSystem.Spacing.large)
+                        .clip(
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius
+                                    .extraSmall
+                            )
+                        )
                         .shimmerEffect()
                 )
 
@@ -157,8 +183,13 @@ private fun ShimmerCarCard() {
                     modifier =
                     Modifier
                         .fillMaxWidth(0.6f)
-                        .height(16.dp)
-                        .clip(RoundedCornerShape(6.dp))
+                        .height(RentalWheelsDesignSystem.Spacing.medium)
+                        .clip(
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius
+                                    .extraSmall
+                            )
+                        )
                         .shimmerEffect()
                 )
 
@@ -168,9 +199,13 @@ private fun ShimmerCarCard() {
                 Box(
                     modifier =
                     Modifier
-                        .width(80.dp)
-                        .height(24.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .width(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
+                        .height(RentalWheelsDesignSystem.Spacing.extraLarge)
+                        .clip(
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius.small
+                            )
+                        )
                         .shimmerEffect()
                 )
             }
