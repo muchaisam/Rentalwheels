@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.material.icons.filled.Brightness6
 import androidx.compose.material.icons.filled.BrightnessAuto
@@ -39,8 +40,6 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -62,13 +61,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.msdc.rentalwheels.R
+import com.msdc.rentalwheels.ui.components.PremiumButton
+import com.msdc.rentalwheels.ui.components.PremiumButtonVariant
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.ui.theme.ThemePreference
 import com.msdc.rentalwheels.ui.theme.ThemePreferencesManager
-import com.msdc.rentalwheels.ui.theme.Typography
 import com.msdc.rentalwheels.ui.theme.rememberThemeState
 import com.msdc.rentalwheels.uistates.Result
 import com.msdc.rentalwheels.viewmodel.SettingsViewModel
@@ -109,7 +108,10 @@ fun SettingsScreen(
                     modifier =
                     Modifier
                         .fillMaxSize()
-                        .padding(16.dp)
+                        .padding(
+                            RentalWheelsDesignSystem.Spacing
+                                .medium
+                        )
                         .wrapContentSize(Alignment.Center),
                     colors =
                     CardDefaults.cardColors(
@@ -117,14 +119,29 @@ fun SettingsScreen(
                         MaterialTheme.colorScheme
                             .errorContainer
                     ),
-                    shape = RoundedCornerShape(16.dp)
+                    shape =
+                    RoundedCornerShape(
+                        RentalWheelsDesignSystem.CornerRadius.Card
+                    ),
+                    elevation =
+                    CardDefaults.cardElevation(
+                        defaultElevation =
+                        RentalWheelsDesignSystem.Elevation
+                            .medium
+                    )
                 ) {
                     Text(
                         text = "Error: ${result.message}",
                         color = MaterialTheme.colorScheme.onErrorContainer,
-                        style = Typography.bodyLarge,
+                        style =
+                        RentalWheelsDesignSystem.Typography
+                            .bodyLarge,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(24.dp)
+                        modifier =
+                        Modifier.padding(
+                            RentalWheelsDesignSystem.Spacing
+                                .large
+                        )
                     )
                 }
             }
@@ -134,8 +151,14 @@ fun SettingsScreen(
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(24.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    contentPadding =
+                    PaddingValues(
+                        RentalWheelsDesignSystem.Spacing.large
+                    ),
+                    verticalArrangement =
+                    Arrangement.spacedBy(
+                        RentalWheelsDesignSystem.Spacing.medium
+                    )
                 ) {
                     // Profile Header
                     item {
@@ -335,65 +358,60 @@ fun SettingsScreen(
                             modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .padding(top = 16.dp),
+                                .padding(
+                                    top =
+                                    RentalWheelsDesignSystem
+                                        .Spacing
+                                        .large
+                                ),
                             colors =
                             CardDefaults.cardColors(
                                 containerColor =
-                                MaterialTheme
-                                    .colorScheme
-                                    .surface
+                                RentalWheelsDesignSystem
+                                    .Colors
+                                    .Surface02
                             ),
-                            shape = RoundedCornerShape(20.dp),
+                            shape =
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem
+                                    .CornerRadius.Card
+                            ),
                             elevation =
                             CardDefaults.cardElevation(
-                                defaultElevation = 8.dp
+                                defaultElevation =
+                                RentalWheelsDesignSystem
+                                    .Elevation
+                                    .medium
                             )
                         ) {
-                            Button(
+                            PremiumButton(
                                 onClick = onLogoutClick,
+                                variant =
+                                PremiumButtonVariant
+                                    .Primary,
                                 modifier =
                                 Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp),
-                                colors =
-                                ButtonDefaults.buttonColors(
-                                    containerColor =
-                                    MaterialTheme
-                                        .colorScheme
-                                        .error,
-                                    contentColor =
-                                    MaterialTheme
-                                        .colorScheme
-                                        .onError
-                                ),
-                                shape = RoundedCornerShape(16.dp)
-                            ) {
-                                Icon(
-                                    imageVector =
-                                    Icons.AutoMirrored.Filled.ExitToApp,
-                                    contentDescription =
-                                    "Logout",
-                                    modifier =
-                                    Modifier.size(20.dp)
-                                )
-                                Spacer(
-                                    modifier =
-                                    Modifier.width(8.dp)
-                                )
-                                Text(
-                                    text = "Logout",
-                                    style =
-                                    Typography
-                                        .bodyLarge,
-                                    fontWeight =
-                                    FontWeight.SemiBold
-                                )
-                            }
+                                    .padding(
+                                        RentalWheelsDesignSystem
+                                            .Spacing
+                                            .medium
+                                    )
+                            ) { Text("Logout") }
                         }
                     }
 
                     // Bottom spacing
-                    item { Spacer(modifier = Modifier.height(80.dp)) }
+                    item {
+                        Spacer(
+                            modifier =
+                            Modifier.height(
+                                RentalWheelsDesignSystem
+                                    .Spacing
+                                    .extraLarge * 3
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -408,23 +426,38 @@ private fun ProfileHeader(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors =
-        CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        CardDefaults.cardColors(
+            containerColor = RentalWheelsDesignSystem.Colors.Surface02
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
-                .padding(24.dp),
+                .padding(RentalWheelsDesignSystem.Spacing.large),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Profile Picture
             Card(
-                modifier = Modifier.size(80.dp),
+                modifier =
+                Modifier.size(
+                    RentalWheelsDesignSystem.Spacing.Huge * 1.25f
+                ),
                 shape = CircleShape,
                 colors =
                 CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary
+                    containerColor =
+                    RentalWheelsDesignSystem.Colors.BrandPrimary
+                ),
+                elevation =
+                CardDefaults.cardElevation(
+                    defaultElevation =
+                    RentalWheelsDesignSystem.Elevation.medium
                 )
             ) {
                 Box(
@@ -434,33 +467,42 @@ private fun ProfileHeader(
                     Image(
                         painter = painterResource(id = R.mipmap.launc),
                         contentDescription = "Profile Picture",
-                        modifier = Modifier.size(48.dp)
+                        modifier =
+                        Modifier.size(
+                            RentalWheelsDesignSystem.Spacing
+                                .Huge * 0.75f
+                        )
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.medium))
 
             // User Info
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "${userData.firstName} ${userData.lastName}",
-                    style = Typography.headlineSmall,
+                    style = RentalWheelsDesignSystem.Typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(
+                    modifier =
+                    Modifier.height(
+                        RentalWheelsDesignSystem.Spacing.extraSmall
+                    )
+                )
 
                 Text(
                     text = userData.email,
-                    style = Typography.bodyMedium,
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 Text(
                     text = userData.phoneNumber,
-                    style = Typography.bodyMedium,
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -493,32 +535,48 @@ private fun ThemeSelectionCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors =
-        CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        CardDefaults.cardColors(
+            containerColor = RentalWheelsDesignSystem.Colors.Surface02
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
-        Column(modifier = Modifier.padding(24.dp)) {
+        Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Default.Brightness6,
                     contentDescription = "Theme",
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(24.dp)
+                    modifier =
+                    Modifier.size(
+                        RentalWheelsDesignSystem.Spacing.extraLarge
+                    )
                 )
 
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(
+                    modifier =
+                    Modifier.width(
+                        RentalWheelsDesignSystem.Spacing.small
+                    )
+                )
 
                 Text(
                     text = "Theme",
-                    style = Typography.titleLarge,
+                    style = RentalWheelsDesignSystem.Typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            LazyRow(
+                horizontalArrangement =
+                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+            ) {
                 items(ThemePreference.values()) { theme ->
                     ThemeOptionCard(
                         theme = theme,
@@ -564,28 +622,43 @@ private fun ThemeOptionCard(theme: ThemePreference, isSelected: Boolean, onSelec
     )
 
     Card(
-        modifier = Modifier
-            .width(100.dp)
-            .clickable { onSelected() },
+        modifier =
+        Modifier
+            .width(RentalWheelsDesignSystem.Spacing.Huge * 1.56f)
+            .clickable {
+                onSelected()
+            },
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
         elevation =
         CardDefaults.cardElevation(
-            defaultElevation = if (isSelected) 8.dp else 2.dp
+            defaultElevation =
+            if (isSelected) RentalWheelsDesignSystem.Elevation.large
+            else RentalWheelsDesignSystem.Elevation.medium
         )
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(RentalWheelsDesignSystem.Spacing.medium),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(modifier = Modifier.size(32.dp), contentAlignment = Alignment.Center) {
+            Box(
+                modifier =
+                Modifier.size(
+                    RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                ),
+                contentAlignment = Alignment.Center
+            ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = title,
                     tint = contentColor,
-                    modifier = Modifier.size(24.dp)
+                    modifier =
+                    Modifier.size(
+                        RentalWheelsDesignSystem.Spacing.extraLarge
+                    )
                 )
 
                 if (isSelected) {
@@ -595,27 +668,29 @@ private fun ThemeOptionCard(theme: ThemePreference, isSelected: Boolean, onSelec
                         tint = contentColor,
                         modifier =
                         Modifier
-                            .size(16.dp)
+                            .size(
+                                RentalWheelsDesignSystem
+                                    .Spacing.medium
+                            )
                             .clip(CircleShape)
                             .background(backgroundColor)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
             Text(
                 text = title,
-                style = Typography.labelMedium,
+                style = RentalWheelsDesignSystem.Typography.labelMedium,
                 color = contentColor,
                 fontWeight = FontWeight.Medium
             )
 
             Text(
                 text = subtitle,
-                style = Typography.labelSmall,
-                color = contentColor.copy(alpha = 0.7f),
-                fontSize = 10.sp
+                style = RentalWheelsDesignSystem.Typography.labelSmall,
+                color = contentColor.copy(alpha = 0.7f)
             )
         }
     }
@@ -626,27 +701,43 @@ private fun SettingsSection(title: String, icon: ImageVector, content: @Composab
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors =
-        CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        CardDefaults.cardColors(
+            containerColor = RentalWheelsDesignSystem.Colors.Surface02
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier =
+                Modifier.padding(
+                    bottom = RentalWheelsDesignSystem.Spacing.small
+                )
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = title,
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
+                    modifier =
+                    Modifier.size(
+                        RentalWheelsDesignSystem.Spacing.large
+                    )
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(
+                    modifier =
+                    Modifier.width(
+                        RentalWheelsDesignSystem.Spacing.small
+                    )
+                )
 
                 Text(
                     text = title,
-                    style = Typography.titleMedium,
+                    style = RentalWheelsDesignSystem.Typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -670,29 +761,32 @@ private fun SettingsItem(
         Modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .padding(vertical = 8.dp, horizontal = 4.dp),
+            .padding(
+                vertical = RentalWheelsDesignSystem.Spacing.small,
+                horizontal = RentalWheelsDesignSystem.Spacing.extraSmall
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = icon,
             contentDescription = title,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.medium))
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                style = Typography.bodyLarge,
+                style = RentalWheelsDesignSystem.Typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
             if (subtitle != null) {
                 Text(
                     text = subtitle,
-                    style = Typography.bodySmall,
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -705,7 +799,7 @@ private fun SettingsItem(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = "Navigate",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
             )
         }
     }
