@@ -6,20 +6,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
-fun SettingsSection(
-    title: String,
-    content: @Composable () -> Unit
-) {
+fun SettingsSection(title: String, content: @Composable () -> Unit) {
     Text(
         text = title,
-        style = Typography.titleMedium,
+        style = RentalWheelsDesignSystem.Typography.titleMedium,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(vertical = 16.dp)
+        modifier = Modifier.padding(vertical = RentalWheelsDesignSystem.Spacing.medium)
     )
     content()
-    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+    HorizontalDivider(
+        modifier = Modifier.padding(vertical = RentalWheelsDesignSystem.Spacing.small)
+    )
 }
