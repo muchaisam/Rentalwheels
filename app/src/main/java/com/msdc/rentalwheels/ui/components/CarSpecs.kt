@@ -1,6 +1,11 @@
 package com.msdc.rentalwheels.ui.components
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,34 +30,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
-fun CarSpecs(
-    car: Car,
-    modifier: Modifier = Modifier
-) {
+fun CarSpecs(car: Car, modifier: Modifier = Modifier) {
     ElevatedCard(
         modifier = modifier,
-        colors = CardDefaults.elevatedCardColors(
+        colors =
+        CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(RentalWheelsDesignSystem.Spacing.medium),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            SpecItem(
-                icon = Icons.Rounded.Speed,
-                label = "Transmission",
-                value = car.transmission
-            )
+            SpecItem(icon = Icons.Rounded.Speed, label = "Transmission", value = car.transmission)
             VerticalDivider()
             SpecItem(
                 icon = Icons.Rounded.LocalGasStation,
@@ -60,7 +59,6 @@ fun CarSpecs(
                 value = car.fuelType
             )
             VerticalDivider()
-
         }
     }
 }
@@ -72,8 +70,25 @@ private fun SpecItem(
     value: String,
     modifier: Modifier = Modifier
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed = interactionSource.collectIsPressedAsState()
+    val scale by
+    animateFloatAsState(
+        targetValue = if (isPressed.value) 0.95f else 1f,
+        animationSpec =
+        spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "specItemScale"
+    )
+
     Column(
-        modifier = modifier,
+        modifier =
+        modifier.graphicsLayer {
+            scaleX = scale
+            scaleY = scale
+        },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
@@ -81,37 +96,30 @@ private fun SpecItem(
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.XXS))
         Text(
             text = label,
-            style = Typography.labelMedium,
+            style = RentalWheelsDesignSystem.Typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Text(
-            text = value,
-            style = Typography.titleMedium
-        )
+        Text(text = value, style = RentalWheelsDesignSystem.Typography.titleMedium)
     }
 }
 
-
 @Composable
-fun CarDescription(
-    description: String,
-    modifier: Modifier = Modifier
-) {
+fun CarDescription(description: String, modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
         Text(
             text = "About this car",
-            style = Typography.titleLarge,
-            modifier = Modifier.padding(bottom = 8.dp)
+            style = RentalWheelsDesignSystem.Typography.titleLarge,
+            modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
         )
 
         Text(
             text = description,
-            style = Typography.bodyLarge,
+            style = RentalWheelsDesignSystem.Typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = if (expanded) Int.MAX_VALUE else 3,
             overflow = TextOverflow.Ellipsis,
@@ -119,9 +127,7 @@ fun CarDescription(
         )
 
         if (!expanded && description.length > 150) {
-            TextButton(onClick = { expanded = true }) {
-                Text("Read more")
-            }
+            TextButton(onClick = { expanded = true }) { Text("Read more") }
         }
     }
 }
