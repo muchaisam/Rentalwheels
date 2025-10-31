@@ -14,46 +14,43 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
 fun RecommendedCars(cars: List<Car>) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
-            .wrapContentHeight()  // Changed from fixed height
-            .padding(vertical = 8.dp)
+            .wrapContentHeight() // Changed from fixed height
+            .padding(vertical = RentalWheelsDesignSystem.Spacing.extraSmall)
     ) {
-        Text("Recommended Cars", style = Typography.titleLarge)
-        Spacer(modifier = Modifier.height(16.dp))
+        Text("Recommended Cars", style = RentalWheelsDesignSystem.Typography.titleLarge)
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
         // Horizontal scrolling carousel instead of AutoScrollingCarousel
         LazyRow(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
-                .height(200.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            items(cars) { car ->
-                RecommendedCarItem(car)
-            }
-        }
+                .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f),
+            horizontalArrangement =
+            Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+        ) { items(cars) { car -> RecommendedCarItem(car) } }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
         // Grid with fixed number of items instead of LazyVerticalGrid
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement =
+            Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
         ) {
             cars.take(2).forEach { car ->
-                Box(modifier = Modifier.weight(1f)) {
-                    RecommendedCarItem(car)
-                }
+                Box(modifier = Modifier.weight(1f)) { RecommendedCarItem(car) }
             }
         }
     }
