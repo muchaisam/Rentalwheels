@@ -64,7 +64,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
@@ -108,7 +108,7 @@ fun FilterableCarList(
             ) {
                 Text(
                     text = "Filter by $filterName",
-                    style = Typography.titleMedium,
+                    style = RentalWheelsDesignSystem.Typography.titleMedium,
                     modifier = Modifier.padding(bottom = 12.dp)
                 )
             }
@@ -144,7 +144,7 @@ fun FilterableCarList(
                             label = {
                                 Text(
                                     text = filter,
-                                    style = Typography.bodyMedium
+                                    style = RentalWheelsDesignSystem.Typography.bodyMedium
                                 )
                             },
                             leadingIcon = if (isSelected) {
@@ -261,7 +261,7 @@ fun FilterableCarList(
                                         ) {
                                             Text(
                                                 text = if (expanded) "Show Less" else "See All ${displayedCars.size} Cars",
-                                                style = Typography.labelLarge
+                                                style = RentalWheelsDesignSystem.Typography.labelLarge
                                             )
                                             Icon(
                                                 imageVector = if (expanded)
@@ -320,7 +320,7 @@ private fun LoadingState() {
 
             Text(
                 text = "Finding cars for you...",
-                style = Typography.bodyMedium,
+                style = RentalWheelsDesignSystem.Typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
@@ -358,7 +358,7 @@ private fun EmptyState() {
 
         Text(
             text = "No cars found",
-            style = Typography.titleMedium,
+            style = RentalWheelsDesignSystem.Typography.titleMedium,
             textAlign = TextAlign.Center
         )
 
@@ -366,7 +366,7 @@ private fun EmptyState() {
 
         Text(
             text = "Try adjusting your filters to see more options",
-            style = Typography.bodyMedium,
+            style = RentalWheelsDesignSystem.Typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
@@ -404,7 +404,7 @@ private fun ErrorState(error: String) {
 
         Text(
             text = "Oops! Something went wrong",
-            style = Typography.titleMedium,
+            style = RentalWheelsDesignSystem.Typography.titleMedium,
             color = MaterialTheme.colorScheme.error,
             textAlign = TextAlign.Center
         )
@@ -413,7 +413,7 @@ private fun ErrorState(error: String) {
 
         Text(
             text = error,
-            style = Typography.bodyMedium,
+            style = RentalWheelsDesignSystem.Typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
