@@ -23,7 +23,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
@@ -41,48 +40,48 @@ import com.msdc.rentalwheels.viewmodel.CarViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContent(
-    uiState: CarViewModel.UiState,
-    onCarClick: (String) -> Unit,
-    onLoadMore: () -> Unit,
-    isLoadingCarDetails: Boolean,
-    onRefresh: () -> Unit,
-    isRefreshing: Boolean,
-    scrollBehavior: TopAppBarScrollBehavior
+        uiState: CarViewModel.UiState,
+        onCarClick: (String) -> Unit,
+        onLoadMore: () -> Unit,
+        isLoadingCarDetails: Boolean,
+        onRefresh: () -> Unit,
+        isRefreshing: Boolean,
+        scrollBehavior: TopAppBarScrollBehavior
 ) {
     when (uiState) {
         is CarViewModel.UiState.Loading -> LoadingScreen()
         is CarViewModel.UiState.Error -> ErrorScreen(message = uiState.message)
         is CarViewModel.UiState.Success ->
-            SuccessScreen(
-                categories = uiState.categories,
-                recommendedCars = uiState.recommendedCars,
-                cars = uiState.cars,
-                deals = uiState.deals,
-                loadMoreError = uiState.loadMoreError,
-                onCarClick = onCarClick,
-                onLoadMore = onLoadMore,
-                isLoadingCarDetails = isLoadingCarDetails,
-                onRefresh = onRefresh,
-                isRefreshing = isRefreshing,
-                scrollBehavior = scrollBehavior
-            )
+                SuccessScreen(
+                        categories = uiState.categories,
+                        recommendedCars = uiState.recommendedCars,
+                        cars = uiState.cars,
+                        deals = uiState.deals,
+                        loadMoreError = uiState.loadMoreError,
+                        onCarClick = onCarClick,
+                        onLoadMore = onLoadMore,
+                        isLoadingCarDetails = isLoadingCarDetails,
+                        onRefresh = onRefresh,
+                        isRefreshing = isRefreshing,
+                        scrollBehavior = scrollBehavior
+                )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun SuccessScreen(
-    categories: List<Category>,
-    recommendedCars: List<Car>,
-    cars: List<Car>,
-    deals: List<Deal>,
-    loadMoreError: String?,
-    onCarClick: (String) -> Unit,
-    onLoadMore: () -> Unit,
-    isLoadingCarDetails: Boolean,
-    onRefresh: () -> Unit,
-    isRefreshing: Boolean,
-    scrollBehavior: TopAppBarScrollBehavior
+        categories: List<Category>,
+        recommendedCars: List<Car>,
+        cars: List<Car>,
+        deals: List<Deal>,
+        loadMoreError: String?,
+        onCarClick: (String) -> Unit,
+        onLoadMore: () -> Unit,
+        isLoadingCarDetails: Boolean,
+        onRefresh: () -> Unit,
+        isRefreshing: Boolean,
+        scrollBehavior: TopAppBarScrollBehavior
 ) {
     val safeCategories = categories.orEmpty().filterNotNull()
     val safeRecommendedCars = recommendedCars.orEmpty().filterNotNull()
@@ -92,17 +91,12 @@ fun SuccessScreen(
     val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .pullRefresh(pullRefreshState)
-        ) {
+        Box(modifier = Modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
             LazyColumn(
-                modifier =
-                Modifier
-                    .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
-                contentPadding = PaddingValues(bottom = RentalWheelsDesignSystem.Spacing.medium)
+                    modifier =
+                            Modifier.fillMaxSize()
+                                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    contentPadding = PaddingValues(bottom = RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 // Deals section
                 if (safeDeals.isNotEmpty()) {
@@ -118,30 +112,28 @@ fun SuccessScreen(
                 if (safeRecommendedCars.isNotEmpty()) {
                     item(key = "recommendedCarsHeader") {
                         Text(
-                            "Recommended Cars",
-                            modifier =
-                            Modifier.padding(
-                                start = RentalWheelsDesignSystem.Spacing.medium,
-                                top = RentalWheelsDesignSystem.Spacing.medium,
-                                bottom = RentalWheelsDesignSystem.Spacing.small
-                            ),
-                            style = RentalWheelsDesignSystem.Typography.bodyMedium
+                                "Recommended Cars",
+                                modifier =
+                                        Modifier.padding(
+                                                start = RentalWheelsDesignSystem.Spacing.medium,
+                                                top = RentalWheelsDesignSystem.Spacing.medium,
+                                                bottom = RentalWheelsDesignSystem.Spacing.small
+                                        ),
+                                style = RentalWheelsDesignSystem.Typography.bodyMedium
                         )
                     }
 
                     item(key = "recommendedCarsList") {
                         LazyRow(
-                            contentPadding =
-                            PaddingValues(
-                                horizontal = RentalWheelsDesignSystem.Spacing.medium
-                            ),
-                            horizontalArrangement =
-                            Arrangement.spacedBy(
-                                RentalWheelsDesignSystem.Spacing.small
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(180.dp)
+                                contentPadding =
+                                        PaddingValues(
+                                                horizontal = RentalWheelsDesignSystem.Spacing.medium
+                                        ),
+                                horizontalArrangement =
+                                        Arrangement.spacedBy(
+                                                RentalWheelsDesignSystem.Spacing.small
+                                        ),
+                                modifier = Modifier.fillMaxWidth().height(180.dp)
                         ) {
                             items(items = safeRecommendedCars, key = { car -> car.id }) { car ->
                                 RecommendedCarItem(car = car, onClick = { onCarClick(car.id) })
@@ -158,21 +150,19 @@ fun SuccessScreen(
                 if (categories.isNotEmpty()) {
                     item(key = "categoriesScroll") {
                         LazyRow(
-                            contentPadding =
-                            PaddingValues(
-                                horizontal = RentalWheelsDesignSystem.Spacing.medium
-                            ),
-                            horizontalArrangement =
-                            Arrangement.spacedBy(
-                                RentalWheelsDesignSystem.Spacing.medium
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(120.dp)
+                                contentPadding =
+                                        PaddingValues(
+                                                horizontal = RentalWheelsDesignSystem.Spacing.medium
+                                        ),
+                                horizontalArrangement =
+                                        Arrangement.spacedBy(
+                                                RentalWheelsDesignSystem.Spacing.medium
+                                        ),
+                                modifier = Modifier.fillMaxWidth().height(120.dp)
                         ) {
                             items(
-                                items = categories,
-                                key = { category -> category.id } // Add proper key if possible
+                                    items = categories,
+                                    key = { category -> category.id } // Add proper key if possible
                             ) { category -> CategoryItem(category) }
                         }
                     }
@@ -182,10 +172,8 @@ fun SuccessScreen(
 
         if (isLoadingCarDetails) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f)),
-                contentAlignment = Alignment.Center
+                    modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.scrim),
+                    contentAlignment = Alignment.Center
             ) { CircularProgressIndicator() }
         }
     }
@@ -193,30 +181,29 @@ fun SuccessScreen(
 
 @Composable
 private fun ErrorFallback(
-    message: String,
-    height: androidx.compose.ui.unit.Dp = 80.dp,
-    width: Float = 1f
+        message: String,
+        height: androidx.compose.ui.unit.Dp = 80.dp,
+        width: Float = 1f
 ) {
     Box(
-        modifier =
-        Modifier
-            .height(height)
-            .fillMaxWidth(width)
-            .padding(RentalWheelsDesignSystem.Spacing.extraSmall)
-            .background(
-                MaterialTheme.colorScheme.errorContainer,
-                shape =
-                androidx.compose.foundation.shape.RoundedCornerShape(
-                    RentalWheelsDesignSystem.CornerRadius.small
-                )
-            ),
-        contentAlignment = Alignment.Center
+            modifier =
+                    Modifier.height(height)
+                            .fillMaxWidth(width)
+                            .padding(RentalWheelsDesignSystem.Spacing.extraSmall)
+                            .background(
+                                    MaterialTheme.colorScheme.errorContainer,
+                                    shape =
+                                            androidx.compose.foundation.shape.RoundedCornerShape(
+                                                    RentalWheelsDesignSystem.CornerRadius.small
+                                            )
+                            ),
+            contentAlignment = Alignment.Center
     ) {
         Text(
-            message,
-            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small),
-            color = MaterialTheme.colorScheme.onErrorContainer,
-            style = RentalWheelsDesignSystem.Typography.bodyMedium
+                message,
+                modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small),
+                color = MaterialTheme.colorScheme.onErrorContainer,
+                style = RentalWheelsDesignSystem.Typography.bodyMedium
         )
     }
 }
