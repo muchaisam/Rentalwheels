@@ -23,48 +23,45 @@ import com.msdc.rentalwheels.ui.components.utils.LoadingPlaceholder
 
 @Composable
 fun CarImage(
-    imageUrl: String,
-    contentDescription: String?,
-    modifier: Modifier = Modifier,
-    placeholderColor: Color = MaterialTheme.colorScheme.surfaceVariant
+        imageUrl: String,
+        contentDescription: String?,
+        modifier: Modifier = Modifier,
+        placeholderColor: Color = MaterialTheme.colorScheme.surfaceVariant
 ) {
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUrl)
-                .crossfade(true)
-                .build(),
-            contentDescription = contentDescription,
-            contentScale = ContentScale.Crop,
-            onLoading = { isLoading = true },
-            onSuccess = { isLoading = false },
-            onError = {
-                isLoading = false
-                isError = true
-            },
-            modifier = Modifier.fillMaxSize()
+                model =
+                        ImageRequest.Builder(LocalContext.current)
+                                .data(imageUrl)
+                                .crossfade(true)
+                                .build(),
+                contentDescription = contentDescription,
+                contentScale = ContentScale.Crop,
+                onLoading = { isLoading = true },
+                onSuccess = { isLoading = false },
+                onError = {
+                    isLoading = false
+                    isError = true
+                },
+                modifier = Modifier.fillMaxSize()
         )
 
         if (isLoading) {
-            LoadingPlaceholder(
-                modifier = Modifier.fillMaxSize()
-            )
+            LoadingPlaceholder(modifier = Modifier.fillMaxSize())
         }
 
         if (isError) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(placeholderColor),
-                contentAlignment = Alignment.Center
+                    modifier = Modifier.fillMaxSize().background(placeholderColor),
+                    contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.BrokenImage,
-                    contentDescription = "Image load error",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        imageVector = Icons.Rounded.BrokenImage,
+                        contentDescription = "Image load error",
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
             }
         }
