@@ -43,17 +43,17 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun CartView(
-    cartItems: List<CartItem>,
-    cartTotal: Double,
-    onRemoveFromCart: (String) -> Unit,
-    onEditCartItem: (CartItem) -> Unit,
-    onProcessCart: () -> Unit,
-    onClearCart: () -> Unit,
-    modifier: Modifier = Modifier
+        cartItems: List<CartItem>,
+        cartTotal: Double,
+        onRemoveFromCart: (String) -> Unit,
+        onEditCartItem: (CartItem) -> Unit,
+        onProcessCart: () -> Unit,
+        onClearCart: () -> Unit,
+        modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
     ) {
         // Cart Header
         CartHeader(itemCount = cartItems.size, onClearCart = onClearCart)
@@ -63,17 +63,17 @@ fun CartView(
         } else {
             // Cart Items
             LazyColumn(
-                modifier = Modifier.weight(1f),
-                contentPadding =
-                PaddingValues(vertical = RentalWheelsDesignSystem.Spacing.small),
-                verticalArrangement =
-                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+                    modifier = Modifier.weight(1f),
+                    contentPadding =
+                            PaddingValues(vertical = RentalWheelsDesignSystem.Spacing.small),
+                    verticalArrangement =
+                            Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 items(items = cartItems, key = { it.car.id }) { cartItem ->
                     CartItemCard(
-                        cartItem = cartItem,
-                        onRemove = { onRemoveFromCart(cartItem.car.id) },
-                        onEdit = { onEditCartItem(cartItem) }
+                            cartItem = cartItem,
+                            onRemove = { onRemoveFromCart(cartItem.car.id) },
+                            onEdit = { onEditCartItem(cartItem) }
                     )
                 }
             }
@@ -87,42 +87,42 @@ fun CartView(
 @Composable
 private fun CartHeader(itemCount: Int, onClearCart: () -> Unit, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
         ) {
             Icon(
-                imageVector = Icons.Default.ShoppingCart,
-                contentDescription = "Cart",
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Cart",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
             )
             Column {
                 Text(
-                    text = "Your Cart",
-                    style = RentalWheelsDesignSystem.Typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                        text = "Your Cart",
+                        style = RentalWheelsDesignSystem.Typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = "$itemCount ${if (itemCount == 1) "item" else "items"}",
-                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = "$itemCount ${if (itemCount == 1) "item" else "items"}",
+                        style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
             }
         }
 
         if (itemCount > 0) {
             OutlinedButton(
-                onClick = onClearCart,
-                colors =
-                ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error
-                )
+                    onClick = onClearCart,
+                    colors =
+                            ButtonDefaults.outlinedButtonColors(
+                                    contentColor = MaterialTheme.colorScheme.error
+                            )
             ) { Text("Clear All") }
         }
     }
@@ -132,26 +132,26 @@ private fun CartHeader(itemCount: Int, onClearCart: () -> Unit, modifier: Modifi
 private fun EmptyCartView(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
         ) {
             Icon(
-                imageVector = Icons.Default.ShoppingCart,
-                contentDescription = "Empty cart",
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge),
-                tint = MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Empty cart",
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge),
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
             )
             Text(
-                text = "Your cart is empty",
-                style = RentalWheelsDesignSystem.Typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
+                    text = "Your cart is empty",
+                    style = RentalWheelsDesignSystem.Typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center
             )
             Text(
-                text = "Add some cars to get started",
-                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                textAlign = TextAlign.Center
+                    text = "Browse available cars and add your favorites",
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    textAlign = TextAlign.Center
             )
         }
     }
@@ -159,114 +159,107 @@ private fun EmptyCartView(modifier: Modifier = Modifier) {
 
 @Composable
 private fun CartItemCard(
-    cartItem: CartItem,
-    onRemove: () -> Unit,
-    onEdit: () -> Unit,
-    modifier: Modifier = Modifier
+        cartItem: CartItem,
+        onRemove: () -> Unit,
+        onEdit: () -> Unit,
+        modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-        ),
-        elevation =
-        CardDefaults.cardElevation(
-            defaultElevation = RentalWheelsDesignSystem.Elevation.small
-        )
+            modifier = modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            elevation =
+                    CardDefaults.cardElevation(
+                            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+                    )
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(RentalWheelsDesignSystem.Spacing.medium)
+                modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.medium)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
             ) {
                 // Car Image
                 Surface(
-                    modifier =
-                    Modifier
-                        .size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
-                        .clip(
-                            RoundedCornerShape(
-                                RentalWheelsDesignSystem.CornerRadius.medium
-                            )
-                        ),
-                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                        modifier =
+                                Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
+                                        .clip(
+                                                RoundedCornerShape(
+                                                        RentalWheelsDesignSystem.CornerRadius.medium
+                                                )
+                                        ),
+                        color = MaterialTheme.colorScheme.surfaceVariant
                 ) {
                     AsyncImage(
-                        model =
-                        ImageRequest.Builder(LocalContext.current)
-                            .data(cartItem.car.imageUrl)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = "${cartItem.car.make} ${cartItem.car.model}",
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
+                            model =
+                                    ImageRequest.Builder(LocalContext.current)
+                                            .data(cartItem.car.imageUrl)
+                                            .crossfade(true)
+                                            .build(),
+                            contentDescription = "${cartItem.car.make} ${cartItem.car.model}",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
                     )
                 }
 
                 // Car Details
                 Column(
-                    modifier =
-                    Modifier
-                        .weight(1f)
-                        .padding(
-                            horizontal = RentalWheelsDesignSystem.Spacing.medium
-                        )
+                        modifier =
+                                Modifier.weight(1f)
+                                        .padding(
+                                                horizontal = RentalWheelsDesignSystem.Spacing.medium
+                                        )
                 ) {
                     Text(
-                        text = "${cartItem.car.make} ${cartItem.car.model}",
-                        style = RentalWheelsDesignSystem.Typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurface
+                            text = "${cartItem.car.make} ${cartItem.car.model}",
+                            style = RentalWheelsDesignSystem.Typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = cartItem.car.category,
-                        style = RentalWheelsDesignSystem.Typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                            text = cartItem.car.category,
+                            style = RentalWheelsDesignSystem.Typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                     )
                     Text(
-                        text = "$${cartItem.car.pricePerDay}/day",
-                        style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Medium
+                            text = "$${cartItem.car.pricePerDay}/day",
+                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Medium
                     )
                 }
 
                 // Action buttons
                 Column(
-                    verticalArrangement =
-                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall)
+                        verticalArrangement =
+                                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall)
                 ) {
                     IconButton(
-                        onClick = onEdit,
-                        modifier =
-                        Modifier.size(
-                            RentalWheelsDesignSystem.Spacing.extraLarge * 1.67f
-                        )
+                            onClick = onEdit,
+                            modifier =
+                                    Modifier.size(
+                                            RentalWheelsDesignSystem.Spacing.extraLarge * 1.67f
+                                    )
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = "Edit",
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = "Edit",
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
                         )
                     }
                     IconButton(
-                        onClick = onRemove,
-                        modifier =
-                        Modifier.size(
-                            RentalWheelsDesignSystem.Spacing.extraLarge * 1.67f
-                        )
+                            onClick = onRemove,
+                            modifier =
+                                    Modifier.size(
+                                            RentalWheelsDesignSystem.Spacing.extraLarge * 1.67f
+                                    )
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Remove",
-                            tint = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Remove",
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
                         )
                     }
                 }
@@ -274,8 +267,8 @@ private fun CartItemCard(
 
             // Rental Details
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = RentalWheelsDesignSystem.Spacing.small),
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                    modifier = Modifier.padding(vertical = RentalWheelsDesignSystem.Spacing.small),
+                    color = MaterialTheme.colorScheme.outlineVariant
             )
 
             RentalDetails(cartItem = cartItem)
@@ -288,68 +281,68 @@ private fun RentalDetails(cartItem: CartItem, modifier: Modifier = Modifier) {
     val dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy")
 
     Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+            modifier = modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
     ) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                text = "Pick-up:",
-                style = RentalWheelsDesignSystem.Typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "Pick-up:",
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
             Text(
-                text = cartItem.startDate.format(dateFormatter),
-                style = RentalWheelsDesignSystem.Typography.bodySmall,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
+                    text = cartItem.startDate.format(dateFormatter),
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
             )
         }
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                text = "Return:",
-                style = RentalWheelsDesignSystem.Typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "Return:",
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
             Text(
-                text = cartItem.endDate.format(dateFormatter),
-                style = RentalWheelsDesignSystem.Typography.bodySmall,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
+                    text = cartItem.endDate.format(dateFormatter),
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
             )
         }
 
         if (cartItem.withDriver) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "With Driver:",
-                    style = RentalWheelsDesignSystem.Typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = "With Driver:",
+                        style = RentalWheelsDesignSystem.Typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
                 Text(
-                    text = "Yes",
-                    style = RentalWheelsDesignSystem.Typography.bodySmall,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.primary
+                        text = "Yes",
+                        style = RentalWheelsDesignSystem.Typography.bodySmall,
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.primary
                 )
             }
         }
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                text = "Total:",
-                style = RentalWheelsDesignSystem.Typography.titleSmall,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
+                    text = "Total:",
+                    style = RentalWheelsDesignSystem.Typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = "$${String.format("%.2f", cartItem.totalCost)}",
-                style = RentalWheelsDesignSystem.Typography.titleSmall,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                    text = "$${String.format("%.2f", cartItem.totalCost)}",
+                    style = RentalWheelsDesignSystem.Typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -358,54 +351,51 @@ private fun RentalDetails(cartItem: CartItem, modifier: Modifier = Modifier) {
 @Composable
 private fun CartSummary(total: Double, onProcessCart: () -> Unit, modifier: Modifier = Modifier) {
     Card(
-        modifier = modifier.fillMaxWidth(),
-        colors =
-        CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
-        ),
-        elevation =
-        CardDefaults.cardElevation(
-            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
-        )
+            modifier = modifier.fillMaxWidth(),
+            colors =
+                    CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                    ),
+            elevation =
+                    CardDefaults.cardElevation(
+                            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+                    )
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(RentalWheelsDesignSystem.Spacing.large),
-            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+                modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.large),
+                verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Total Amount:",
-                    style = RentalWheelsDesignSystem.Typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                        text = "Total Amount:",
+                        style = RentalWheelsDesignSystem.Typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    text = "$${String.format("%.2f", total)}",
-                    style = RentalWheelsDesignSystem.Typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                        text = "$${String.format("%.2f", total)}",
+                        style = RentalWheelsDesignSystem.Typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
                 )
             }
 
             Button(
-                onClick = onProcessCart,
-                modifier = Modifier.fillMaxWidth(),
-                colors =
-                ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+                    onClick = onProcessCart,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors =
+                            ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary
+                            )
             ) {
                 Text(
-                    text = "Proceed to Booking",
-                    style = RentalWheelsDesignSystem.Typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold
+                        text = "Proceed to Booking",
+                        style = RentalWheelsDesignSystem.Typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold
                 )
             }
         }
