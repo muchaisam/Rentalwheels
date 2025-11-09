@@ -69,108 +69,127 @@ import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun FilterableCarList(
-    carsByFilter: Map<String, List<Car>>,
-    filterName: String,
-    onCarClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
-    error: String? = null
+        carsByFilter: Map<String, List<Car>>,
+        filterName: String,
+        onCarClick: (String) -> Unit,
+        modifier: Modifier = Modifier,
+        isLoading: Boolean = false,
+        error: String? = null
 ) {
     // State management
     var selectedFilter by remember { mutableStateOf<String?>(null) }
-    val displayedCars by remember(carsByFilter, selectedFilter) {
-        derivedStateOf {
-            selectedFilter?.let { filter ->
-                carsByFilter[filter] ?: emptyList()
-            } ?: carsByFilter.values.flatten()
-        }
-    }
+    val displayedCars by
+            remember(carsByFilter, selectedFilter) {
+                derivedStateOf {
+                    selectedFilter?.let { filter -> carsByFilter[filter] ?: emptyList() }
+                            ?: carsByFilter.values.flatten()
+                }
+            }
 
     // Remember expanded state for "See All" animation
     var expanded by remember { mutableStateOf(false) }
 
     // Surface container for enhanced elevation and material treatment
     Surface(
-        modifier = modifier.fillMaxWidth(),
-        tonalElevation = 1.dp, // Subtle elevation to distinguish from background
-        shape = MaterialTheme.shapes.medium
+            modifier = modifier.fillMaxWidth(),
+            tonalElevation = RentalWheelsDesignSystem.Elevation.extraSmall,
+            shape = MaterialTheme.shapes.medium
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
+                modifier =
+                        Modifier.fillMaxWidth()
+                                .padding(vertical = RentalWheelsDesignSystem.Spacing.medium)
         ) {
             // Header with animated transition
             AnimatedVisibility(
-                visible = true,
-                enter = fadeIn() + expandVertically(),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                    visible = true,
+                    enter = fadeIn() + expandVertically(),
+                    modifier =
+                            Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 Text(
-                    text = "Filter by $filterName",
-                    style = RentalWheelsDesignSystem.Typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 12.dp)
+                        text = "Filter by $filterName",
+                        style = RentalWheelsDesignSystem.Typography.titleMedium,
+                        modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
                 )
             }
 
-            // Enhanced Filter Chips Section
+            // Filter Chips Section
             Surface(
-                tonalElevation = 0.5.dp,
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                    tonalElevation = RentalWheelsDesignSystem.Elevation.extraSmall,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    modifier =
+                            Modifier.fillMaxWidth()
+                                    .padding(bottom = RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                        horizontalArrangement =
+                                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
+                        contentPadding =
+                                PaddingValues(
+                                        horizontal = RentalWheelsDesignSystem.Spacing.medium,
+                                        vertical = RentalWheelsDesignSystem.Spacing.small
+                                ),
                 ) {
                     items(carsByFilter.keys.toList()) { filter ->
                         val isSelected = filter == selectedFilter
                         // Animate selection changes with scale effect
-                        val scale by animateFloatAsState(
-                            targetValue = if (isSelected) 1.05f else 1f,
-                            animationSpec = spring(
-                                dampingRatio = Spring.DampingRatioMediumBouncy,
-                                stiffness = Spring.StiffnessMedium
-                            )
-                        )
+                        val scale by
+                                animateFloatAsState(
+                                        targetValue = if (isSelected) 1.05f else 1f,
+                                        animationSpec =
+                                                spring(
+                                                        dampingRatio =
+                                                                Spring.DampingRatioMediumBouncy,
+                                                        stiffness = Spring.StiffnessMedium
+                                                )
+                                )
 
                         FilterChip(
-                            selected = isSelected,
-                            onClick = {
-                                selectedFilter = if (isSelected) null else filter
-                            },
-                            label = {
-                                Text(
-                                    text = filter,
-                                    style = RentalWheelsDesignSystem.Typography.bodyMedium
-                                )
-                            },
-                            leadingIcon = if (isSelected) {
-                                {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Check,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(18.dp)
-                                    )
-                                }
-                            } else null,
-                            colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                            ),
-                            border = FilterChipDefaults.filterChipBorder(
-                                borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
-                                selectedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-                                enabled = true,
                                 selected = isSelected,
-                                borderWidth = 1.dp
-                            ),
-                            modifier = Modifier.graphicsLayer {
-                                scaleX = scale
-                                scaleY = scale
-                            }
+                                onClick = { selectedFilter = if (isSelected) null else filter },
+                                label = {
+                                    Text(
+                                            text = filter,
+                                            style = RentalWheelsDesignSystem.Typography.bodyMedium
+                                    )
+                                },
+                                leadingIcon =
+                                        if (isSelected) {
+                                            {
+                                                Icon(
+                                                        imageVector = Icons.Rounded.Check,
+                                                        contentDescription = null,
+                                                        modifier = Modifier.size(18.dp)
+                                                )
+                                            }
+                                        } else null,
+                                colors =
+                                        FilterChipDefaults.filterChipColors(
+                                                selectedContainerColor =
+                                                        MaterialTheme.colorScheme.primaryContainer,
+                                                selectedLabelColor =
+                                                        MaterialTheme.colorScheme.onPrimaryContainer
+                                        ),
+                                border =
+                                        FilterChipDefaults.filterChipBorder(
+                                                borderColor =
+                                                        MaterialTheme.colorScheme.outline.copy(
+                                                                alpha = 0.5f
+                                                        ),
+                                                selectedBorderColor =
+                                                        MaterialTheme.colorScheme.primary.copy(
+                                                                alpha = 0.8f
+                                                        ),
+                                                enabled = true,
+                                                selected = isSelected,
+                                                borderWidth = 1.dp
+                                        ),
+                                modifier =
+                                        Modifier.graphicsLayer {
+                                            scaleX = scale
+                                            scaleY = scale
+                                        }
                         )
                     }
                 }
@@ -178,32 +197,26 @@ fun FilterableCarList(
 
             // Content Section with improved states
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                contentAlignment = Alignment.Center
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                    contentAlignment = Alignment.Center
             ) {
                 when {
                     isLoading -> {
                         LoadingState()
                     }
-
                     error != null -> {
                         ErrorState(error = error)
                     }
-
                     displayedCars.isEmpty() -> {
                         EmptyState()
                     }
-
                     else -> {
                         // Animated content area
-                        Column(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
                             // Animating car items appearing with staggered effect
                             val maxItems =
-                                if (expanded) displayedCars.size else minOf(4, displayedCars.size)
+                                    if (expanded) displayedCars.size
+                                    else minOf(4, displayedCars.size)
 
                             displayedCars.take(maxItems).forEachIndexed { index, car ->
                                 key(car.id) {
@@ -211,27 +224,38 @@ fun FilterableCarList(
 
                                     // Staggered animation for each card
                                     AnimatedVisibility(
-                                        visible = true,
-                                        enter = fadeIn(initialAlpha = 0.3f) +
-                                                slideInVertically {
-                                                    with(density) { (30 * (index + 1)).dp.roundToPx() }
-                                                },
-                                        modifier = Modifier.animateContentSize()
+                                            visible = true,
+                                            enter =
+                                                    fadeIn(initialAlpha = 0.3f) +
+                                                            slideInVertically {
+                                                                with(density) {
+                                                                    (30 * (index + 1)).dp
+                                                                            .roundToPx()
+                                                                }
+                                                            },
+                                            modifier = Modifier.animateContentSize()
                                     ) {
                                         CarCard(
-                                            car = car,
-                                            onClick = { onCarClick(car.id) },
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(bottom = 16.dp)
-                                                .shadow(
-                                                    elevation = 2.dp,
-                                                    shape = MaterialTheme.shapes.medium,
-                                                    spotColor = MaterialTheme.colorScheme.primary.copy(
-                                                        alpha = 0.1f
-                                                    )
-                                                )
-                                                .clip(MaterialTheme.shapes.medium)
+                                                car = car,
+                                                onClick = { onCarClick(car.id) },
+                                                modifier =
+                                                        Modifier.fillMaxWidth()
+                                                                .padding(bottom = 16.dp)
+                                                                .shadow(
+                                                                        elevation = 2.dp,
+                                                                        shape =
+                                                                                MaterialTheme.shapes
+                                                                                        .medium,
+                                                                        spotColor =
+                                                                                MaterialTheme
+                                                                                        .colorScheme
+                                                                                        .primary
+                                                                                        .copy(
+                                                                                                alpha =
+                                                                                                        0.1f
+                                                                                        )
+                                                                )
+                                                                .clip(MaterialTheme.shapes.medium)
                                         )
                                     }
                                 }
@@ -239,37 +263,47 @@ fun FilterableCarList(
 
                             // Enhanced "See All" button with animation
                             AnimatedVisibility(
-                                visible = displayedCars.size > 4,
-                                enter = fadeIn() + expandVertically(),
-                                exit = fadeOut() + shrinkVertically()
+                                    visible = displayedCars.size > 4,
+                                    enter = fadeIn() + expandVertically(),
+                                    exit = fadeOut() + shrinkVertically()
                             ) {
                                 Box(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    contentAlignment = Alignment.Center
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center
                                 ) {
                                     ElevatedButton(
-                                        onClick = { expanded = !expanded },
-                                        colors = ButtonDefaults.elevatedButtonColors(
-                                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                                        ),
-                                        modifier = Modifier.padding(top = 8.dp)
+                                            onClick = { expanded = !expanded },
+                                            colors =
+                                                    ButtonDefaults.elevatedButtonColors(
+                                                            containerColor =
+                                                                    MaterialTheme.colorScheme
+                                                                            .secondaryContainer,
+                                                            contentColor =
+                                                                    MaterialTheme.colorScheme
+                                                                            .onSecondaryContainer
+                                                    ),
+                                            modifier = Modifier.padding(top = 8.dp)
                                     ) {
                                         Row(
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                horizontalArrangement = Arrangement.spacedBy(8.dp)
                                         ) {
                                             Text(
-                                                text = if (expanded) "Show Less" else "See All ${displayedCars.size} Cars",
-                                                style = RentalWheelsDesignSystem.Typography.labelLarge
+                                                    text =
+                                                            if (expanded) "Show Less"
+                                                            else
+                                                                    "See All ${displayedCars.size} Cars",
+                                                    style =
+                                                            RentalWheelsDesignSystem.Typography
+                                                                    .labelLarge
                                             )
                                             Icon(
-                                                imageVector = if (expanded)
-                                                    Icons.Rounded.KeyboardArrowUp
-                                                else
-                                                    Icons.Rounded.KeyboardArrowDown,
-                                                contentDescription = null,
-                                                modifier = Modifier.size(18.dp)
+                                                    imageVector =
+                                                            if (expanded)
+                                                                    Icons.Rounded.KeyboardArrowUp
+                                                            else Icons.Rounded.KeyboardArrowDown,
+                                                    contentDescription = null,
+                                                    modifier = Modifier.size(18.dp)
                                             )
                                         }
                                     }
@@ -285,43 +319,40 @@ fun FilterableCarList(
 
 @Composable
 private fun LoadingState() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(250.dp),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = Modifier.fillMaxWidth().height(250.dp), contentAlignment = Alignment.Center) {
         // Pulsating animation for the loading indicator
         val infiniteTransition = rememberInfiniteTransition()
-        val scale by infiniteTransition.animateFloat(
-            initialValue = 0.8f,
-            targetValue = 1.1f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(800, easing = FastOutSlowInEasing),
-                repeatMode = RepeatMode.Reverse
-            )
-        )
+        val scale by
+                infiniteTransition.animateFloat(
+                        initialValue = 0.8f,
+                        targetValue = 1.1f,
+                        animationSpec =
+                                infiniteRepeatable(
+                                        animation = tween(800, easing = FastOutSlowInEasing),
+                                        repeatMode = RepeatMode.Reverse
+                                )
+                )
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
         ) {
             CircularProgressIndicator(
-                modifier = Modifier
-                    .graphicsLayer {
-                        scaleX = scale
-                        scaleY = scale
-                    },
-                color = MaterialTheme.colorScheme.primary,
-                trackColor = MaterialTheme.colorScheme.surfaceVariant
+                    modifier =
+                            Modifier.graphicsLayer {
+                                scaleX = scale
+                                scaleY = scale
+                            },
+                    color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Finding cars for you...",
-                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "Finding cars for you...",
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -330,26 +361,23 @@ private fun LoadingState() {
 @Composable
 private fun EmptyState() {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(32.dp)
-            .heightIn(min = 200.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            modifier = Modifier.fillMaxWidth().padding(32.dp).heightIn(min = 200.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
     ) {
         // Surface for icon with dynamic color and elevation
         Surface(
-            shape = MaterialTheme.shapes.extraLarge,
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            tonalElevation = 3.dp,
-            modifier = Modifier.size(72.dp)
+                shape = MaterialTheme.shapes.extraLarge,
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                tonalElevation = 3.dp,
+                modifier = Modifier.size(72.dp)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
-                    imageVector = Icons.Rounded.SearchOff,
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp),
-                    tint = MaterialTheme.colorScheme.primary
+                        imageVector = Icons.Rounded.SearchOff,
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp),
+                        tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
@@ -357,18 +385,18 @@ private fun EmptyState() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "No cars found",
-            style = RentalWheelsDesignSystem.Typography.titleMedium,
-            textAlign = TextAlign.Center
+                text = "No cars found",
+                style = RentalWheelsDesignSystem.Typography.titleMedium,
+                textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Try adjusting your filters to see more options",
-            style = RentalWheelsDesignSystem.Typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center
+                text = "Try adjusting your filters to see more options",
+                style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
         )
     }
 }
@@ -376,26 +404,23 @@ private fun EmptyState() {
 @Composable
 private fun ErrorState(error: String) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(32.dp)
-            .heightIn(min = 200.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            modifier = Modifier.fillMaxWidth().padding(32.dp).heightIn(min = 200.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
     ) {
         // Attention-grabbing error icon
         Surface(
-            shape = MaterialTheme.shapes.extraLarge,
-            color = MaterialTheme.colorScheme.errorContainer,
-            tonalElevation = 3.dp,
-            modifier = Modifier.size(72.dp)
+                shape = MaterialTheme.shapes.extraLarge,
+                color = MaterialTheme.colorScheme.errorContainer,
+                tonalElevation = 3.dp,
+                modifier = Modifier.size(72.dp)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
-                    imageVector = Icons.Rounded.Error,
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp),
-                    tint = MaterialTheme.colorScheme.error
+                        imageVector = Icons.Rounded.Error,
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp),
+                        tint = MaterialTheme.colorScheme.error
                 )
             }
         }
@@ -403,38 +428,39 @@ private fun ErrorState(error: String) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Oops! Something went wrong",
-            style = RentalWheelsDesignSystem.Typography.titleMedium,
-            color = MaterialTheme.colorScheme.error,
-            textAlign = TextAlign.Center
+                text = "Oops! Something went wrong",
+                style = RentalWheelsDesignSystem.Typography.titleMedium,
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = error,
-            style = RentalWheelsDesignSystem.Typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center
+                text = error,
+                style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Retry button for better UX
         Button(
-            onClick = { /* Implement retry logic */ },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.error
-            )
+                onClick = { /* Implement retry logic */},
+                colors =
+                        ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error
+                        )
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Refresh,
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp)
+                        imageVector = Icons.Rounded.Refresh,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
                 )
                 Text("Retry")
             }
