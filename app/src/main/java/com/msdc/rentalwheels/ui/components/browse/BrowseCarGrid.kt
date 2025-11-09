@@ -48,17 +48,17 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
 fun BrowseCarGrid(
-    cars: List<Car>,
-    onCarClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
-    onLoadMore: (() -> Unit)? = null,
-    // Enhanced features
-    favoriteCarIds: Set<String> = emptySet(),
-    onToggleFavorite: (String) -> Unit = {},
-    selectedCarsForComparison: List<Car> = emptyList(),
-    onToggleComparison: (Car) -> Unit = {},
-    maxComparisons: Int = 3
+        cars: List<Car>,
+        onCarClick: (String) -> Unit,
+        modifier: Modifier = Modifier,
+        isLoading: Boolean = false,
+        onLoadMore: (() -> Unit)? = null,
+        // Enhanced features
+        favoriteCarIds: Set<String> = emptySet(),
+        onToggleFavorite: (String) -> Unit = {},
+        selectedCarsForComparison: List<Car> = emptyList(),
+        onToggleComparison: (Car) -> Unit = {},
+        maxComparisons: Int = 3
 ) {
     val gridState = rememberLazyGridState()
 
@@ -80,9 +80,9 @@ fun BrowseCarGrid(
 
     Box(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(
-            visible = !isLoading || cars.isNotEmpty(),
-            enter = fadeIn(),
-            exit = fadeOut()
+                visible = !isLoading || cars.isNotEmpty(),
+                enter = fadeIn(),
+                exit = fadeOut()
         ) {
             if (cars.isEmpty() && !isLoading) {
                 // Empty State
@@ -90,24 +90,24 @@ fun BrowseCarGrid(
             } else {
                 // Car Grid with load more
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(minSize = 280.dp),
-                    state = gridState,
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                        columns = GridCells.Adaptive(minSize = 280.dp),
+                        state = gridState,
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(cars) { car ->
                         EnhancedCarCard(
-                            car = car,
-                            onClick = { onCarClick(car.id) },
-                            isFavorite = favoriteCarIds.contains(car.id),
-                            onToggleFavorite = { onToggleFavorite(car.id) },
-                            isSelectedForComparison =
-                            selectedCarsForComparison.any { it.id == car.id },
-                            canAddToComparison =
-                            selectedCarsForComparison.size < maxComparisons,
-                            onToggleComparison = { onToggleComparison(car) }
+                                car = car,
+                                onClick = { onCarClick(car.id) },
+                                isFavorite = favoriteCarIds.contains(car.id),
+                                onToggleFavorite = { onToggleFavorite(car.id) },
+                                isSelectedForComparison =
+                                        selectedCarsForComparison.any { it.id == car.id },
+                                canAddToComparison =
+                                        selectedCarsForComparison.size < maxComparisons,
+                                onToggleComparison = { onToggleComparison(car) }
                         )
                     }
 
@@ -131,54 +131,50 @@ fun BrowseCarGrid(
 @Composable
 private fun EmptyStateCard() {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
-        ),
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
+            elevation =
+                    CardDefaults.cardElevation(
+                            defaultElevation = RentalWheelsDesignSystem.Elevation.large
+                    )
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(40.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                modifier = Modifier.fillMaxWidth().padding(40.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
         ) {
             Icon(
-                imageVector = Icons.Default.SearchOff,
-                contentDescription = "No results",
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                    imageVector = Icons.Default.SearchOff,
+                    contentDescription = "No results",
+                    modifier = Modifier.size(64.dp),
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
             )
 
             Text(
-                text = "No cars found",
-                style = RentalWheelsDesignSystem.Typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(top = 16.dp)
+                    text = "No cars found",
+                    style = RentalWheelsDesignSystem.Typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(top = 16.dp)
             )
 
             Text(
-                text = "Try adjusting your filters or search criteria to find more vehicles.",
-                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 8.dp)
+                    text = "Try adjusting your filters or search criteria to find more vehicles.",
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 8.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                OutlinedButton(onClick = { /* Clear filters functionality */ }) {
+                OutlinedButton(onClick = { /* Clear filters functionality */}) {
                     Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp)
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Clear Filters")
@@ -191,33 +187,28 @@ private fun EmptyStateCard() {
 @Composable
 private fun LoadMoreIndicator() {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp),
-        colors =
-        CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-        ),
-        shape = RoundedCornerShape(12.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+            colors =
+                    CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainer
+                    ),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
         ) {
             CircularProgressIndicator(
-                modifier = Modifier.size(20.dp),
-                strokeWidth = 2.dp,
-                color = MaterialTheme.colorScheme.primary
+                    modifier = Modifier.size(20.dp),
+                    strokeWidth = 2.dp,
+                    color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = "Loading more vehicles...",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "Loading more vehicles...",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
