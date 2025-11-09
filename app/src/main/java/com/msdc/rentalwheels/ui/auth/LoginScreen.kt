@@ -67,11 +67,11 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun LoginScreen(
-    isLoading: Boolean = false,
-    errorMessage: String? = null,
-    onLoginClick: (email: String, password: String) -> Unit,
-    onRegisterClick: () -> Unit,
-    onForgotPasswordClick: () -> Unit
+        isLoading: Boolean = false,
+        errorMessage: String? = null,
+        onLoginClick: (email: String, password: String) -> Unit,
+        onRegisterClick: () -> Unit,
+        onForgotPasswordClick: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -91,79 +91,77 @@ fun LoginScreen(
 
     // Animated scale for the form
     val formScale by
-    animateFloatAsState(
-        targetValue = if (isFormAnimated) 1f else 0.8f,
-        animationSpec =
-        spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        ),
-        label = "FormScale"
-    )
+            animateFloatAsState(
+                    targetValue = if (isFormAnimated) 1f else 0.8f,
+                    animationSpec =
+                            spring(
+                                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                                    stiffness = Spring.StiffnessLow
+                            ),
+                    label = "FormScale"
+            )
 
     // Dynamic background gradient
     val backgroundBrush =
-        Brush.verticalGradient(
-            colors =
-            listOf(
-                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                MaterialTheme.colorScheme.surface,
-                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+            Brush.verticalGradient(
+                    colors =
+                            listOf(
+                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.05f),
+                                    MaterialTheme.colorScheme.surface,
+                                    MaterialTheme.colorScheme.surfaceVariant
+                            )
             )
-        )
     Box(
-        modifier =
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .imePadding()
+            modifier =
+                    Modifier.fillMaxSize()
+                            .background(MaterialTheme.colorScheme.background)
+                            .imePadding()
     ) {
         Column(
-            modifier =
-            Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(RentalWheelsDesignSystem.Spacing.large),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                modifier =
+                        Modifier.fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                                .padding(RentalWheelsDesignSystem.Spacing.large),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
         ) {
             // App Logo/Title Section
             AnimatedVisibility(
-                visible = isFormAnimated,
-                enter = fadeIn() + scaleIn(),
-                exit = fadeOut() + scaleOut()
+                    visible = isFormAnimated,
+                    enter = fadeIn() + scaleIn(),
+                    exit = fadeOut() + scaleOut()
             ) {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier =
-                    Modifier.padding(
-                        bottom = RentalWheelsDesignSystem.Spacing.extraLarge * 2
-                    )
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier =
+                                Modifier.padding(
+                                        bottom = RentalWheelsDesignSystem.Spacing.extraLarge * 2
+                                )
                 ) { // App Logo
                     Card(
-                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f),
-                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                        colors =
-                        CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        ),
-                        elevation =
-                        CardDefaults.cardElevation(
-                            defaultElevation =
-                            RentalWheelsDesignSystem.Elevation.small
-                        )
+                            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f),
+                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                            colors =
+                                    CardDefaults.cardColors(
+                                            containerColor = MaterialTheme.colorScheme.primary
+                                    ),
+                            elevation =
+                                    CardDefaults.cardElevation(
+                                            defaultElevation =
+                                                    RentalWheelsDesignSystem.Elevation.small
+                                    )
                     ) {
                         Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.rental_logo),
-                                contentDescription = "App Logo",
-                                modifier =
-                                Modifier.size(
-                                    RentalWheelsDesignSystem.Spacing.Huge * 0.75f
-                                )
+                                    painter = painterResource(id = R.drawable.rental_logo),
+                                    contentDescription = "App Logo",
+                                    modifier =
+                                            Modifier.size(
+                                                    RentalWheelsDesignSystem.Spacing.Huge * 0.75f
+                                            )
                             )
                         }
                     }
@@ -171,74 +169,71 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     Text(
-                        text = "Welcome Back",
-                        style = RentalWheelsDesignSystem.Typography.headlineLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface
+                            text = "Welcome Back",
+                            style = RentalWheelsDesignSystem.Typography.headlineLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
                     )
 
                     Text(
-                        text = "Sign in to your account",
-                        style = RentalWheelsDesignSystem.Typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center
+                            text = "Sign in to your account",
+                            style = RentalWheelsDesignSystem.Typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                            textAlign = TextAlign.Center
                     )
                 }
             }
 
             // Login Form Card
             Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .scale(formScale),
-                shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                colors =
-                CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                ),
-                elevation =
-                CardDefaults.cardElevation(
-                    defaultElevation = RentalWheelsDesignSystem.Elevation.small
-                )
+                    modifier = Modifier.fillMaxWidth().scale(formScale),
+                    shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                    colors =
+                            CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surface
+                            ),
+                    elevation =
+                            CardDefaults.cardElevation(
+                                    defaultElevation = RentalWheelsDesignSystem.Elevation.small
+                            )
             ) {
                 Column(
-                    modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge),
+                        horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     // Error Message
                     AnimatedVisibility(
-                        visible = errorMessage != null,
-                        enter = fadeIn() + scaleIn(),
-                        exit = fadeOut() + scaleOut()
+                            visible = errorMessage != null,
+                            enter = fadeIn() + scaleIn(),
+                            exit = fadeOut() + scaleOut()
                     ) {
                         errorMessage?.let {
                             Card(
-                                modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        bottom =
-                                        RentalWheelsDesignSystem.Spacing
-                                            .medium
-                                    ),
-                                colors =
-                                CardDefaults.cardColors(
-                                    containerColor =
-                                    MaterialTheme.colorScheme.errorContainer
-                                ),
-                                shape =
-                                RoundedCornerShape(
-                                    RentalWheelsDesignSystem.CornerRadius.medium
-                                )
+                                    modifier =
+                                            Modifier.fillMaxWidth()
+                                                    .padding(
+                                                            bottom =
+                                                                    RentalWheelsDesignSystem.Spacing
+                                                                            .medium
+                                                    ),
+                                    colors =
+                                            CardDefaults.cardColors(
+                                                    containerColor =
+                                                            MaterialTheme.colorScheme.errorContainer
+                                            ),
+                                    shape =
+                                            RoundedCornerShape(
+                                                    RentalWheelsDesignSystem.CornerRadius.medium
+                                            )
                             ) {
                                 Text(
-                                    text = it,
-                                    modifier =
-                                    Modifier.padding(
-                                        RentalWheelsDesignSystem.Spacing.medium
-                                    ),
-                                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onErrorContainer
+                                        text = it,
+                                        modifier =
+                                                Modifier.padding(
+                                                        RentalWheelsDesignSystem.Spacing.medium
+                                                ),
+                                        style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onErrorContainer
                                 )
                             }
                         }
@@ -246,116 +241,116 @@ fun LoginScreen(
 
                     // Email Field
                     OutlinedTextField(
-                        value = email,
-                        onValueChange = {
-                            email = it
-                            isEmailValid =
-                                android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches() ||
-                                        it.isEmpty()
-                        },
-                        label = { Text("Email Address") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Email,
-                                contentDescription = null,
-                                tint =
-                                if (isEmailValid) MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.error
-                            )
-                        },
-                        isError = !isEmailValid,
-                        supportingText =
-                        if (!isEmailValid) {
-                            { Text("Please enter a valid email address") }
-                        } else null,
-                        keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Email,
-                            imeAction = ImeAction.Next
-                        ),
-                        keyboardActions =
-                        KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                        ),
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+                            value = email,
+                            onValueChange = {
+                                email = it
+                                isEmailValid =
+                                        android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches() ||
+                                                it.isEmpty()
+                            },
+                            label = { Text("Email Address") },
+                            leadingIcon = {
+                                Icon(
+                                        imageVector = Icons.Default.Email,
+                                        contentDescription = null,
+                                        tint =
+                                                if (isEmailValid) MaterialTheme.colorScheme.primary
+                                                else MaterialTheme.colorScheme.error
+                                )
+                            },
+                            isError = !isEmailValid,
+                            supportingText =
+                                    if (!isEmailValid) {
+                                        { Text("Please enter a valid email address") }
+                                    } else null,
+                            keyboardOptions =
+                                    KeyboardOptions(
+                                            keyboardType = KeyboardType.Email,
+                                            imeAction = ImeAction.Next
+                                    ),
+                            keyboardActions =
+                                    KeyboardActions(
+                                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                                    ),
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
                     )
 
                     Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Password Field
                     OutlinedTextField(
-                        value = password,
-                        onValueChange = {
-                            password = it
-                            isPasswordValid = it.length >= 6 || it.isEmpty()
-                        },
-                        label = { Text("Password") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = null,
-                                tint =
-                                if (isPasswordValid)
-                                    MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.error
-                            )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                            value = password,
+                            onValueChange = {
+                                password = it
+                                isPasswordValid = it.length >= 6 || it.isEmpty()
+                            },
+                            label = { Text("Password") },
+                            leadingIcon = {
                                 Icon(
-                                    imageVector =
-                                    if (passwordVisible) Icons.Default.Visibility
-                                    else Icons.Default.VisibilityOff,
-                                    contentDescription =
-                                    if (passwordVisible) "Hide password"
-                                    else "Show password"
+                                        imageVector = Icons.Default.Lock,
+                                        contentDescription = null,
+                                        tint =
+                                                if (isPasswordValid)
+                                                        MaterialTheme.colorScheme.primary
+                                                else MaterialTheme.colorScheme.error
                                 )
-                            }
-                        },
-                        visualTransformation =
-                        if (passwordVisible) VisualTransformation.None
-                        else PasswordVisualTransformation(),
-                        isError = !isPasswordValid,
-                        supportingText =
-                        if (!isPasswordValid) {
-                            { Text("Password must be at least 6 characters") }
-                        } else null,
-                        keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions =
-                        KeyboardActions(
-                            onDone = {
-                                keyboardController?.hide()
-                                if (email.isNotEmpty() &&
-                                    password.isNotEmpty() &&
-                                    isEmailValid &&
-                                    isPasswordValid
-                                ) {
-                                    onLoginClick(email, password)
+                            },
+                            trailingIcon = {
+                                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                                    Icon(
+                                            imageVector =
+                                                    if (passwordVisible) Icons.Default.Visibility
+                                                    else Icons.Default.VisibilityOff,
+                                            contentDescription =
+                                                    if (passwordVisible) "Hide password"
+                                                    else "Show password"
+                                    )
                                 }
-                            }
-                        ),
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+                            },
+                            visualTransformation =
+                                    if (passwordVisible) VisualTransformation.None
+                                    else PasswordVisualTransformation(),
+                            isError = !isPasswordValid,
+                            supportingText =
+                                    if (!isPasswordValid) {
+                                        { Text("Password must be at least 6 characters") }
+                                    } else null,
+                            keyboardOptions =
+                                    KeyboardOptions(
+                                            keyboardType = KeyboardType.Password,
+                                            imeAction = ImeAction.Done
+                                    ),
+                            keyboardActions =
+                                    KeyboardActions(
+                                            onDone = {
+                                                keyboardController?.hide()
+                                                if (email.isNotEmpty() &&
+                                                                password.isNotEmpty() &&
+                                                                isEmailValid &&
+                                                                isPasswordValid
+                                                ) {
+                                                    onLoginClick(email, password)
+                                                }
+                                            }
+                                    ),
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
                     )
 
                     Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
                     // Forgot Password
                     TextButton(
-                        onClick = onForgotPasswordClick,
-                        modifier = Modifier.align(Alignment.End)
+                            onClick = onForgotPasswordClick,
+                            modifier = Modifier.align(Alignment.End)
                     ) {
                         Text(
-                            text = "Forgot Password?",
-                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.primary
+                                text = "Forgot Password?",
+                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary
                         )
                     }
 
@@ -363,43 +358,43 @@ fun LoginScreen(
 
                     // Login Button - Premium Design
                     PremiumButton(
-                        onClick = {
-                            if (email.isNotEmpty() &&
-                                password.isNotEmpty() &&
-                                isEmailValid &&
-                                isPasswordValid
-                            ) {
-                                onLoginClick(email, password)
-                            }
-                        },
-                        variant = PremiumButtonVariant.Primary,
-                        enabled =
-                        !isLoading &&
-                                email.isNotEmpty() &&
-                                password.isNotEmpty() &&
-                                isEmailValid &&
-                                isPasswordValid,
-                        modifier = Modifier.fillMaxWidth()
+                            onClick = {
+                                if (email.isNotEmpty() &&
+                                                password.isNotEmpty() &&
+                                                isEmailValid &&
+                                                isPasswordValid
+                                ) {
+                                    onLoginClick(email, password)
+                                }
+                            },
+                            variant = PremiumButtonVariant.Primary,
+                            enabled =
+                                    !isLoading &&
+                                            email.isNotEmpty() &&
+                                            password.isNotEmpty() &&
+                                            isEmailValid &&
+                                            isPasswordValid,
+                            modifier = Modifier.fillMaxWidth()
                     ) { Text(if (isLoading) "Signing In..." else "Sign In") }
 
                     Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.large))
 
                     // Register Link
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Don't have an account? ",
-                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                text = "Don't have an account? ",
+                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                         )
                         TextButton(onClick = onRegisterClick) {
                             Text(
-                                text = "Sign Up",
-                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                                fontWeight = FontWeight.SemiBold,
-                                color = MaterialTheme.colorScheme.primary
+                                    text = "Sign Up",
+                                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
