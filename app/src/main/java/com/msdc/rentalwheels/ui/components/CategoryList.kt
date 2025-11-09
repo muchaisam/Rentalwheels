@@ -5,7 +5,6 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -40,9 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -100,89 +97,67 @@ fun CategoryList(
             },
         shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
         color = MaterialTheme.colorScheme.surface,
-        tonalElevation = RentalWheelsDesignSystem.Elevation.small,
-        shadowElevation = RentalWheelsDesignSystem.Elevation.medium
+        tonalElevation = RentalWheelsDesignSystem.Elevation.extraSmall
     ) {
-        // Subtle gradient background for premium feel
-        Box(
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .background(
-                    brush =
-                    Brush.verticalGradient(
-                        colors =
-                        listOf(
-                            MaterialTheme.colorScheme
-                                .surface,
-                            MaterialTheme.colorScheme
-                                .surface.copy(
-                                    alpha = 0.95f
-                                )
-                        )
+        Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge)) {
+            // Enhanced Header with better spacing
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "Car Categories",
+                        style = RentalWheelsDesignSystem.Typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
-                )
-        ) {
-            Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge)) {
-                // Enhanced Header with better spacing
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column {
-                        Text(
-                            text = "Car Categories",
-                            style = RentalWheelsDesignSystem.Typography.headlineSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                        Text(
-                            text = "Browse by vehicle type",
-                            style = RentalWheelsDesignSystem.Typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier =
-                            Modifier.padding(top = RentalWheelsDesignSystem.Spacing.XXS)
-                        )
-                    }
-
-                    TextButton(onClick = onSeeAllClick, modifier = Modifier.padding(0.dp)) {
-                        Text(
-                            text = "See All",
-                            style = RentalWheelsDesignSystem.Typography.labelLarge,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Medium
-                        )
-                        Spacer(
-                            modifier =
-                            Modifier.width(RentalWheelsDesignSystem.Spacing.extraSmall)
-                        )
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = "See All Categories",
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
-                        )
-                    }
+                    Text(
+                        text = "Browse by vehicle type",
+                        style = RentalWheelsDesignSystem.Typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier =
+                        Modifier.padding(top = RentalWheelsDesignSystem.Spacing.XXS)
+                    )
                 }
 
-                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.large))
+                TextButton(onClick = onSeeAllClick, modifier = Modifier.padding(0.dp)) {
+                    Text(
+                        text = "See All",
+                        style = RentalWheelsDesignSystem.Typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Spacer(
+                        modifier =
+                        Modifier.width(RentalWheelsDesignSystem.Spacing.extraSmall)
+                    )
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = "See All Categories",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                    )
+                }
+            }
 
-                // Categories Row with staggered animations
-                LazyRow(
-                    horizontalArrangement =
-                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium),
-                    contentPadding =
-                    PaddingValues(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
-                ) {
-                    itemsIndexed(items = categories, key = { _, category -> category.id }) { index,
-                                                                                             category ->
-                        CategoryCard(
-                            category = category,
-                            onClick = { onCategoryClick(category) },
-                            animationDelay = index * 50L // Staggered animation
-                        )
-                    }
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.large))
+
+            // Categories Row with staggered animations
+            LazyRow(
+                horizontalArrangement =
+                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium),
+                contentPadding =
+                PaddingValues(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
+            ) {
+                itemsIndexed(items = categories, key = { _, category -> category.id }) { index,
+                                                                                         category ->
+                    CategoryCard(
+                        category = category,
+                        onClick = { onCategoryClick(category) },
+                        animationDelay = index * 50L // Staggered animation
+                    )
                 }
             }
         }
@@ -230,10 +205,8 @@ private fun CategoryCard(
         modifier =
         modifier
             .size(
-                width = 140.dp, // Design system:
-                // ~RentalWheelsDesignSystem.Spacing.Huge * 2.2
-                height = 120.dp // Design system:
-                // ~RentalWheelsDesignSystem.Spacing.Huge * 1.875
+                width = RentalWheelsDesignSystem.Spacing.Huge * 2.2f,
+                height = RentalWheelsDesignSystem.Spacing.Huge * 1.875f
             )
             .scale(scale)
             .graphicsLayer {
@@ -254,8 +227,7 @@ private fun CategoryCard(
         shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
         colors =
         CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
         elevation =
         CardDefaults.cardElevation(
@@ -263,75 +235,41 @@ private fun CategoryCard(
             pressedElevation = RentalWheelsDesignSystem.Elevation.medium
         )
     ) {
-        Box(
+        Column(
             modifier =
             Modifier
                 .fillMaxSize()
-                .clip(
-                    RoundedCornerShape(
-                        RentalWheelsDesignSystem.CornerRadius.large
-                    )
-                )
-                .background(
-                    brush =
-                    Brush.verticalGradient(
-                        colors =
-                        listOf(
-                            MaterialTheme.colorScheme
-                                .primary.copy(
-                                    alpha = 0.12f
-                                ),
-                            MaterialTheme.colorScheme
-                                .primary.copy(
-                                    alpha = 0.05f
-                                ),
-                            MaterialTheme.colorScheme
-                                .surface.copy(
-                                    alpha = 0.02f
-                                )
-                        )
-                    )
-                )
+                .padding(RentalWheelsDesignSystem.Spacing.medium),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Column(
-                modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(RentalWheelsDesignSystem.Spacing.medium),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+            // Icon Container
+            Surface(
+                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge),
+                shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+                color = MaterialTheme.colorScheme.primaryContainer,
+                tonalElevation = RentalWheelsDesignSystem.Elevation.extraSmall
             ) {
-                // Premium Icon Container with glassmorphism
-                Surface(
-                    modifier = Modifier.size(56.dp),
-                    shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
-                    tonalElevation = RentalWheelsDesignSystem.Elevation.small,
-                    shadowElevation = RentalWheelsDesignSystem.Elevation.extraSmall
-                ) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Icon(
-                            imageVector = Icons.Default.DirectionsCar,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.XXL)
-                        )
-                    }
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = Icons.Default.DirectionsCar,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.XXL)
+                    )
                 }
-
-                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
-
-                // Category Name with proper typography
-                Text(
-                    text = category.name,
-                    style = RentalWheelsDesignSystem.Typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 2,
-                    modifier =
-                    Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
-                )
             }
+
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
+
+            // Category Name
+            Text(
+                text = category.name,
+                style = RentalWheelsDesignSystem.Typography.labelLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 2
+            )
         }
     }
 }
