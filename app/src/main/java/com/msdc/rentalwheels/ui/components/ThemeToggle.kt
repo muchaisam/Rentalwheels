@@ -40,98 +40,95 @@ fun ThemeToggle(themeState: ThemeState, modifier: Modifier = Modifier) {
 
     // Animated colors and properties
     val toggleColor by
-    animateColorAsState(
-        targetValue =
-        if (isDarkTheme) {
-            MaterialTheme.colorScheme.primary
-        } else {
-            MaterialTheme.colorScheme.tertiary
-        },
-        animationSpec = tween(300),
-        label = "ToggleColor"
-    )
+            animateColorAsState(
+                    targetValue =
+                            if (isDarkTheme) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.tertiary
+                            },
+                    animationSpec = tween(300),
+                    label = "ToggleColor"
+            )
 
     val backgroundColor by
-    animateColorAsState(
-        targetValue = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
-        animationSpec = tween(300),
-        label = "BackgroundColor"
-    )
+            animateColorAsState(
+                    targetValue = MaterialTheme.colorScheme.surfaceContainer,
+                    animationSpec = tween(300),
+                    label = "BackgroundColor"
+            )
 
     val iconScale by
-    animateFloatAsState(
-        targetValue = if (isDarkTheme) 1.1f else 1.0f,
-        animationSpec = spring(dampingRatio = 0.6f),
-        label = "IconScale"
-    )
+            animateFloatAsState(
+                    targetValue = if (isDarkTheme) 1.1f else 1.0f,
+                    animationSpec = spring(dampingRatio = 0.6f),
+                    label = "IconScale"
+            )
 
     Row(
-        modifier =
-        modifier
-            .background(
-                backgroundColor,
-                RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge)
-            )
-            .border(
-                RentalWheelsDesignSystem.Elevation.extraSmall,
-                MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-                RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge)
-            )
-            .padding(RentalWheelsDesignSystem.Spacing.XXS)
-            .clickable {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                themeState.toggleTheme()
-            },
-        horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
-        verticalAlignment = Alignment.CenterVertically
+            modifier =
+                    modifier.background(
+                                    backgroundColor,
+                                    RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge)
+                            )
+                            .border(
+                                    RentalWheelsDesignSystem.Elevation.extraSmall,
+                                    MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
+                                    RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge)
+                            )
+                            .padding(RentalWheelsDesignSystem.Spacing.XXS)
+                            .clickable {
+                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                themeState.toggleTheme()
+                            },
+            horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
+            verticalAlignment = Alignment.CenterVertically
     ) {
         // Light mode icon
         Box(
-            modifier =
-            Modifier
-                .size(RentalWheelsDesignSystem.Spacing.Huge * 0.625f)
-                .background(
-                    if (!isDarkTheme) toggleColor else Color.Transparent,
-                    CircleShape
-                )
-                .scale(if (!isDarkTheme) iconScale else 1f),
-            contentAlignment = Alignment.Center
+                modifier =
+                        Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 0.625f)
+                                .background(
+                                        if (!isDarkTheme) toggleColor else Color.Transparent,
+                                        CircleShape
+                                )
+                                .scale(if (!isDarkTheme) iconScale else 1f),
+                contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = Icons.Default.LightMode,
-                contentDescription = "Light mode",
-                tint =
-                if (!isDarkTheme) {
-                    MaterialTheme.colorScheme.onPrimary
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-                },
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                    imageVector = Icons.Default.LightMode,
+                    contentDescription = "Light mode",
+                    tint =
+                            if (!isDarkTheme) {
+                                MaterialTheme.colorScheme.onPrimary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                            },
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
             )
         }
 
         // Dark mode icon
         Box(
-            modifier =
-            Modifier
-                .size(RentalWheelsDesignSystem.Spacing.Huge * 0.625f)
-                .background(
-                    if (isDarkTheme) toggleColor else Color.Transparent,
-                    CircleShape
-                )
-                .scale(if (isDarkTheme) iconScale else 1f),
-            contentAlignment = Alignment.Center
+                modifier =
+                        Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 0.625f)
+                                .background(
+                                        if (isDarkTheme) toggleColor else Color.Transparent,
+                                        CircleShape
+                                )
+                                .scale(if (isDarkTheme) iconScale else 1f),
+                contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = Icons.Default.DarkMode,
-                contentDescription = "Dark mode",
-                tint =
-                if (isDarkTheme) {
-                    MaterialTheme.colorScheme.onPrimary
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-                },
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                    imageVector = Icons.Default.DarkMode,
+                    contentDescription = "Dark mode",
+                    tint =
+                            if (isDarkTheme) {
+                                MaterialTheme.colorScheme.onPrimary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                            },
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
             )
         }
     }
