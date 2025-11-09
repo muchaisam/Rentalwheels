@@ -38,41 +38,39 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 private fun SpecificationItem(
-    icon: ImageVector,
-    label: String,
-    value: String,
-    modifier: Modifier = Modifier
+        icon: ImageVector,
+        label: String,
+        value: String,
+        modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier,
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
-        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+            modifier = modifier,
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+            color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(RentalWheelsDesignSystem.Spacing.medium),
-            horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.medium),
+                horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
             )
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraSmall))
             Text(
-                text = label,
-                style = RentalWheelsDesignSystem.Typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
+                    text = label,
+                    style = RentalWheelsDesignSystem.Typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
             )
             Text(
-                text = value,
-                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Center
+                    text = value,
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
             )
         }
     }
@@ -81,35 +79,33 @@ private fun SpecificationItem(
 @Composable
 private fun FeatureChip(text: String, modifier: Modifier = Modifier) {
     Surface(
-        modifier = modifier,
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small),
-        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+            modifier = modifier,
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small),
+            color = MaterialTheme.colorScheme.primaryContainer
     ) {
         Row(
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = RentalWheelsDesignSystem.Spacing.small,
-                    vertical = RentalWheelsDesignSystem.Spacing.extraSmall
-                ),
-            verticalAlignment = Alignment.CenterVertically
+                modifier =
+                        Modifier.fillMaxWidth()
+                                .padding(
+                                        horizontal = RentalWheelsDesignSystem.Spacing.small,
+                                        vertical = RentalWheelsDesignSystem.Spacing.extraSmall
+                                ),
+                verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
-                modifier =
-                Modifier
-                    .size(RentalWheelsDesignSystem.Spacing.XXS)
-                    .background(
-                        MaterialTheme.colorScheme.primary,
-                        shape = androidx.compose.foundation.shape.CircleShape
-                    )
+                    modifier =
+                            Modifier.size(RentalWheelsDesignSystem.Spacing.XXS)
+                                    .background(
+                                            MaterialTheme.colorScheme.primary,
+                                            shape = androidx.compose.foundation.shape.CircleShape
+                                    )
             )
             Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
             Text(
-                text = text,
-                style = RentalWheelsDesignSystem.Typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.weight(1f)
+                    text = text,
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.weight(1f)
             )
         }
     }
@@ -118,42 +114,38 @@ private fun FeatureChip(text: String, modifier: Modifier = Modifier) {
 @Composable
 private fun BookingDatesCard(startDate: LocalDate, endDate: LocalDate, totalDays: Int) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
-        elevation = CardDefaults.cardElevation(RentalWheelsDesignSystem.Elevation.small),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+            elevation = CardDefaults.cardElevation(RentalWheelsDesignSystem.Elevation.small),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(RentalWheelsDesignSystem.Spacing.large)
-        ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.large)) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Rental Period",
-                    style = RentalWheelsDesignSystem.Typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                        text = "Rental Period",
+                        style = RentalWheelsDesignSystem.Typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Surface(
-                    shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small),
-                    color = MaterialTheme.colorScheme.primaryContainer
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small),
+                        color = MaterialTheme.colorScheme.primaryContainer
                 ) {
                     Text(
-                        text = "$totalDays days",
-                        style = RentalWheelsDesignSystem.Typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier =
-                        Modifier.padding(
-                            horizontal = RentalWheelsDesignSystem.Spacing.medium,
-                            vertical = RentalWheelsDesignSystem.Spacing.small
-                        )
+                            text = "$totalDays days",
+                            style = RentalWheelsDesignSystem.Typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier =
+                                    Modifier.padding(
+                                            horizontal = RentalWheelsDesignSystem.Spacing.medium,
+                                            vertical = RentalWheelsDesignSystem.Spacing.small
+                                    )
                     )
                 }
             }
@@ -161,24 +153,24 @@ private fun BookingDatesCard(startDate: LocalDate, endDate: LocalDate, totalDays
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement =
-                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement =
+                            Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 DateCard(
-                    icon = Icons.Default.DateRange,
-                    label = "Pick-up",
-                    date = startDate,
-                    time = "10:00 AM",
-                    modifier = Modifier.weight(1f)
+                        icon = Icons.Default.DateRange,
+                        label = "Pick-up",
+                        date = startDate,
+                        time = "10:00 AM",
+                        modifier = Modifier.weight(1f)
                 )
 
                 DateCard(
-                    icon = Icons.Default.CalendarMonth,
-                    label = "Drop-off",
-                    date = endDate,
-                    time = "10:00 AM",
-                    modifier = Modifier.weight(1f)
+                        icon = Icons.Default.CalendarMonth,
+                        label = "Drop-off",
+                        date = endDate,
+                        time = "10:00 AM",
+                        modifier = Modifier.weight(1f)
                 )
             }
 
@@ -186,16 +178,16 @@ private fun BookingDatesCard(startDate: LocalDate, endDate: LocalDate, totalDays
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = Icons.Default.LocationOn,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
                 )
                 Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
                 Text(
-                    text = "Nairobi City Center - Same pick-up and drop-off location",
-                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = "Nairobi City Center - Same pick-up and drop-off location",
+                        style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -204,52 +196,50 @@ private fun BookingDatesCard(startDate: LocalDate, endDate: LocalDate, totalDays
 
 @Composable
 private fun DateCard(
-    icon: ImageVector,
-    label: String,
-    date: LocalDate,
-    time: String,
-    modifier: Modifier = Modifier
+        icon: ImageVector,
+        label: String,
+        date: LocalDate,
+        time: String,
+        modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier,
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
-        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+            modifier = modifier,
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+            color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(RentalWheelsDesignSystem.Spacing.medium),
-            horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.medium),
+                horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
             )
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraSmall))
 
             Text(
-                text = label,
-                style = RentalWheelsDesignSystem.Typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
+                    text = label,
+                    style = RentalWheelsDesignSystem.Typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
             )
 
             Text(
-                text = date.format(DateTimeFormatter.ofPattern("MMM dd")),
-                style = RentalWheelsDesignSystem.Typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+                    text = date.format(DateTimeFormatter.ofPattern("MMM dd")),
+                    style = RentalWheelsDesignSystem.Typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
             )
 
             Text(
-                text = time,
-                style = RentalWheelsDesignSystem.Typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
+                    text = time,
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
             )
         }
     }
@@ -257,83 +247,78 @@ private fun DateCard(
 
 @Composable
 private fun PricingBreakdownCard(
-    dailyRate: Int,
-    totalDays: Int,
-    subtotal: Int,
-    insurance: Int,
-    taxes: Int,
-    total: Int
+        dailyRate: Int,
+        totalDays: Int,
+        subtotal: Int,
+        insurance: Int,
+        taxes: Int,
+        total: Int
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
-        elevation = CardDefaults.cardElevation(RentalWheelsDesignSystem.Elevation.small),
-        colors =
-        CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-        )
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+            elevation = CardDefaults.cardElevation(RentalWheelsDesignSystem.Elevation.small),
+            colors =
+                    CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                    )
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(RentalWheelsDesignSystem.Spacing.large)
-        ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.large)) {
             Text(
-                text = "Price Breakdown",
-                style = RentalWheelsDesignSystem.Typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
+                    text = "Price Breakdown",
+                    style = RentalWheelsDesignSystem.Typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
             PriceRow(
-                label = "Daily Rate",
-                value = CurrencyUtils.formatDailyRate(dailyRate),
-                description = "$totalDays days"
+                    label = "Daily Rate",
+                    value = CurrencyUtils.formatDailyRate(dailyRate),
+                    description = "$totalDays days"
             )
 
             PriceRow(label = "Subtotal", value = CurrencyUtils.formatDailyRate(subtotal))
 
             PriceRow(
-                label = "Insurance",
-                value = CurrencyUtils.formatDailyRate(insurance),
-                description = "15% coverage"
+                    label = "Insurance",
+                    value = CurrencyUtils.formatDailyRate(insurance),
+                    description = "15% coverage"
             )
 
             PriceRow(
-                label = "Taxes & Fees",
-                value = CurrencyUtils.formatDailyRate(taxes),
-                description = "8% VAT"
+                    label = "Taxes & Fees",
+                    value = CurrencyUtils.formatDailyRate(taxes),
+                    description = "8% VAT"
             )
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
             androidx.compose.material3.HorizontalDivider(
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
-                thickness = RentalWheelsDesignSystem.Elevation.extraSmall
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                    thickness = RentalWheelsDesignSystem.Elevation.extraSmall
             )
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Total Amount",
-                    style = RentalWheelsDesignSystem.Typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                        text = "Total Amount",
+                        style = RentalWheelsDesignSystem.Typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(
-                    text = CurrencyUtils.formatDailyRate(total),
-                    style = RentalWheelsDesignSystem.Typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                        text = CurrencyUtils.formatDailyRate(total),
+                        style = RentalWheelsDesignSystem.Typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
                 )
             }
         }
@@ -343,33 +328,32 @@ private fun PricingBreakdownCard(
 @Composable
 private fun PriceRow(label: String, value: String, description: String? = null) {
     Row(
-        modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = RentalWheelsDesignSystem.Spacing.extraSmall),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+            modifier =
+                    Modifier.fillMaxWidth()
+                            .padding(vertical = RentalWheelsDesignSystem.Spacing.extraSmall),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
     ) {
         Column {
             Text(
-                text = label,
-                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                    text = label,
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
             )
             description?.let {
                 Text(
-                    text = it,
-                    style = RentalWheelsDesignSystem.Typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = it,
+                        style = RentalWheelsDesignSystem.Typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
 
         Text(
-            text = value,
-            style = RentalWheelsDesignSystem.Typography.bodyLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onSurface
+                text = value,
+                style = RentalWheelsDesignSystem.Typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface
         )
     }
 }
@@ -377,60 +361,56 @@ private fun PriceRow(label: String, value: String, description: String? = null) 
 @Composable
 private fun TermsConditionsCard(car: Car) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
-        elevation = CardDefaults.cardElevation(RentalWheelsDesignSystem.Elevation.small),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+            elevation = CardDefaults.cardElevation(RentalWheelsDesignSystem.Elevation.small),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(RentalWheelsDesignSystem.Spacing.large)
-        ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.large)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                        imageVector = Icons.Default.Info,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
                 )
                 Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
                 Text(
-                    text = "Important Information",
-                    style = RentalWheelsDesignSystem.Typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                        text = "Important Information",
+                        style = RentalWheelsDesignSystem.Typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
             TermsItem(
-                icon = Icons.Default.Security,
-                title = "Insurance Coverage",
-                description =
-                if (car.insuranceIncluded) "Comprehensive insurance included"
-                else "Insurance not included - additional coverage available"
+                    icon = Icons.Default.Security,
+                    title = "Insurance Coverage",
+                    description =
+                            if (car.insuranceIncluded) "Comprehensive insurance included"
+                            else "Insurance not included - additional coverage available"
             )
 
             TermsItem(
-                icon = Icons.Default.AccessTime,
-                title = "Cancellation Policy",
-                description = car.cancellationPolicy
+                    icon = Icons.Default.AccessTime,
+                    title = "Cancellation Policy",
+                    description = car.cancellationPolicy
             )
 
             TermsItem(
-                icon = Icons.Default.LocationOn,
-                title = "Fuel Policy",
-                description = "Return vehicle with same fuel level as pickup"
+                    icon = Icons.Default.LocationOn,
+                    title = "Fuel Policy",
+                    description = "Return vehicle with same fuel level as pickup"
             )
 
             if (car.depositRequired > 0) {
                 TermsItem(
-                    icon = Icons.Default.Security,
-                    title = "Security Deposit",
-                    description =
-                    "Refundable deposit of ${CurrencyUtils.formatDailyRate(car.depositRequired.toInt())} required"
+                        icon = Icons.Default.Security,
+                        title = "Security Deposit",
+                        description =
+                                "Refundable deposit of ${CurrencyUtils.formatDailyRate(car.depositRequired.toInt())} required"
                 )
             }
         }
@@ -440,23 +420,22 @@ private fun TermsConditionsCard(car: Car) {
 @Composable
 private fun TermsItem(icon: ImageVector, title: String, description: String) {
     Row(
-        modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = RentalWheelsDesignSystem.Spacing.small),
-        verticalAlignment = Alignment.Top
+            modifier =
+                    Modifier.fillMaxWidth()
+                            .padding(vertical = RentalWheelsDesignSystem.Spacing.small),
+            verticalAlignment = Alignment.Top
     ) {
         Surface(
-            shape = androidx.compose.foundation.shape.CircleShape,
-            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
-            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f)
+                shape = androidx.compose.foundation.shape.CircleShape,
+                color = MaterialTheme.colorScheme.primaryContainer,
+                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f)
         ) {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                 Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
+                        imageVector = icon,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
                 )
             }
         }
@@ -465,16 +444,16 @@ private fun TermsItem(icon: ImageVector, title: String, description: String) {
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = title,
-                style = RentalWheelsDesignSystem.Typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface
+                    text = title,
+                    style = RentalWheelsDesignSystem.Typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = description,
-                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                lineHeight = RentalWheelsDesignSystem.Typography.bodyMedium.lineHeight
+                    text = description,
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    lineHeight = RentalWheelsDesignSystem.Typography.bodyMedium.lineHeight
             )
         }
     }
