@@ -61,150 +61,144 @@ enum class CarCardVariant {
 /** Premium Car Card Component Professional design with micro-animations and proper branding */
 @Composable
 fun PremiumCarCard(
-    car: Car,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    variant: CarCardVariant = CarCardVariant.Standard,
-    onFavorite: (() -> Unit)? = null,
-    showPricing: Boolean = true,
-    isFavorite: Boolean = false
+        car: Car,
+        onClick: () -> Unit,
+        modifier: Modifier = Modifier,
+        variant: CarCardVariant = CarCardVariant.Standard,
+        onFavorite: (() -> Unit)? = null,
+        showPricing: Boolean = true,
+        isFavorite: Boolean = false
 ) {
     val (cardWidth, cardHeight, imageHeight) =
-        when (variant) {
-            CarCardVariant.Standard ->
-                Triple(
-                    RentalWheelsDesignSystem.Spacing.Huge * 4.375f,
-                    RentalWheelsDesignSystem.Spacing.Huge * 5.625f,
-                    RentalWheelsDesignSystem.Spacing.Huge * 3.125f
-                )
-
-            CarCardVariant.Compact ->
-                Triple(
-                    RentalWheelsDesignSystem.Spacing.Huge * 3.125f,
-                    RentalWheelsDesignSystem.Spacing.Huge * 4.375f,
-                    RentalWheelsDesignSystem.Spacing.Huge * 2.1875f
-                )
-
-            CarCardVariant.Featured ->
-                Triple(
-                    RentalWheelsDesignSystem.Spacing.Huge * 5f,
-                    RentalWheelsDesignSystem.Spacing.Huge * 6.25f,
-                    RentalWheelsDesignSystem.Spacing.Huge * 3.75f
-                )
-        }
+            when (variant) {
+                CarCardVariant.Standard ->
+                        Triple(
+                                RentalWheelsDesignSystem.Spacing.Huge * 4.375f,
+                                RentalWheelsDesignSystem.Spacing.Huge * 5.625f,
+                                RentalWheelsDesignSystem.Spacing.Huge * 3.125f
+                        )
+                CarCardVariant.Compact ->
+                        Triple(
+                                RentalWheelsDesignSystem.Spacing.Huge * 3.125f,
+                                RentalWheelsDesignSystem.Spacing.Huge * 4.375f,
+                                RentalWheelsDesignSystem.Spacing.Huge * 2.1875f
+                        )
+                CarCardVariant.Featured ->
+                        Triple(
+                                RentalWheelsDesignSystem.Spacing.Huge * 5f,
+                                RentalWheelsDesignSystem.Spacing.Huge * 6.25f,
+                                RentalWheelsDesignSystem.Spacing.Huge * 3.75f
+                        )
+            }
 
     Card(
-        modifier =
-        modifier
-            .width(cardWidth)
-            .height(cardHeight)
-            .animateContentSize(
-                animationSpec =
-                spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessLow
-                )
-            )
-            .clickable { onClick() },
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation =
-        CardDefaults.cardElevation(
-            defaultElevation = RentalWheelsDesignSystem.Elevation.Card,
-            pressedElevation = RentalWheelsDesignSystem.Elevation.large,
-            hoveredElevation = RentalWheelsDesignSystem.Elevation.large
-        )
+            modifier =
+                    modifier.width(cardWidth)
+                            .height(cardHeight)
+                            .animateContentSize(
+                                    animationSpec =
+                                            spring(
+                                                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                                                    stiffness = Spring.StiffnessLow
+                                            )
+                            )
+                            .clickable { onClick() },
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            elevation =
+                    CardDefaults.cardElevation(
+                            defaultElevation = RentalWheelsDesignSystem.Elevation.Card,
+                            pressedElevation = RentalWheelsDesignSystem.Elevation.large,
+                            hoveredElevation = RentalWheelsDesignSystem.Elevation.large
+                    )
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.fillMaxSize()) {
                 // Hero Image Section
                 Box(
-                    modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(imageHeight)
-                        .clip(
-                            RoundedCornerShape(
-                                topStart =
-                                RentalWheelsDesignSystem
-                                    .CornerRadius.extraLarge,
-                                topEnd =
-                                RentalWheelsDesignSystem
-                                    .CornerRadius.extraLarge
-                            )
-                        )
+                        modifier =
+                                Modifier.fillMaxWidth()
+                                        .height(imageHeight)
+                                        .clip(
+                                                RoundedCornerShape(
+                                                        topStart =
+                                                                RentalWheelsDesignSystem
+                                                                        .CornerRadius.extraLarge,
+                                                        topEnd =
+                                                                RentalWheelsDesignSystem
+                                                                        .CornerRadius.extraLarge
+                                                )
+                                        )
                 ) {
                     // Car Image
                     AsyncImage(
-                        model =
-                        ImageRequest.Builder(LocalContext.current)
-                            .data(
-                                car.imageUrl.ifEmpty {
-                                    "https://via.placeholder.com/400x300?text=Car"
-                                }
-                            )
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = "${car.make} ${car.model}",
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
+                            model =
+                                    ImageRequest.Builder(LocalContext.current)
+                                            .data(
+                                                    car.imageUrl.ifEmpty {
+                                                        "https://via.placeholder.com/400x300?text=Car"
+                                                    }
+                                            )
+                                            .crossfade(true)
+                                            .build(),
+                            contentDescription = "${car.make} ${car.model}",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
                     )
 
                     // Gradient Overlay
                     Box(
-                        modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .background(
-                                Brush.verticalGradient(
-                                    colors =
-                                    listOf(
-                                        Color.Transparent,
-                                        Color.Black.copy(
-                                            alpha = 0.3f
-                                        )
-                                    ),
-                                    startY = 0f,
-                                    endY = Float.POSITIVE_INFINITY
-                                )
-                            )
+                            modifier =
+                                    Modifier.fillMaxSize()
+                                            .background(
+                                                    Brush.verticalGradient(
+                                                            colors =
+                                                                    listOf(
+                                                                            Color.Transparent,
+                                                                            Color.Black.copy(
+                                                                                    alpha = 0.3f
+                                                                            )
+                                                                    ),
+                                                            startY = 0f,
+                                                            endY = Float.POSITIVE_INFINITY
+                                                    )
+                                            )
                     )
 
                     // Favorite Button
                     if (onFavorite != null) {
                         IconButton(
-                            onClick = onFavorite,
-                            modifier =
-                            Modifier
-                                .align(Alignment.TopEnd)
-                                .padding(
-                                    RentalWheelsDesignSystem.Spacing.extraSmall
-                                )
+                                onClick = onFavorite,
+                                modifier =
+                                        Modifier.align(Alignment.TopEnd)
+                                                .padding(
+                                                        RentalWheelsDesignSystem.Spacing.extraSmall
+                                                )
                         ) {
                             androidx.compose.animation.AnimatedVisibility(
-                                visible = true,
-                                enter =
-                                scaleIn(
-                                    tween(RentalWheelsDesignSystem.Animation.Fast)
-                                ) + fadeIn(),
-                                exit =
-                                scaleOut(
-                                    tween(RentalWheelsDesignSystem.Animation.Fast)
-                                ) + fadeOut()
+                                    visible = true,
+                                    enter =
+                                            scaleIn(
+                                                    tween(RentalWheelsDesignSystem.Animation.Fast)
+                                            ) + fadeIn(),
+                                    exit =
+                                            scaleOut(
+                                                    tween(RentalWheelsDesignSystem.Animation.Fast)
+                                            ) + fadeOut()
                             ) {
                                 Icon(
-                                    imageVector =
-                                    if (isFavorite) Icons.Filled.Favorite
-                                    else Icons.Outlined.FavoriteBorder,
-                                    contentDescription = "Toggle Favorite",
-                                    tint =
-                                    if (isFavorite)
-                                        RentalWheelsDesignSystem.Colors.Error
-                                    else RentalWheelsDesignSystem.Colors.NeutralWhite,
-                                    modifier =
-                                    Modifier.size(
-                                        RentalWheelsDesignSystem.Spacing.extraLarge
-                                    )
+                                        imageVector =
+                                                if (isFavorite) Icons.Filled.Favorite
+                                                else Icons.Outlined.FavoriteBorder,
+                                        contentDescription = "Toggle Favorite",
+                                        tint =
+                                                if (isFavorite)
+                                                        RentalWheelsDesignSystem.Colors.Error
+                                                else RentalWheelsDesignSystem.Colors.NeutralWhite,
+                                        modifier =
+                                                Modifier.size(
+                                                        RentalWheelsDesignSystem.Spacing.extraLarge
+                                                )
                                 )
                             }
                         }
@@ -213,53 +207,52 @@ fun PremiumCarCard(
                     // Rating Badge
                     if (car.rating > 0) {
                         Card(
-                            modifier =
-                            Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(RentalWheelsDesignSystem.Spacing.small),
-                            colors =
-                            CardDefaults.cardColors(
-                                containerColor =
-                                RentalWheelsDesignSystem.Colors.NeutralWhite
-                                    .copy(alpha = 0.95f)
-                            ),
-                            shape =
-                            RoundedCornerShape(
-                                RentalWheelsDesignSystem.CornerRadius.medium
-                            )
+                                modifier =
+                                        Modifier.align(Alignment.BottomStart)
+                                                .padding(RentalWheelsDesignSystem.Spacing.small),
+                                colors =
+                                        CardDefaults.cardColors(
+                                                containerColor =
+                                                        RentalWheelsDesignSystem.Colors.NeutralWhite
+                                                                .copy(alpha = 0.95f)
+                                        ),
+                                shape =
+                                        RoundedCornerShape(
+                                                RentalWheelsDesignSystem.CornerRadius.medium
+                                        )
                         ) {
                             Row(
-                                modifier =
-                                Modifier.padding(
-                                    horizontal =
-                                    RentalWheelsDesignSystem.Spacing
-                                        .extraSmall,
-                                    vertical = RentalWheelsDesignSystem.Spacing.XXS
-                                ),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement =
-                                Arrangement.spacedBy(
-                                    RentalWheelsDesignSystem.Spacing.XXS
-                                )
+                                    modifier =
+                                            Modifier.padding(
+                                                    horizontal =
+                                                            RentalWheelsDesignSystem.Spacing
+                                                                    .extraSmall,
+                                                    vertical = RentalWheelsDesignSystem.Spacing.XXS
+                                            ),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement =
+                                            Arrangement.spacedBy(
+                                                    RentalWheelsDesignSystem.Spacing.XXS
+                                            )
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Star,
-                                    contentDescription = null,
-                                    tint = RentalWheelsDesignSystem.Colors.BrandWarning,
-                                    modifier =
-                                    Modifier.size(
-                                        RentalWheelsDesignSystem.Spacing.medium
-                                    )
+                                        imageVector = Icons.Default.Star,
+                                        contentDescription = null,
+                                        tint = RentalWheelsDesignSystem.Colors.BrandWarning,
+                                        modifier =
+                                                Modifier.size(
+                                                        RentalWheelsDesignSystem.Spacing.medium
+                                                )
                                 )
                                 Text(
-                                    text = String.format("%.1f", car.rating),
-                                    style =
-                                    MaterialTheme.typography.labelMedium.copy(
-                                        fontWeight = FontWeight.SemiBold,
-                                        color =
-                                        RentalWheelsDesignSystem.Colors
-                                            .TextPrimary
-                                    )
+                                        text = String.format("%.1f", car.rating),
+                                        style =
+                                                MaterialTheme.typography.labelMedium.copy(
+                                                        fontWeight = FontWeight.SemiBold,
+                                                        color =
+                                                                RentalWheelsDesignSystem.Colors
+                                                                        .TextPrimary
+                                                )
                                 )
                             }
                         }
@@ -268,55 +261,54 @@ fun PremiumCarCard(
 
                 // Content Section
                 Column(
-                    modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(RentalWheelsDesignSystem.Spacing.medium),
-                    verticalArrangement =
-                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall)
+                        modifier =
+                                Modifier.fillMaxWidth()
+                                        .padding(RentalWheelsDesignSystem.Spacing.medium),
+                        verticalArrangement =
+                                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall)
                 ) {
                     // Car Title
                     Text(
-                        text = "${car.make} ${car.model}",
-                        style =
-                        MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        ),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                            text = "${car.make} ${car.model}",
+                            style =
+                                    MaterialTheme.typography.titleMedium.copy(
+                                            fontWeight = FontWeight.Bold,
+                                            color = MaterialTheme.colorScheme.onSurface
+                                    ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                     )
 
                     // Category & Year
                     Text(
-                        text =
-                        if (car.year > 0) "${car.category} • ${car.year}"
-                        else car.category,
-                        style =
-                        MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                            text =
+                                    if (car.year > 0) "${car.category} • ${car.year}"
+                                    else car.category,
+                            style =
+                                    MaterialTheme.typography.bodySmall.copy(
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
                     )
 
                     // Features Row
                     if (variant != CarCardVariant.Compact) {
                         Row(
-                            horizontalArrangement =
-                            Arrangement.spacedBy(
-                                RentalWheelsDesignSystem.Spacing.extraSmall
-                            ),
-                            verticalAlignment = Alignment.CenterVertically
+                                horizontalArrangement =
+                                        Arrangement.spacedBy(
+                                                RentalWheelsDesignSystem.Spacing.extraSmall
+                                        ),
+                                verticalAlignment = Alignment.CenterVertically
                         ) {
                             // Fuel Type
                             FeatureChip(
-                                icon = Icons.Outlined.LocalGasStation,
-                                text = car.fuelType.ifEmpty { "Gasoline" }
+                                    icon = Icons.Outlined.LocalGasStation,
+                                    text = car.fuelType.ifEmpty { "Gasoline" }
                             )
 
                             // Transmission
                             FeatureChip(
-                                icon = Icons.Outlined.Speed,
-                                text = car.transmission.ifEmpty { "Auto" }
+                                    icon = Icons.Outlined.Speed,
+                                    text = car.transmission.ifEmpty { "Auto" }
                             )
                         }
                     }
@@ -326,33 +318,33 @@ fun PremiumCarCard(
                     // Pricing Section
                     if (showPricing) {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column {
                                 Text(
-                                    text =
-                                    CurrencyUtils.formatDailyRate(
-                                        if (car.pricePerDay > 0)
-                                            car.pricePerDay.toInt()
-                                        else car.dailyRate
-                                    ),
-                                    style =
-                                    MaterialTheme.typography.titleMedium.copy(
-                                        fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
+                                        text =
+                                                CurrencyUtils.formatDailyRate(
+                                                        if (car.pricePerDay > 0)
+                                                                car.pricePerDay.toInt()
+                                                        else car.dailyRate
+                                                ),
+                                        style =
+                                                MaterialTheme.typography.titleMedium.copy(
+                                                        fontWeight = FontWeight.Bold,
+                                                        color = MaterialTheme.colorScheme.primary
+                                                )
                                 )
                                 if (variant == CarCardVariant.Featured) {
                                     Text(
-                                        text = "per day",
-                                        style =
-                                        MaterialTheme.typography.bodySmall.copy(
-                                            color =
-                                            MaterialTheme.colorScheme
-                                                .onSurfaceVariant
-                                        )
+                                            text = "per day",
+                                            style =
+                                                    MaterialTheme.typography.bodySmall.copy(
+                                                            color =
+                                                                    MaterialTheme.colorScheme
+                                                                            .onSurfaceVariant
+                                                    )
                                     )
                                 }
                             }
@@ -360,23 +352,23 @@ fun PremiumCarCard(
                             // Action Button (for Featured variant only)
                             if (variant == CarCardVariant.Featured) {
                                 Button(
-                                    onClick = onClick,
-                                    shape =
-                                    RoundedCornerShape(
-                                        RentalWheelsDesignSystem.CornerRadius.Button
-                                    ),
-                                    colors =
-                                    ButtonDefaults.buttonColors(
-                                        containerColor =
-                                        MaterialTheme.colorScheme.primary
-                                    )
+                                        onClick = onClick,
+                                        shape =
+                                                RoundedCornerShape(
+                                                        RentalWheelsDesignSystem.CornerRadius.Button
+                                                ),
+                                        colors =
+                                                ButtonDefaults.buttonColors(
+                                                        containerColor =
+                                                                MaterialTheme.colorScheme.primary
+                                                )
                                 ) {
                                     Text(
-                                        text = "View Details",
-                                        style =
-                                        MaterialTheme.typography.labelMedium.copy(
-                                            fontWeight = FontWeight.Medium
-                                        )
+                                            text = "View Details",
+                                            style =
+                                                    MaterialTheme.typography.labelMedium.copy(
+                                                            fontWeight = FontWeight.Medium
+                                                    )
                                     )
                                 }
                             }
@@ -390,44 +382,43 @@ fun PremiumCarCard(
 
 @Composable
 private fun FeatureChip(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    text: String,
-    modifier: Modifier = Modifier
+        icon: androidx.compose.ui.graphics.vector.ImageVector,
+        text: String,
+        modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier,
-        colors =
-        CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-        ),
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small)
+            modifier = modifier,
+            colors =
+                    CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainer
+                    ),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small)
     ) {
         Row(
-            modifier =
-            Modifier.padding(
-                horizontal = RentalWheelsDesignSystem.Spacing.extraSmall,
-                vertical = RentalWheelsDesignSystem.Spacing.XXS
-            ),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.XXS)
+                modifier =
+                        Modifier.padding(
+                                horizontal = RentalWheelsDesignSystem.Spacing.extraSmall,
+                                vertical = RentalWheelsDesignSystem.Spacing.XXS
+                        ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.XXS)
         ) {
             Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier =
-                Modifier.size(
-                    RentalWheelsDesignSystem.Spacing.ContentSpacing +
-                            RentalWheelsDesignSystem.Spacing.XXS
-                ),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier =
+                            Modifier.size(
+                                    RentalWheelsDesignSystem.Spacing.ContentSpacing +
+                                            RentalWheelsDesignSystem.Spacing.XXS
+                            ),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                text = text,
-                style =
-                MaterialTheme.typography.labelSmall.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                    text = text,
+                    style =
+                            MaterialTheme.typography.labelSmall.copy(
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
             )
         }
     }
