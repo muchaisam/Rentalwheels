@@ -38,86 +38,85 @@ import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
 fun BookingsHeader(
-    totalBookings: Int,
-    activeBookings: Int,
-    upcomingBookings: Int,
-    onAnalyticsClick: () -> Unit = {},
-    modifier: Modifier = Modifier
+        totalBookings: Int,
+        activeBookings: Int,
+        upcomingBookings: Int,
+        onAnalyticsClick: () -> Unit = {},
+        modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-        elevation =
-        CardDefaults.cardElevation(
-            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
-        )
+            modifier = modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+            elevation =
+                    CardDefaults.cardElevation(
+                            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+                    )
     ) {
         Box(
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .background(
-                    brush =
-                    Brush.horizontalGradient(
-                        colors =
-                        listOf(
-                            MaterialTheme.colorScheme
-                                .primaryContainer,
-                            MaterialTheme.colorScheme
-                                .secondaryContainer
-                        )
-                    ),
-                    shape =
-                    RoundedCornerShape(
-                        RentalWheelsDesignSystem.CornerRadius.large
-                    )
-                )
+                modifier =
+                        Modifier.fillMaxWidth()
+                                .background(
+                                        brush =
+                                                Brush.horizontalGradient(
+                                                        colors =
+                                                                listOf(
+                                                                        MaterialTheme.colorScheme
+                                                                                .primaryContainer,
+                                                                        MaterialTheme.colorScheme
+                                                                                .secondaryContainer
+                                                                )
+                                                ),
+                                        shape =
+                                                RoundedCornerShape(
+                                                        RentalWheelsDesignSystem.CornerRadius.large
+                                                )
+                                )
         ) {
             Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.large)) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column {
                         Text(
-                            text = "My Bookings",
-                            style = RentalWheelsDesignSystem.Typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                                text = "My Bookings",
+                                style = RentalWheelsDesignSystem.Typography.headlineMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                         Text(
-                            text = "Track and manage your rentals",
-                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                            color =
-                            MaterialTheme.colorScheme.onPrimaryContainer.copy(
-                                alpha = 0.8f
-                            )
+                                text = "Track and manage your rentals",
+                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                                color =
+                                        MaterialTheme.colorScheme.onPrimaryContainer.copy(
+                                                alpha = 0.8f
+                                        )
                         )
                     }
 
                     Surface(
-                        onClick = onAnalyticsClick,
-                        shape =
-                        RoundedCornerShape(
-                            RentalWheelsDesignSystem.CornerRadius.medium
-                        ),
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                            onClick = onAnalyticsClick,
+                            shape =
+                                    RoundedCornerShape(
+                                            RentalWheelsDesignSystem.CornerRadius.medium
+                                    ),
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
                     ) {
                         Box(
-                            modifier =
-                            Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
-                            contentAlignment = Alignment.Center
+                                modifier =
+                                        Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
+                                contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Analytics,
-                                contentDescription = "View Analytics",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier =
-                                Modifier.size(
-                                    RentalWheelsDesignSystem.Spacing.extraLarge
-                                )
+                                    imageVector = Icons.Default.Analytics,
+                                    contentDescription = "View Analytics",
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier =
+                                            Modifier.size(
+                                                    RentalWheelsDesignSystem.Spacing.extraLarge
+                                            )
                             )
                         }
                     }
@@ -126,32 +125,32 @@ fun BookingsHeader(
                 Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.large))
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement =
-                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement =
+                                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
                 ) {
                     AnimatedBookingStatCard(
-                        icon = Icons.Default.CalendarToday,
-                        label = "Total",
-                        value = totalBookings,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.weight(1f)
+                            icon = Icons.Default.CalendarToday,
+                            label = "Total",
+                            value = totalBookings,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.weight(1f)
                     )
 
                     AnimatedBookingStatCard(
-                        icon = Icons.Default.DirectionsCar,
-                        label = "Active",
-                        value = activeBookings,
-                        color = MaterialTheme.colorScheme.tertiary,
-                        modifier = Modifier.weight(1f)
+                            icon = Icons.Default.DirectionsCar,
+                            label = "Active",
+                            value = activeBookings,
+                            color = MaterialTheme.colorScheme.tertiary,
+                            modifier = Modifier.weight(1f)
                     )
 
                     AnimatedBookingStatCard(
-                        icon = Icons.Default.Schedule,
-                        label = "Upcoming",
-                        value = upcomingBookings,
-                        color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.weight(1f)
+                            icon = Icons.Default.Schedule,
+                            label = "Upcoming",
+                            value = upcomingBookings,
+                            color = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.weight(1f)
                     )
                 }
             }
@@ -161,61 +160,60 @@ fun BookingsHeader(
 
 @Composable
 private fun AnimatedBookingStatCard(
-    icon: ImageVector,
-    label: String,
-    value: Int,
-    color: Color,
-    modifier: Modifier = Modifier
+        icon: ImageVector,
+        label: String,
+        value: Int,
+        color: Color,
+        modifier: Modifier = Modifier
 ) {
     val animatedValue by
-    animateFloatAsState(
-        targetValue = value.toFloat(),
-        animationSpec = tween(durationMillis = 800, easing = FastOutSlowInEasing),
-        label = "stat_animation"
-    )
+            animateFloatAsState(
+                    targetValue = value.toFloat(),
+                    animationSpec = tween(durationMillis = 800, easing = FastOutSlowInEasing),
+                    label = "stat_animation"
+            )
 
     Surface(
-        modifier = modifier,
-        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
-        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
+            modifier = modifier,
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+            color = MaterialTheme.colorScheme.surface
     ) {
         Column(
-            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
-            horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
+                horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
-                modifier =
-                Modifier
-                    .size(RentalWheelsDesignSystem.Spacing.Huge)
-                    .clip(
-                        RoundedCornerShape(
-                            RentalWheelsDesignSystem.CornerRadius.medium
-                        )
-                    )
-                    .background(color.copy(alpha = 0.15f)),
-                contentAlignment = Alignment.Center
+                    modifier =
+                            Modifier.size(RentalWheelsDesignSystem.Spacing.Huge)
+                                    .clip(
+                                            RoundedCornerShape(
+                                                    RentalWheelsDesignSystem.CornerRadius.medium
+                                            )
+                                    )
+                                    .background(color.copy(alpha = 0.15f)),
+                    contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = icon,
-                    contentDescription = label,
-                    tint = color,
-                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                        imageVector = icon,
+                        contentDescription = label,
+                        tint = color,
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
                 )
             }
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
             Text(
-                text = animatedValue.toInt().toString(),
-                style = RentalWheelsDesignSystem.Typography.headlineLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
+                    text = animatedValue.toInt().toString(),
+                    style = RentalWheelsDesignSystem.Typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
-                text = label,
-                style = RentalWheelsDesignSystem.Typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = label,
+                    style = RentalWheelsDesignSystem.Typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
         }
     }
