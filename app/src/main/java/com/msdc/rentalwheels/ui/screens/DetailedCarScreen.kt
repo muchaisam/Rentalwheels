@@ -70,10 +70,10 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailedCarScreen(
-    car: Car,
-    onBackClick: () -> Unit,
-    onBookNowClick: (Car) -> Unit = {},
-    modifier: Modifier = Modifier
+        car: Car,
+        onBackClick: () -> Unit,
+        onBookNowClick: (Car) -> Unit = {},
+        modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val scope = rememberCoroutineScope()
@@ -86,28 +86,28 @@ fun DetailedCarScreen(
 
     LaunchedEffect(Unit) {
         specsAlpha.animateTo(
-            targetValue = 1f,
-            animationSpec =
-            tween(
-                durationMillis = RentalWheelsDesignSystem.Animation.Medium,
-                delayMillis = 100
-            )
+                targetValue = 1f,
+                animationSpec =
+                        tween(
+                                durationMillis = RentalWheelsDesignSystem.Animation.Medium,
+                                delayMillis = 100
+                        )
         )
         descriptionAlpha.animateTo(
-            targetValue = 1f,
-            animationSpec =
-            tween(
-                durationMillis = RentalWheelsDesignSystem.Animation.Medium,
-                delayMillis = 200
-            )
+                targetValue = 1f,
+                animationSpec =
+                        tween(
+                                durationMillis = RentalWheelsDesignSystem.Animation.Medium,
+                                delayMillis = 200
+                        )
         )
         featuresAlpha.animateTo(
-            targetValue = 1f,
-            animationSpec =
-            tween(
-                durationMillis = RentalWheelsDesignSystem.Animation.Medium,
-                delayMillis = 300
-            )
+                targetValue = 1f,
+                animationSpec =
+                        tween(
+                                durationMillis = RentalWheelsDesignSystem.Animation.Medium,
+                                delayMillis = 300
+                        )
         )
     }
 
@@ -120,15 +120,15 @@ fun DetailedCarScreen(
         // Extract dominant color from car image
         withContext(Dispatchers.IO) {
             val bitmap =
-                context.imageLoader
-                    .execute(
-                        ImageRequest.Builder(context)
-                            .data(car.imageUrl)
-                            .allowHardware(false)
-                            .build()
-                    )
-                    .drawable
-                    ?.toBitmap()
+                    context.imageLoader
+                            .execute(
+                                    ImageRequest.Builder(context)
+                                            .data(car.imageUrl)
+                                            .allowHardware(false)
+                                            .build()
+                            )
+                            .drawable
+                            ?.toBitmap()
 
             bitmap?.let {
                 val palette = Palette.from(it).generate()
@@ -138,103 +138,94 @@ fun DetailedCarScreen(
     }
 
     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            LargeTopAppBar(
-                title = {
-                    Column {
-                        Text(
-                            text = car.make,
-                            style = RentalWheelsDesignSystem.Typography.titleMedium
-                        )
-                        Text(
-                            text = car.model,
-                            style = RentalWheelsDesignSystem.Typography.headlineSmall
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onBackClick,
-                        modifier =
-                        Modifier.semantics {
-                            contentDescription = "Navigate back"
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior,
-                colors =
-                TopAppBarDefaults.largeTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    scrolledContainerColor =
-                    MaterialTheme.colorScheme.surface.copy(
-                        alpha = 0.95f
-                    )
+            modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                LargeTopAppBar(
+                        title = {
+                            Column {
+                                Text(
+                                        text = car.make,
+                                        style = RentalWheelsDesignSystem.Typography.titleMedium
+                                )
+                                Text(
+                                        text = car.model,
+                                        style = RentalWheelsDesignSystem.Typography.headlineSmall
+                                )
+                            }
+                        },
+                        navigationIcon = {
+                            IconButton(
+                                    onClick = onBackClick,
+                                    modifier =
+                                            Modifier.semantics {
+                                                contentDescription = "Navigate back"
+                                            }
+                            ) {
+                                Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                        contentDescription = null
+                                )
+                            }
+                        },
+                        scrollBehavior = scrollBehavior,
+                        colors =
+                                TopAppBarDefaults.largeTopAppBarColors(
+                                        containerColor = MaterialTheme.colorScheme.surface,
+                                        scrolledContainerColor =
+                                                MaterialTheme.colorScheme.surfaceContainer
+                                )
                 )
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.surface
+            },
+            containerColor = MaterialTheme.colorScheme.surface
     ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
             item(key = "image") {
                 Box(
-                    modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(RentalWheelsDesignSystem.Spacing.Huge * 4.6875f)
+                        modifier =
+                                Modifier.fillMaxWidth()
+                                        .height(RentalWheelsDesignSystem.Spacing.Huge * 4.6875f)
                 ) { // ~300dp
                     CarImage(
-                        imageUrl = car.imageUrl,
-                        contentDescription = "${car.brand} ${car.model}",
-                        modifier = Modifier.fillMaxSize()
+                            imageUrl = car.imageUrl,
+                            contentDescription = "${car.brand} ${car.model}",
+                            modifier = Modifier.fillMaxSize()
                     )
 
                     // Gradient overlay for better text visibility
                     Box(
-                        modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .background(
-                                Brush.verticalGradient(
-                                    colors =
-                                    listOf(
-                                        Color.Transparent,
-                                        Color.Black.copy(
-                                            alpha = 0.3f
-                                        )
-                                    )
-                                )
-                            )
+                            modifier =
+                                    Modifier.fillMaxSize()
+                                            .background(
+                                                    Brush.verticalGradient(
+                                                            colors =
+                                                                    listOf(
+                                                                            Color.Transparent,
+                                                                            Color.Black.copy(
+                                                                                    alpha = 0.4f
+                                                                            )
+                                                                    )
+                                                    )
+                                            )
                     )
 
                     // Price tag
                     Surface(
-                        modifier =
-                        Modifier
-                            .padding(RentalWheelsDesignSystem.Spacing.medium)
-                            .align(Alignment.TopEnd),
-                        shape = MaterialTheme.shapes.medium,
-                        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f)
+                            modifier =
+                                    Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)
+                                            .align(Alignment.TopEnd),
+                            shape = MaterialTheme.shapes.medium,
+                            color = MaterialTheme.colorScheme.primaryContainer
                     ) {
                         Text(
-                            text = CurrencyUtils.formatDailyRate(car.dailyRate),
-                            style = RentalWheelsDesignSystem.Typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            modifier =
-                            Modifier.padding(
-                                horizontal =
-                                RentalWheelsDesignSystem.Spacing.medium,
-                                vertical = RentalWheelsDesignSystem.Spacing.small
-                            )
+                                text = CurrencyUtils.formatDailyRate(car.dailyRate),
+                                style = RentalWheelsDesignSystem.Typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier =
+                                        Modifier.padding(
+                                                horizontal =
+                                                        RentalWheelsDesignSystem.Spacing.medium,
+                                                vertical = RentalWheelsDesignSystem.Spacing.small
+                                        )
                         )
                     }
                 }
@@ -242,58 +233,55 @@ fun DetailedCarScreen(
 
             item(key = "specs") {
                 CarSpecs(
-                    car = car,
-                    modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(RentalWheelsDesignSystem.Spacing.medium)
-                        .graphicsLayer {
-                            alpha = specsAlpha.value
-                            translationY = (1f - specsAlpha.value) * 50f
-                        }
+                        car = car,
+                        modifier =
+                                Modifier.fillMaxWidth()
+                                        .padding(RentalWheelsDesignSystem.Spacing.medium)
+                                        .graphicsLayer {
+                                            alpha = specsAlpha.value
+                                            translationY = (1f - specsAlpha.value) * 50f
+                                        }
                 )
             }
 
             item(key = "description") {
                 AnimatedVisibility(visible = true, enter = fadeIn() + expandVertically()) {
                     CarDescription(
-                        description = car.description,
-                        modifier =
-                        Modifier
-                            .padding(
-                                horizontal =
-                                RentalWheelsDesignSystem.Spacing.medium
-                            )
-                            .graphicsLayer {
-                                alpha = descriptionAlpha.value
-                                translationY = (1f - descriptionAlpha.value) * 50f
-                            }
+                            description = car.description,
+                            modifier =
+                                    Modifier.padding(
+                                                    horizontal =
+                                                            RentalWheelsDesignSystem.Spacing.medium
+                                            )
+                                            .graphicsLayer {
+                                                alpha = descriptionAlpha.value
+                                                translationY = (1f - descriptionAlpha.value) * 50f
+                                            }
                     )
                 }
             }
 
             item(key = "features") {
                 AnimatedVisibility(
-                    visible = true,
-                    enter =
-                    fadeIn() +
-                            expandVertically(
-                                animationSpec =
-                                tween(
-                                    durationMillis = 300,
-                                    delayMillis = 100
-                                )
-                            )
+                        visible = true,
+                        enter =
+                                fadeIn() +
+                                        expandVertically(
+                                                animationSpec =
+                                                        tween(
+                                                                durationMillis = 300,
+                                                                delayMillis = 100
+                                                        )
+                                        )
                 ) {
                     CarFeatures(
-                        features = car.features,
-                        modifier =
-                        Modifier
-                            .padding(RentalWheelsDesignSystem.Spacing.medium)
-                            .graphicsLayer {
-                                alpha = featuresAlpha.value
-                                translationY = (1f - featuresAlpha.value) * 50f
-                            }
+                            features = car.features,
+                            modifier =
+                                    Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)
+                                            .graphicsLayer {
+                                                alpha = featuresAlpha.value
+                                                translationY = (1f - featuresAlpha.value) * 50f
+                                            }
                     )
                 }
             }
@@ -309,44 +297,43 @@ fun DetailedCarScreen(
             val fabInteractionSource = remember { MutableInteractionSource() }
             val isFabPressed = fabInteractionSource.collectIsPressedAsState()
             val fabScale by
-            animateFloatAsState(
-                targetValue = if (isFabPressed.value) 0.92f else 1f,
-                animationSpec =
-                spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessLow
-                ),
-                label = "fabScale"
-            )
+                    animateFloatAsState(
+                            targetValue = if (isFabPressed.value) 0.92f else 1f,
+                            animationSpec =
+                                    spring(
+                                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                                            stiffness = Spring.StiffnessLow
+                                    ),
+                            label = "fabScale"
+                    )
 
             FloatingActionButton(
-                onClick = { onBookNowClick(car) },
-                modifier =
-                Modifier
-                    .padding(RentalWheelsDesignSystem.Spacing.medium)
-                    .align(Alignment.BottomEnd)
-                    .graphicsLayer {
-                        scaleX = fabScale
-                        scaleY = fabScale
-                    },
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                interactionSource = fabInteractionSource
+                    onClick = { onBookNowClick(car) },
+                    modifier =
+                            Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)
+                                    .align(Alignment.BottomEnd)
+                                    .graphicsLayer {
+                                        scaleX = fabScale
+                                        scaleY = fabScale
+                                    },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    interactionSource = fabInteractionSource
             ) {
                 Row(
-                    modifier =
-                    Modifier.padding(
-                        horizontal = RentalWheelsDesignSystem.Spacing.medium
-                    ),
-                    horizontalArrangement =
-                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
-                    verticalAlignment = Alignment.CenterVertically
+                        modifier =
+                                Modifier.padding(
+                                        horizontal = RentalWheelsDesignSystem.Spacing.medium
+                                ),
+                        horizontalArrangement =
+                                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
+                        verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(Icons.Rounded.BookOnline, contentDescription = null)
                     Text(
-                        text = "Book Now",
-                        style = RentalWheelsDesignSystem.Typography.labelLarge,
-                        fontWeight = FontWeight.SemiBold
+                            text = "Book Now",
+                            style = RentalWheelsDesignSystem.Typography.labelLarge,
+                            fontWeight = FontWeight.SemiBold
                     )
                 }
             }
