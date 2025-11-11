@@ -74,35 +74,35 @@ import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlinx.coroutines.delay
 
 data class RegisterFormData(
-        val firstName: String = "",
-        val lastName: String = "",
-        val email: String = "",
-        val phone: String = "",
-        val password: String = "",
-        val confirmPassword: String = ""
+    val firstName: String = "",
+    val lastName: String = "",
+    val email: String = "",
+    val phone: String = "",
+    val password: String = "",
+    val confirmPassword: String = ""
 )
 
 /** Enhanced text field colors for better dark theme contrast */
 @Composable
 private fun registerTextFieldColors() =
-        OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                cursorColor = MaterialTheme.colorScheme.primary,
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-        )
+    OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = MaterialTheme.colorScheme.primary,
+        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+        focusedLabelColor = MaterialTheme.colorScheme.primary,
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+        cursorColor = MaterialTheme.colorScheme.primary,
+        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+    )
 
 @Composable
 fun RegisterScreen(
-        isLoading: Boolean = false,
-        errorMessage: String? = null,
-        onRegisterClick: (RegisterFormData) -> Unit,
-        onLoginClick: () -> Unit
+    isLoading: Boolean = false,
+    errorMessage: String? = null,
+    onRegisterClick: (RegisterFormData) -> Unit,
+    onLoginClick: () -> Unit
 ) {
     var formData by remember { mutableStateOf(RegisterFormData()) }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -167,79 +167,81 @@ fun RegisterScreen(
 
     // Animated scale for the form
     val formScale by
-            animateFloatAsState(
-                    targetValue = if (isFormAnimated) 1f else 0.8f,
-                    animationSpec =
-                            spring(
-                                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                                    stiffness = Spring.StiffnessLow
-                            ),
-                    label = "FormScale"
-            )
+    animateFloatAsState(
+        targetValue = if (isFormAnimated) 1f else 0.8f,
+        animationSpec =
+        spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "FormScale"
+    )
 
     // Dynamic background gradient
     val backgroundBrush =
-            Brush.verticalGradient(
-                    colors =
-                            listOf(
-                                    MaterialTheme.colorScheme.secondary,
-                                    MaterialTheme.colorScheme.surface,
-                                    MaterialTheme.colorScheme.surfaceVariant
-                            )
+        Brush.verticalGradient(
+            colors =
+            listOf(
+                MaterialTheme.colorScheme.secondary,
+                MaterialTheme.colorScheme.surface,
+                MaterialTheme.colorScheme.surfaceVariant
             )
+        )
     Box(
-            modifier =
-                    Modifier.fillMaxSize()
-                            .background(MaterialTheme.colorScheme.background)
-                            .imePadding()
+        modifier =
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .imePadding()
     ) {
         Column(
-                modifier =
-                        Modifier.fillMaxSize()
-                                .verticalScroll(rememberScrollState())
-                                .padding(RentalWheelsDesignSystem.Spacing.extraLarge),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+            modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(RentalWheelsDesignSystem.Spacing.extraLarge),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             // App Logo/Title Section
             AnimatedVisibility(
-                    visible = isFormAnimated,
-                    enter = fadeIn() + scaleIn(),
-                    exit = fadeOut() + scaleOut()
+                visible = isFormAnimated,
+                enter = fadeIn() + scaleIn(),
+                exit = fadeOut() + scaleOut()
             ) {
                 Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier =
-                                Modifier.padding(
-                                        bottom = RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
-                                )
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier =
+                    Modifier.padding(
+                        bottom = RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                    )
                 ) {
                     // Logo placeholder                    // App Logo
                     Card(
-                            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge),
-                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                            colors =
-                                    CardDefaults.cardColors(
-                                            containerColor = MaterialTheme.colorScheme.secondary
-                                    ),
-                            elevation =
-                                    CardDefaults.cardElevation(
-                                            defaultElevation =
-                                                    RentalWheelsDesignSystem.Elevation.medium
-                                    )
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors =
+                        CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.secondary
+                        ),
+                        elevation =
+                        CardDefaults.cardElevation(
+                            defaultElevation =
+                            RentalWheelsDesignSystem.Elevation.medium
+                        )
                     ) {
                         Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
                         ) {
                             Image(
-                                    painter = painterResource(id = R.drawable.rental_logo),
-                                    contentDescription = "App Logo",
-                                    modifier =
-                                            Modifier.size(
-                                                    RentalWheelsDesignSystem.Spacing.extraLarge *
-                                                            1.5f
-                                            )
+                                painter = painterResource(id = R.drawable.rental_logo),
+                                contentDescription = "App Logo",
+                                modifier =
+                                Modifier.size(
+                                    RentalWheelsDesignSystem.Spacing.extraLarge *
+                                            1.5f
+                                )
                             )
                         }
                     }
@@ -247,74 +249,77 @@ fun RegisterScreen(
                     Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     Text(
-                            text = "Create Account",
-                            style = RentalWheelsDesignSystem.Typography.headlineLarge,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
+                        text = "Create Account",
+                        style = RentalWheelsDesignSystem.Typography.headlineLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
 
                     Text(
-                            text = "Join us for seamless car rental experience",
-                            style = RentalWheelsDesignSystem.Typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Center
+                        text = "Join us for seamless car rental experience",
+                        style = RentalWheelsDesignSystem.Typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
                     )
                 }
             }
 
             // Register Form Card
             Card(
-                    modifier = Modifier.fillMaxWidth().scale(formScale),
-                    shape = RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge),
-                    colors =
-                            CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surface
-                            ),
-                    elevation =
-                            CardDefaults.cardElevation(
-                                    defaultElevation = RentalWheelsDesignSystem.Elevation.medium
-                            )
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .scale(formScale),
+                shape = RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge),
+                colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                elevation =
+                CardDefaults.cardElevation(
+                    defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+                )
             ) {
                 Column(
-                        modifier =
-                                Modifier.padding(
-                                        RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
-                                ),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    modifier =
+                    Modifier.padding(
+                        RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                    ),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     // Error Message
                     AnimatedVisibility(
-                            visible = errorMessage != null,
-                            enter = fadeIn() + scaleIn(),
-                            exit = fadeOut() + scaleOut()
+                        visible = errorMessage != null,
+                        enter = fadeIn() + scaleIn(),
+                        exit = fadeOut() + scaleOut()
                     ) {
                         errorMessage?.let {
                             Card(
-                                    modifier =
-                                            Modifier.fillMaxWidth()
-                                                    .padding(
-                                                            bottom =
-                                                                    RentalWheelsDesignSystem.Spacing
-                                                                            .medium
-                                                    ),
-                                    colors =
-                                            CardDefaults.cardColors(
-                                                    containerColor =
-                                                            MaterialTheme.colorScheme.errorContainer
-                                            ),
-                                    shape =
-                                            RoundedCornerShape(
-                                                    RentalWheelsDesignSystem.CornerRadius.medium
-                                            )
+                                modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        bottom =
+                                        RentalWheelsDesignSystem.Spacing
+                                            .medium
+                                    ),
+                                colors =
+                                CardDefaults.cardColors(
+                                    containerColor =
+                                    MaterialTheme.colorScheme.errorContainer
+                                ),
+                                shape =
+                                RoundedCornerShape(
+                                    RentalWheelsDesignSystem.CornerRadius.medium
+                                )
                             ) {
                                 Text(
-                                        text = it,
-                                        modifier =
-                                                Modifier.padding(
-                                                        RentalWheelsDesignSystem.Spacing.medium
-                                                ),
-                                        style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onErrorContainer
+                                    text = it,
+                                    modifier =
+                                    Modifier.padding(
+                                        RentalWheelsDesignSystem.Spacing.medium
+                                    ),
+                                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onErrorContainer
                                 )
                             }
                         }
@@ -322,65 +327,65 @@ fun RegisterScreen(
 
                     // Name Fields Row
                     Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement =
-                                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement =
+                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
                     ) {
                         // First Name
                         OutlinedTextField(
-                                value = formData.firstName,
-                                onValueChange = { formData = formData.copy(firstName = it) },
-                                label = { Text("First Name") },
-                                leadingIcon = {
-                                    Icon(
-                                            imageVector = Icons.Default.Person,
-                                            contentDescription = null,
-                                            tint = MaterialTheme.colorScheme.primary
-                                    )
-                                },
-                                keyboardOptions =
-                                        KeyboardOptions(
-                                                keyboardType = KeyboardType.Text,
-                                                imeAction = ImeAction.Next
-                                        ),
-                                keyboardActions =
-                                        KeyboardActions(
-                                                onNext = {
-                                                    focusManager.moveFocus(FocusDirection.Right)
-                                                }
-                                        ),
-                                singleLine = true,
-                                modifier = Modifier.weight(1f),
-                                shape =
-                                        RoundedCornerShape(
-                                                RentalWheelsDesignSystem.CornerRadius.large
-                                        ),
-                                colors = registerTextFieldColors()
+                            value = formData.firstName,
+                            onValueChange = { formData = formData.copy(firstName = it) },
+                            label = { Text("First Name") },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Person,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            },
+                            keyboardOptions =
+                            KeyboardOptions(
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions =
+                            KeyboardActions(
+                                onNext = {
+                                    focusManager.moveFocus(FocusDirection.Right)
+                                }
+                            ),
+                            singleLine = true,
+                            modifier = Modifier.weight(1f),
+                            shape =
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius.large
+                            ),
+                            colors = registerTextFieldColors()
                         )
 
                         // Last Name
                         OutlinedTextField(
-                                value = formData.lastName,
-                                onValueChange = { formData = formData.copy(lastName = it) },
-                                label = { Text("Last Name") },
-                                keyboardOptions =
-                                        KeyboardOptions(
-                                                keyboardType = KeyboardType.Text,
-                                                imeAction = ImeAction.Next
-                                        ),
-                                keyboardActions =
-                                        KeyboardActions(
-                                                onNext = {
-                                                    focusManager.moveFocus(FocusDirection.Down)
-                                                }
-                                        ),
-                                singleLine = true,
-                                modifier = Modifier.weight(1f),
-                                shape =
-                                        RoundedCornerShape(
-                                                RentalWheelsDesignSystem.CornerRadius.large
-                                        ),
-                                colors = registerTextFieldColors()
+                            value = formData.lastName,
+                            onValueChange = { formData = formData.copy(lastName = it) },
+                            label = { Text("Last Name") },
+                            keyboardOptions =
+                            KeyboardOptions(
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions =
+                            KeyboardActions(
+                                onNext = {
+                                    focusManager.moveFocus(FocusDirection.Down)
+                                }
+                            ),
+                            singleLine = true,
+                            modifier = Modifier.weight(1f),
+                            shape =
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius.large
+                            ),
+                            colors = registerTextFieldColors()
                         )
                     }
 
@@ -388,124 +393,124 @@ fun RegisterScreen(
 
                     // Email Field
                     OutlinedTextField(
-                            value = formData.email,
-                            onValueChange = { formData = formData.copy(email = it) },
-                            label = { Text("Email Address") },
-                            leadingIcon = {
-                                Icon(
-                                        imageVector = Icons.Default.Email,
-                                        contentDescription = null,
-                                        tint =
-                                                if (isEmailValid) MaterialTheme.colorScheme.primary
-                                                else MaterialTheme.colorScheme.error
-                                )
-                            },
-                            isError = !isEmailValid,
-                            supportingText =
-                                    if (!isEmailValid) {
-                                        { Text("Please enter a valid email address") }
-                                    } else null,
-                            keyboardOptions =
-                                    KeyboardOptions(
-                                            keyboardType = KeyboardType.Email,
-                                            imeAction = ImeAction.Next
-                                    ),
-                            keyboardActions =
-                                    KeyboardActions(
-                                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                                    ),
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                            colors = registerTextFieldColors()
+                        value = formData.email,
+                        onValueChange = { formData = formData.copy(email = it) },
+                        label = { Text("Email Address") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Email,
+                                contentDescription = null,
+                                tint =
+                                if (isEmailValid) MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.error
+                            )
+                        },
+                        isError = !isEmailValid,
+                        supportingText =
+                        if (!isEmailValid) {
+                            { Text("Please enter a valid email address") }
+                        } else null,
+                        keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Email,
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions =
+                        KeyboardActions(
+                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                        ),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors = registerTextFieldColors()
                     )
 
                     Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Phone Field
                     OutlinedTextField(
-                            value = formData.phone,
-                            onValueChange = { formData = formData.copy(phone = it) },
-                            label = { Text("Phone Number") },
-                            leadingIcon = {
-                                Icon(
-                                        imageVector = Icons.Default.Phone,
-                                        contentDescription = null,
-                                        tint =
-                                                if (isPhoneValid) MaterialTheme.colorScheme.primary
-                                                else MaterialTheme.colorScheme.error
-                                )
-                            },
-                            isError = !isPhoneValid,
-                            supportingText =
-                                    if (!isPhoneValid) {
-                                        { Text("Phone number must be at least 10 digits") }
-                                    } else null,
-                            keyboardOptions =
-                                    KeyboardOptions(
-                                            keyboardType = KeyboardType.Phone,
-                                            imeAction = ImeAction.Next
-                                    ),
-                            keyboardActions =
-                                    KeyboardActions(
-                                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                                    ),
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                            colors = registerTextFieldColors()
+                        value = formData.phone,
+                        onValueChange = { formData = formData.copy(phone = it) },
+                        label = { Text("Phone Number") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Phone,
+                                contentDescription = null,
+                                tint =
+                                if (isPhoneValid) MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.error
+                            )
+                        },
+                        isError = !isPhoneValid,
+                        supportingText =
+                        if (!isPhoneValid) {
+                            { Text("Phone number must be at least 10 digits") }
+                        } else null,
+                        keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Phone,
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions =
+                        KeyboardActions(
+                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                        ),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors = registerTextFieldColors()
                     )
 
                     Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Password Field
                     OutlinedTextField(
-                            value = formData.password,
-                            onValueChange = { formData = formData.copy(password = it) },
-                            label = { Text("Password") },
-                            leadingIcon = {
+                        value = formData.password,
+                        onValueChange = { formData = formData.copy(password = it) },
+                        label = { Text("Password") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Lock,
+                                contentDescription = null,
+                                tint =
+                                if (isPasswordValid)
+                                    MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.error
+                            )
+                        },
+                        trailingIcon = {
+                            IconButton(onClick = { passwordVisible = !passwordVisible }) {
                                 Icon(
-                                        imageVector = Icons.Default.Lock,
-                                        contentDescription = null,
-                                        tint =
-                                                if (isPasswordValid)
-                                                        MaterialTheme.colorScheme.primary
-                                                else MaterialTheme.colorScheme.error
+                                    imageVector =
+                                    if (passwordVisible) Icons.Default.Visibility
+                                    else Icons.Default.VisibilityOff,
+                                    contentDescription =
+                                    if (passwordVisible) "Hide password"
+                                    else "Show password"
                                 )
-                            },
-                            trailingIcon = {
-                                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                                    Icon(
-                                            imageVector =
-                                                    if (passwordVisible) Icons.Default.Visibility
-                                                    else Icons.Default.VisibilityOff,
-                                            contentDescription =
-                                                    if (passwordVisible) "Hide password"
-                                                    else "Show password"
-                                    )
-                                }
-                            },
-                            visualTransformation =
-                                    if (passwordVisible) VisualTransformation.None
-                                    else PasswordVisualTransformation(),
-                            isError = !isPasswordValid,
-                            supportingText =
-                                    if (!isPasswordValid) {
-                                        { Text("Password must be at least 6 characters") }
-                                    } else null,
-                            keyboardOptions =
-                                    KeyboardOptions(
-                                            keyboardType = KeyboardType.Password,
-                                            imeAction = ImeAction.Next
-                                    ),
-                            keyboardActions =
-                                    KeyboardActions(
-                                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                                    ),
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                            colors = registerTextFieldColors()
+                            }
+                        },
+                        visualTransformation =
+                        if (passwordVisible) VisualTransformation.None
+                        else PasswordVisualTransformation(),
+                        isError = !isPasswordValid,
+                        supportingText =
+                        if (!isPasswordValid) {
+                            { Text("Password must be at least 6 characters") }
+                        } else null,
+                        keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions =
+                        KeyboardActions(
+                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                        ),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors = registerTextFieldColors()
                     )
 
                     // Password Strength Indicator
@@ -513,37 +518,40 @@ fun RegisterScreen(
                         Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                         Column(modifier = Modifier.fillMaxWidth()) {
                             Text(
-                                    text =
-                                            when {
-                                                passwordStrength < 0.5f -> "Weak"
-                                                passwordStrength < 0.75f -> "Medium"
-                                                else -> "Strong"
-                                            },
-                                    style = RentalWheelsDesignSystem.Typography.bodySmall,
-                                    color =
-                                            when {
-                                                passwordStrength < 0.5f ->
-                                                        MaterialTheme.colorScheme.error
-                                                passwordStrength < 0.75f -> Color(0xFFFF9800)
-                                                else -> Color(0xFF4CAF50)
-                                            }
+                                text =
+                                when {
+                                    passwordStrength < 0.5f -> "Weak"
+                                    passwordStrength < 0.75f -> "Medium"
+                                    else -> "Strong"
+                                },
+                                style = RentalWheelsDesignSystem.Typography.bodySmall,
+                                color =
+                                when {
+                                    passwordStrength < 0.5f ->
+                                        MaterialTheme.colorScheme.error
+
+                                    passwordStrength < 0.75f -> Color(0xFFFF9800)
+                                    else -> Color(0xFF4CAF50)
+                                }
                             )
                             LinearProgressIndicator(
-                                    progress = { passwordStrength },
-                                    modifier =
-                                            Modifier.fillMaxWidth()
-                                                    .height(
-                                                            RentalWheelsDesignSystem.Spacing
-                                                                    .extraSmall
-                                                    ),
-                                    color =
-                                            when {
-                                                passwordStrength < 0.5f ->
-                                                        MaterialTheme.colorScheme.error
-                                                passwordStrength < 0.75f -> Color(0xFFFF9800)
-                                                else -> Color(0xFF4CAF50)
-                                            },
-                                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                                progress = { passwordStrength },
+                                modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(
+                                        RentalWheelsDesignSystem.Spacing
+                                            .extraSmall
+                                    ),
+                                color =
+                                when {
+                                    passwordStrength < 0.5f ->
+                                        MaterialTheme.colorScheme.error
+
+                                    passwordStrength < 0.75f -> Color(0xFFFF9800)
+                                    else -> Color(0xFF4CAF50)
+                                },
+                                trackColor = MaterialTheme.colorScheme.surfaceVariant,
                             )
                         }
                     }
@@ -552,114 +560,115 @@ fun RegisterScreen(
 
                     // Confirm Password Field
                     OutlinedTextField(
-                            value = formData.confirmPassword,
-                            onValueChange = { formData = formData.copy(confirmPassword = it) },
-                            label = { Text("Confirm Password") },
-                            leadingIcon = {
-                                Icon(
-                                        imageVector = Icons.Default.Lock,
-                                        contentDescription = null,
-                                        tint =
-                                                if (doPasswordsMatch)
-                                                        MaterialTheme.colorScheme.primary
-                                                else MaterialTheme.colorScheme.error
-                                )
-                            },
-                            trailingIcon = {
-                                IconButton(
-                                        onClick = {
-                                            confirmPasswordVisible = !confirmPasswordVisible
-                                        }
-                                ) {
-                                    Icon(
-                                            imageVector =
-                                                    if (confirmPasswordVisible)
-                                                            Icons.Default.Visibility
-                                                    else Icons.Default.VisibilityOff,
-                                            contentDescription =
-                                                    if (confirmPasswordVisible) "Hide password"
-                                                    else "Show password"
-                                    )
+                        value = formData.confirmPassword,
+                        onValueChange = { formData = formData.copy(confirmPassword = it) },
+                        label = { Text("Confirm Password") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Lock,
+                                contentDescription = null,
+                                tint =
+                                if (doPasswordsMatch)
+                                    MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.error
+                            )
+                        },
+                        trailingIcon = {
+                            IconButton(
+                                onClick = {
+                                    confirmPasswordVisible = !confirmPasswordVisible
                                 }
-                            },
-                            visualTransformation =
-                                    if (confirmPasswordVisible) VisualTransformation.None
-                                    else PasswordVisualTransformation(),
-                            isError = !doPasswordsMatch,
-                            supportingText =
-                                    if (!doPasswordsMatch) {
-                                        { Text("Passwords do not match") }
-                                    } else null,
-                            keyboardOptions =
-                                    KeyboardOptions(
-                                            keyboardType = KeyboardType.Password,
-                                            imeAction = ImeAction.Done
-                                    ),
-                            keyboardActions =
-                                    KeyboardActions(
-                                            onDone = {
-                                                keyboardController?.hide()
-                                                if (isFormValid) {
-                                                    onRegisterClick(formData)
-                                                }
-                                            }
-                                    ),
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                            colors = registerTextFieldColors()
+                            ) {
+                                Icon(
+                                    imageVector =
+                                    if (confirmPasswordVisible)
+                                        Icons.Default.Visibility
+                                    else Icons.Default.VisibilityOff,
+                                    contentDescription =
+                                    if (confirmPasswordVisible) "Hide password"
+                                    else "Show password"
+                                )
+                            }
+                        },
+                        visualTransformation =
+                        if (confirmPasswordVisible) VisualTransformation.None
+                        else PasswordVisualTransformation(),
+                        isError = !doPasswordsMatch,
+                        supportingText =
+                        if (!doPasswordsMatch) {
+                            { Text("Passwords do not match") }
+                        } else null,
+                        keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions =
+                        KeyboardActions(
+                            onDone = {
+                                keyboardController?.hide()
+                                if (isFormValid) {
+                                    onRegisterClick(formData)
+                                }
+                            }
+                        ),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors = registerTextFieldColors()
                     )
 
                     Spacer(
-                            modifier =
-                                    Modifier.height(
-                                            RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
-                                    )
+                        modifier =
+                        Modifier.height(
+                            RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                        )
                     )
 
                     // Register Button
                     Button(
-                            onClick = { onRegisterClick(formData) },
-                            enabled = !isLoading && isFormValid,
-                            modifier =
-                                    Modifier.fillMaxWidth()
-                                            .height(RentalWheelsDesignSystem.Spacing.Huge * 0.875f),
-                            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                            colors =
-                                    ButtonDefaults.buttonColors(
-                                            containerColor = MaterialTheme.colorScheme.secondary
-                                    )
+                        onClick = { onRegisterClick(formData) },
+                        enabled = !isLoading && isFormValid,
+                        modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(RentalWheelsDesignSystem.Spacing.Huge * 0.875f),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary
+                        )
                     ) {
                         if (isLoading) {
                             Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Center
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
                             ) {
                                 CircularProgressIndicator(
-                                        modifier =
-                                                Modifier.size(
-                                                        RentalWheelsDesignSystem.Spacing.large
-                                                ),
-                                        color = MaterialTheme.colorScheme.onSecondary,
-                                        strokeWidth = RentalWheelsDesignSystem.Spacing.XXS
+                                    modifier =
+                                    Modifier.size(
+                                        RentalWheelsDesignSystem.Spacing.large
+                                    ),
+                                    color = MaterialTheme.colorScheme.onSecondary,
+                                    strokeWidth = RentalWheelsDesignSystem.Spacing.XXS
                                 )
                                 Spacer(
-                                        modifier =
-                                                Modifier.width(
-                                                        RentalWheelsDesignSystem.Spacing.small
-                                                )
+                                    modifier =
+                                    Modifier.width(
+                                        RentalWheelsDesignSystem.Spacing.small
+                                    )
                                 )
                                 Text(
-                                        text = "Creating Account...",
-                                        style = RentalWheelsDesignSystem.Typography.labelLarge,
-                                        fontWeight = FontWeight.SemiBold
+                                    text = "Creating Account...",
+                                    style = RentalWheelsDesignSystem.Typography.labelLarge,
+                                    fontWeight = FontWeight.SemiBold
                                 )
                             }
                         } else {
                             Text(
-                                    text = "Create Account",
-                                    style = RentalWheelsDesignSystem.Typography.labelLarge,
-                                    fontWeight = FontWeight.SemiBold
+                                text = "Create Account",
+                                style = RentalWheelsDesignSystem.Typography.labelLarge,
+                                fontWeight = FontWeight.SemiBold
                             )
                         }
                     }
@@ -668,20 +677,20 @@ fun RegisterScreen(
 
                     // Login Link
                     Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                                text = "Already have an account? ",
-                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            text = "Already have an account? ",
+                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         TextButton(onClick = onLoginClick) {
                             Text(
-                                    text = "Sign In",
-                                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colorScheme.primary
+                                text = "Sign In",
+                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
