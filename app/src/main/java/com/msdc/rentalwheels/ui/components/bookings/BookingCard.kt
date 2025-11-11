@@ -55,96 +55,100 @@ import java.time.temporal.ChronoUnit
 
 @Composable
 fun BookingCard(
-        booking: Booking,
-        onBookingClick: () -> Unit,
-        onCarClick: () -> Unit,
-        onCancelBooking: () -> Unit,
-        onExtendBooking: () -> Unit,
-        onRebookCar: () -> Unit,
-        onToggleFavorite: () -> Unit = {},
-        isFavorite: Boolean = false,
-        modifier: Modifier = Modifier
+    booking: Booking,
+    onBookingClick: () -> Unit,
+    onCarClick: () -> Unit,
+    onCancelBooking: () -> Unit,
+    onExtendBooking: () -> Unit,
+    onRebookCar: () -> Unit,
+    onToggleFavorite: () -> Unit = {},
+    isFavorite: Boolean = false,
+    modifier: Modifier = Modifier
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
     val statusColor by
-            animateColorAsState(
-                    targetValue = Color(android.graphics.Color.parseColor(booking.status.colorHex)),
-                    label = "status_color"
-            )
+    animateColorAsState(
+        targetValue = Color(android.graphics.Color.parseColor(booking.status.colorHex)),
+        label = "status_color"
+    )
 
     Card(
-            modifier = modifier.fillMaxWidth().clickable { onBookingClick() },
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
-            elevation =
-                    CardDefaults.cardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.small
-                    )
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onBookingClick() },
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+        )
     ) {
         Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             // Header Row
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 // Status Badge
                 Box(
-                        modifier =
-                                Modifier.background(
-                                                color = statusColor.copy(alpha = 0.15f),
-                                                shape =
-                                                        RoundedCornerShape(
-                                                                RentalWheelsDesignSystem
-                                                                        .CornerRadius.medium
-                                                        )
-                                        )
-                                        .padding(
-                                                horizontal =
-                                                        RentalWheelsDesignSystem.Spacing.medium,
-                                                vertical =
-                                                        RentalWheelsDesignSystem.Spacing.extraSmall
-                                        )
+                    modifier =
+                    Modifier
+                        .background(
+                            color = statusColor.copy(alpha = 0.15f),
+                            shape =
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem
+                                    .CornerRadius.medium
+                            )
+                        )
+                        .padding(
+                            horizontal =
+                            RentalWheelsDesignSystem.Spacing.medium,
+                            vertical =
+                            RentalWheelsDesignSystem.Spacing.extraSmall
+                        )
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
-                                modifier =
-                                        Modifier.size(RentalWheelsDesignSystem.Spacing.small)
-                                                .background(
-                                                        color = statusColor,
-                                                        shape = CircleShape
-                                                )
+                            modifier =
+                            Modifier
+                                .size(RentalWheelsDesignSystem.Spacing.small)
+                                .background(
+                                    color = statusColor,
+                                    shape = CircleShape
+                                )
                         )
                         Spacer(
-                                modifier =
-                                        Modifier.width(RentalWheelsDesignSystem.Spacing.extraSmall)
+                            modifier =
+                            Modifier.width(RentalWheelsDesignSystem.Spacing.extraSmall)
                         )
                         Text(
-                                text = booking.status.displayName,
-                                style = RentalWheelsDesignSystem.Typography.labelSmall,
-                                fontWeight = FontWeight.Medium,
-                                color = statusColor
+                            text = booking.status.displayName,
+                            style = RentalWheelsDesignSystem.Typography.labelSmall,
+                            fontWeight = FontWeight.Medium,
+                            color = statusColor
                         )
                     }
                 } // Actions Row
                 Row(
-                        horizontalArrangement =
-                                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall),
-                        verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement =
+                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     // Favorite Button
                     IconButton(onClick = onToggleFavorite) {
                         Icon(
-                                imageVector =
-                                        if (isFavorite) Icons.Default.Favorite
-                                        else Icons.Default.FavoriteBorder,
-                                contentDescription =
-                                        if (isFavorite) "Remove from favorites"
-                                        else "Add to favorites",
-                                tint =
-                                        if (isFavorite) MaterialTheme.colorScheme.error
-                                        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                            imageVector =
+                            if (isFavorite) Icons.Default.Favorite
+                            else Icons.Default.FavoriteBorder,
+                            contentDescription =
+                            if (isFavorite) "Remove from favorites"
+                            else "Add to favorites",
+                            tint =
+                            if (isFavorite) MaterialTheme.colorScheme.error
+                            else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                         )
                     }
 
@@ -152,8 +156,8 @@ fun BookingCard(
                     Box {
                         IconButton(onClick = { showMenu = true }) {
                             Icon(
-                                    imageVector = Icons.Default.MoreVert,
-                                    contentDescription = "More options"
+                                imageVector = Icons.Default.MoreVert,
+                                contentDescription = "More options"
                             )
                         }
 
@@ -162,49 +166,52 @@ fun BookingCard(
                             when (booking.status) {
                                 BookingStatus.CONFIRMED -> {
                                     DropdownMenuItem(
-                                            text = { Text("Cancel Booking") },
-                                            onClick = {
-                                                showMenu = false
-                                                onCancelBooking()
-                                            },
-                                            leadingIcon = {
-                                                Icon(
-                                                        Icons.Default.Cancel,
-                                                        contentDescription = null
-                                                )
-                                            }
+                                        text = { Text("Cancel Booking") },
+                                        onClick = {
+                                            showMenu = false
+                                            onCancelBooking()
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                Icons.Default.Cancel,
+                                                contentDescription = null
+                                            )
+                                        }
                                     )
                                 }
+
                                 BookingStatus.ACTIVE -> {
                                     DropdownMenuItem(
-                                            text = { Text("Extend Rental") },
-                                            onClick = {
-                                                showMenu = false
-                                                onExtendBooking()
-                                            },
-                                            leadingIcon = {
-                                                Icon(
-                                                        Icons.Default.ExtensionOff,
-                                                        contentDescription = null
-                                                )
-                                            }
+                                        text = { Text("Extend Rental") },
+                                        onClick = {
+                                            showMenu = false
+                                            onExtendBooking()
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                Icons.Default.ExtensionOff,
+                                                contentDescription = null
+                                            )
+                                        }
                                     )
                                 }
+
                                 BookingStatus.COMPLETED -> {
                                     DropdownMenuItem(
-                                            text = { Text("Book Again") },
-                                            onClick = {
-                                                showMenu = false
-                                                onRebookCar()
-                                            },
-                                            leadingIcon = {
-                                                Icon(
-                                                        Icons.Default.Refresh,
-                                                        contentDescription = null
-                                                )
-                                            }
+                                        text = { Text("Book Again") },
+                                        onClick = {
+                                            showMenu = false
+                                            onRebookCar()
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                Icons.Default.Refresh,
+                                                contentDescription = null
+                                            )
+                                        }
                                     )
                                 }
+
                                 else -> {
                                     // No actions for other statuses
                                 }
@@ -217,33 +224,34 @@ fun BookingCard(
 
                 // Car Information Row
                 Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     // Car Image
                     AsyncImage(
-                            model =
-                                    booking.car.imageUrl.ifEmpty {
-                                        "https://via.placeholder.com/100x60?text=${booking.car.brand}"
-                                    },
-                            contentDescription = "${booking.car.brand} ${booking.car.model}",
-                            modifier =
-                                    Modifier.size(
-                                                    width =
-                                                            RentalWheelsDesignSystem.Spacing.Huge *
-                                                                    1.5f, // ~96dp
-                                                    height =
-                                                            RentalWheelsDesignSystem.Spacing
-                                                                    .Huge // ~64dp
-                                            )
-                                            .clip(
-                                                    RoundedCornerShape(
-                                                            RentalWheelsDesignSystem.CornerRadius
-                                                                    .small
-                                                    )
-                                            )
-                                            .clickable { onCarClick() },
-                            contentScale = ContentScale.Crop
+                        model =
+                        booking.car.imageUrl.ifEmpty {
+                            "https://via.placeholder.com/100x60?text=${booking.car.brand}"
+                        },
+                        contentDescription = "${booking.car.brand} ${booking.car.model}",
+                        modifier =
+                        Modifier
+                            .size(
+                                width =
+                                RentalWheelsDesignSystem.Spacing.Huge *
+                                        1.5f, // ~96dp
+                                height =
+                                RentalWheelsDesignSystem.Spacing
+                                    .Huge // ~64dp
+                            )
+                            .clip(
+                                RoundedCornerShape(
+                                    RentalWheelsDesignSystem.CornerRadius
+                                        .small
+                                )
+                            )
+                            .clickable { onCarClick() },
+                        contentScale = ContentScale.Crop
                     )
 
                     Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.medium))
@@ -251,24 +259,24 @@ fun BookingCard(
                     // Car Details
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                                text = "${booking.car.brand} ${booking.car.model}",
-                                style = RentalWheelsDesignSystem.Typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                            text = "${booking.car.brand} ${booking.car.model}",
+                            style = RentalWheelsDesignSystem.Typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
 
                         Text(
-                                text = booking.car.category,
-                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                            text = booking.car.category,
+                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                         )
 
                         Text(
-                                text = "$${booking.totalCost.toInt()} total",
-                                style = RentalWheelsDesignSystem.Typography.titleSmall,
-                                fontWeight = FontWeight.SemiBold,
-                                color = MaterialTheme.colorScheme.primary
+                            text = "$${booking.totalCost.toInt()} total",
+                            style = RentalWheelsDesignSystem.Typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -277,34 +285,34 @@ fun BookingCard(
 
                 // Booking Details
                 BookingDetailRow(
-                        icon = Icons.Default.DateRange,
-                        label = "Duration",
-                        value = formatBookingDuration(booking)
+                    icon = Icons.Default.DateRange,
+                    label = "Duration",
+                    value = formatBookingDuration(booking)
                 )
 
                 Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
                 BookingDetailRow(
-                        icon = Icons.Default.LocationOn,
-                        label = "Pickup",
-                        value = booking.pickupLocation
+                    icon = Icons.Default.LocationOn,
+                    label = "Pickup",
+                    value = booking.pickupLocation
                 )
 
                 if (booking.returnLocation != booking.pickupLocation) {
                     Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                     BookingDetailRow(
-                            icon = Icons.Default.LocationOn,
-                            label = "Return",
-                            value = booking.returnLocation
+                        icon = Icons.Default.LocationOn,
+                        label = "Return",
+                        value = booking.returnLocation
                     )
                 }
 
                 Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
                 BookingDetailRow(
-                        icon = Icons.Default.AccessTime,
-                        label = "Reference",
-                        value = "#${booking.referenceNumber.ifEmpty { booking.id.take(8) }}"
+                    icon = Icons.Default.AccessTime,
+                    label = "Reference",
+                    value = "#${booking.referenceNumber.ifEmpty { booking.id.take(8) }}"
                 )
 
                 // Driver Information (if applicable)
@@ -319,79 +327,80 @@ fun BookingCard(
 
 @Composable
 private fun BookingDetailRow(
-        icon: androidx.compose.ui.graphics.vector.ImageVector,
-        label: String,
-        value: String,
-        modifier: Modifier = Modifier
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    value: String,
+    modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Icon(
-                imageVector = icon,
-                contentDescription = label,
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
+            imageVector = icon,
+            contentDescription = label,
+            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
         )
 
         Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
 
         Text(
-                text = "$label: ",
-                style = RentalWheelsDesignSystem.Typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            text = "$label: ",
+            style = RentalWheelsDesignSystem.Typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
         )
 
         Text(
-                text = value,
-                style = RentalWheelsDesignSystem.Typography.bodySmall,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
+            text = value,
+            style = RentalWheelsDesignSystem.Typography.bodySmall,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }
 
 @Composable
 private fun DriverInfoSection(
-        driverInfo: com.msdc.rentalwheels.uistates.DriverInfo,
-        modifier: Modifier = Modifier
+    driverInfo: com.msdc.rentalwheels.uistates.DriverInfo,
+    modifier: Modifier = Modifier
 ) {
     Card(
-            modifier = modifier.fillMaxWidth(),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small)
+        modifier = modifier.fillMaxWidth(),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small)
     ) {
         Row(
-                modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small),
-                verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                    model =
-                            driverInfo.imageUrl.ifEmpty {
-                                "https://via.placeholder.com/40x40?text=${driverInfo.name.firstOrNull()}"
-                            },
-                    contentDescription = driverInfo.name,
-                    modifier =
-                            Modifier.size(
-                                            RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
-                                    ) // ~32dp
-                                    .clip(CircleShape),
-                    contentScale = ContentScale.Crop
+                model =
+                driverInfo.imageUrl.ifEmpty {
+                    "https://via.placeholder.com/40x40?text=${driverInfo.name.firstOrNull()}"
+                },
+                contentDescription = driverInfo.name,
+                modifier =
+                Modifier
+                    .size(
+                        RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                    ) // ~32dp
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
 
             Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
 
             Column {
                 Text(
-                        text = "Driver: ${driverInfo.name}",
-                        style = RentalWheelsDesignSystem.Typography.bodySmall,
-                        fontWeight = FontWeight.Medium
+                    text = "Driver: ${driverInfo.name}",
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
+                    fontWeight = FontWeight.Medium
                 )
                 Text(
-                        text = "★ ${driverInfo.rating} • ${driverInfo.experience}",
-                        style = RentalWheelsDesignSystem.Typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.7f)
+                    text = "★ ${driverInfo.rating} • ${driverInfo.experience}",
+                    style = RentalWheelsDesignSystem.Typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.7f)
                 )
             }
         }
