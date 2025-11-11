@@ -51,125 +51,127 @@ import com.msdc.rentalwheels.uistates.ComparisonState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComparisonButton(
-        isSelected: Boolean,
-        canAdd: Boolean,
-        onToggleComparison: () -> Unit,
-        modifier: Modifier = Modifier
+    isSelected: Boolean,
+    canAdd: Boolean,
+    onToggleComparison: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val backgroundColor =
-            when {
-                isSelected -> MaterialTheme.colorScheme.primary
-                canAdd -> MaterialTheme.colorScheme.surfaceVariant
-                else -> MaterialTheme.colorScheme.outlineVariant
-            }
+        when {
+            isSelected -> MaterialTheme.colorScheme.primary
+            canAdd -> MaterialTheme.colorScheme.surfaceVariant
+            else -> MaterialTheme.colorScheme.outlineVariant
+        }
 
     val contentColor =
-            when {
-                isSelected -> MaterialTheme.colorScheme.onPrimary
-                canAdd -> MaterialTheme.colorScheme.onSurfaceVariant
-                else -> MaterialTheme.colorScheme.outline
-            }
+        when {
+            isSelected -> MaterialTheme.colorScheme.onPrimary
+            canAdd -> MaterialTheme.colorScheme.onSurfaceVariant
+            else -> MaterialTheme.colorScheme.outline
+        }
 
     IconButton(
-            onClick = onToggleComparison,
-            enabled = canAdd || isSelected,
-            modifier = modifier.size(40.dp).background(color = backgroundColor, shape = CircleShape)
+        onClick = onToggleComparison,
+        enabled = canAdd || isSelected,
+        modifier = modifier
+            .size(40.dp)
+            .background(color = backgroundColor, shape = CircleShape)
     ) {
         Icon(
-                imageVector = if (isSelected) Icons.Default.Close else Icons.Default.Add,
-                contentDescription =
-                        if (isSelected) "Remove from comparison" else "Add to comparison",
-                tint = contentColor,
-                modifier = Modifier.size(20.dp)
+            imageVector = if (isSelected) Icons.Default.Close else Icons.Default.Add,
+            contentDescription =
+            if (isSelected) "Remove from comparison" else "Add to comparison",
+            tint = contentColor,
+            modifier = Modifier.size(20.dp)
         )
     }
 }
 
 @Composable
 fun ComparisonFloatingButton(
-        comparisonState: ComparisonState,
-        onViewComparison: () -> Unit,
-        modifier: Modifier = Modifier
+    comparisonState: ComparisonState,
+    onViewComparison: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
-            visible = comparisonState.hasSelections,
-            enter = slideInVertically() + fadeIn(),
-            exit = slideOutVertically() + fadeOut(),
-            modifier = modifier
+        visible = comparisonState.hasSelections,
+        enter = slideInVertically() + fadeIn(),
+        exit = slideOutVertically() + fadeOut(),
+        modifier = modifier
     ) {
         ExtendedFloatingActionButton(
-                onClick = onViewComparison,
-                icon = {
-                    Box {
-                        Icon(
-                                imageVector = Icons.Default.Compare,
-                                contentDescription = "Compare cars"
-                        )
-                        if (comparisonState.selectedCars.isNotEmpty()) {
-                            Badge(modifier = Modifier.align(Alignment.TopEnd)) {
-                                Text(comparisonState.selectedCars.size.toString())
-                            }
+            onClick = onViewComparison,
+            icon = {
+                Box {
+                    Icon(
+                        imageVector = Icons.Default.Compare,
+                        contentDescription = "Compare cars"
+                    )
+                    if (comparisonState.selectedCars.isNotEmpty()) {
+                        Badge(modifier = Modifier.align(Alignment.TopEnd)) {
+                            Text(comparisonState.selectedCars.size.toString())
                         }
                     }
-                },
-                text = { Text("Compare (${comparisonState.selectedCars.size})") },
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                }
+            },
+            text = { Text("Compare (${comparisonState.selectedCars.size})") },
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 }
 
 @Composable
 fun ComparisonPreview(
-        comparisonState: ComparisonState,
-        onRemoveCar: (String) -> Unit,
-        onViewComparison: () -> Unit,
-        modifier: Modifier = Modifier
+    comparisonState: ComparisonState,
+    onRemoveCar: (String) -> Unit,
+    onViewComparison: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
-            visible = comparisonState.hasSelections,
-            enter = slideInVertically() + fadeIn(),
-            exit = slideOutVertically() + fadeOut(),
-            modifier = modifier
+        visible = comparisonState.hasSelections,
+        enter = slideInVertically() + fadeIn(),
+        exit = slideOutVertically() + fadeOut(),
+        modifier = modifier
     ) {
         Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors =
-                        CardDefaults.cardColors(
-                                containerColor =
-                                        MaterialTheme.colorScheme.secondaryContainer.copy(
-                                                alpha = 0.7f
-                                        )
-                        ),
-                elevation =
-                        CardDefaults.cardElevation(
-                                defaultElevation = RentalWheelsDesignSystem.Elevation.Card
-                        )
+            modifier = Modifier.fillMaxWidth(),
+            colors =
+            CardDefaults.cardColors(
+                containerColor =
+                MaterialTheme.colorScheme.secondaryContainer.copy(
+                    alpha = 0.7f
+                )
+            ),
+            elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = RentalWheelsDesignSystem.Elevation.Card
+            )
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                            text =
-                                    "Compare Cars (${comparisonState.selectedCars.size}/${comparisonState.maxComparisons})",
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        text =
+                        "Compare Cars (${comparisonState.selectedCars.size}/${comparisonState.maxComparisons})",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
                     )
 
                     ExtendedFloatingActionButton(
-                            onClick = onViewComparison,
-                            text = { Text("Compare") },
-                            icon = {
-                                Icon(
-                                        imageVector = Icons.Default.Compare,
-                                        contentDescription = "View comparison"
-                                )
-                            },
-                            modifier = Modifier.height(32.dp)
+                        onClick = onViewComparison,
+                        text = { Text("Compare") },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Compare,
+                                contentDescription = "View comparison"
+                            )
+                        },
+                        modifier = Modifier.height(32.dp)
                     )
                 }
 
@@ -188,65 +190,67 @@ fun ComparisonPreview(
 @Composable
 private fun ComparisonCarItem(car: Car, onRemove: () -> Unit, modifier: Modifier = Modifier) {
     Card(
-            modifier = modifier.width(120.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            elevation =
-                    CardDefaults.cardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.small
-                    )
+        modifier = modifier.width(120.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+        )
     ) {
         Box {
             Column(modifier = Modifier.padding(8.dp)) {
                 AsyncImage(
-                        model =
-                                car.imageUrl.ifEmpty {
-                                    "https://via.placeholder.com/150x100?text=${car.brand}"
-                                },
-                        contentDescription = "${car.brand} ${car.model}",
-                        modifier =
-                                Modifier.fillMaxWidth()
-                                        .height(60.dp)
-                                        .clip(
-                                                RoundedCornerShape(
-                                                        RentalWheelsDesignSystem.CornerRadius
-                                                                .extraSmall
-                                                )
-                                        ),
-                        contentScale = ContentScale.Crop
+                    model =
+                    car.imageUrl.ifEmpty {
+                        "https://via.placeholder.com/150x100?text=${car.brand}"
+                    },
+                    contentDescription = "${car.brand} ${car.model}",
+                    modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .clip(
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius
+                                    .extraSmall
+                            )
+                        ),
+                    contentScale = ContentScale.Crop
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                        text = "${car.brand} ${car.model}",
-                        style = MaterialTheme.typography.bodySmall,
-                        fontWeight = FontWeight.Medium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                    text = "${car.brand} ${car.model}",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Medium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
 
                 Text(
-                        text = "${car.dailyRate}",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary
+                    text = "${car.dailyRate}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
             IconButton(
-                    onClick = onRemove,
-                    modifier =
-                            Modifier.align(Alignment.TopEnd)
-                                    .size(20.dp)
-                                    .background(
-                                            color = MaterialTheme.colorScheme.scrim,
-                                            shape = CircleShape
-                                    )
+                onClick = onRemove,
+                modifier =
+                Modifier
+                    .align(Alignment.TopEnd)
+                    .size(20.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.scrim,
+                        shape = CircleShape
+                    )
             ) {
                 Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Remove from comparison",
-                        tint = Color.White,
-                        modifier = Modifier.size(12.dp)
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Remove from comparison",
+                    tint = Color.White,
+                    modifier = Modifier.size(12.dp)
                 )
             }
         }
