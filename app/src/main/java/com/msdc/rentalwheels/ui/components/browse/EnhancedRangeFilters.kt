@@ -27,43 +27,43 @@ import com.msdc.rentalwheels.uistates.RangeFilterState
 
 @Composable
 fun EnhancedRangeFilters(
-        rangeState: RangeFilterState,
-        onPriceRangeChange: (Pair<Float, Float>) -> Unit,
-        onYearRangeChange: (Pair<Float, Float>) -> Unit,
-        modifier: Modifier = Modifier
+    rangeState: RangeFilterState,
+    onPriceRangeChange: (Pair<Float, Float>) -> Unit,
+    onYearRangeChange: (Pair<Float, Float>) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-            modifier = modifier,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            elevation =
-                    CardDefaults.cardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.Card
-                    )
+        modifier = modifier,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.Card
+        )
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Text(
-                    text = "Range Filters",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface
+                text = "Range Filters",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
             PriceRangeSlider(
-                    currentRange = rangeState.priceRange,
-                    minValue = rangeState.minPrice,
-                    maxValue = rangeState.maxPrice,
-                    onRangeChange = onPriceRangeChange
+                currentRange = rangeState.priceRange,
+                minValue = rangeState.minPrice,
+                maxValue = rangeState.maxPrice,
+                onRangeChange = onPriceRangeChange
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
             YearRangeSlider(
-                    currentRange = rangeState.yearRange,
-                    minValue = rangeState.minYear,
-                    maxValue = rangeState.maxYear,
-                    onRangeChange = onYearRangeChange
+                currentRange = rangeState.yearRange,
+                minValue = rangeState.minYear,
+                maxValue = rangeState.maxYear,
+                onRangeChange = onYearRangeChange
             )
         }
     }
@@ -71,62 +71,62 @@ fun EnhancedRangeFilters(
 
 @Composable
 private fun PriceRangeSlider(
-        currentRange: Pair<Float, Float>,
-        minValue: Float,
-        maxValue: Float,
-        onRangeChange: (Pair<Float, Float>) -> Unit,
-        modifier: Modifier = Modifier
+    currentRange: Pair<Float, Float>,
+    minValue: Float,
+    maxValue: Float,
+    onRangeChange: (Pair<Float, Float>) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var sliderPosition by
-            remember(currentRange) { mutableStateOf(currentRange.first..currentRange.second) }
+    remember(currentRange) { mutableStateOf(currentRange.first..currentRange.second) }
 
     Column(modifier = modifier) {
         Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                    text = "Price Range",
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Medium
+                text = "Price Range",
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.Medium
             )
             Text(
-                    text = "$${currentRange.first.toInt()} - $${currentRange.second.toInt()}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.SemiBold
+                text = "$${currentRange.first.toInt()} - $${currentRange.second.toInt()}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
             )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
         RangeSlider(
-                value = sliderPosition,
-                onValueChange = { range ->
-                    sliderPosition = range
-                    onRangeChange(Pair(range.start, range.endInclusive))
-                },
-                valueRange = minValue..maxValue,
-                steps = 20,
-                colors =
-                        SliderDefaults.colors(
-                                thumbColor = MaterialTheme.colorScheme.primary,
-                                activeTrackColor = MaterialTheme.colorScheme.primary,
-                                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
-                        )
+            value = sliderPosition,
+            onValueChange = { range ->
+                sliderPosition = range
+                onRangeChange(Pair(range.start, range.endInclusive))
+            },
+            valueRange = minValue..maxValue,
+            steps = 20,
+            colors =
+            SliderDefaults.colors(
+                thumbColor = MaterialTheme.colorScheme.primary,
+                activeTrackColor = MaterialTheme.colorScheme.primary,
+                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
+            )
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                    text = "$${minValue.toInt()}",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = "$${minValue.toInt()}",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                    text = "$${maxValue.toInt()}",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = "$${maxValue.toInt()}",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -134,62 +134,62 @@ private fun PriceRangeSlider(
 
 @Composable
 private fun YearRangeSlider(
-        currentRange: Pair<Float, Float>,
-        minValue: Float,
-        maxValue: Float,
-        onRangeChange: (Pair<Float, Float>) -> Unit,
-        modifier: Modifier = Modifier
+    currentRange: Pair<Float, Float>,
+    minValue: Float,
+    maxValue: Float,
+    onRangeChange: (Pair<Float, Float>) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var sliderPosition by
-            remember(currentRange) { mutableStateOf(currentRange.first..currentRange.second) }
+    remember(currentRange) { mutableStateOf(currentRange.first..currentRange.second) }
 
     Column(modifier = modifier) {
         Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                    text = "Year Range",
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Medium
+                text = "Year Range",
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.Medium
             )
             Text(
-                    text = "${currentRange.first.toInt()} - ${currentRange.second.toInt()}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.SemiBold
+                text = "${currentRange.first.toInt()} - ${currentRange.second.toInt()}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
             )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
         RangeSlider(
-                value = sliderPosition,
-                onValueChange = { range ->
-                    sliderPosition = range
-                    onRangeChange(Pair(range.start, range.endInclusive))
-                },
-                valueRange = minValue..maxValue,
-                steps = (maxValue - minValue).toInt() - 1,
-                colors =
-                        SliderDefaults.colors(
-                                thumbColor = MaterialTheme.colorScheme.secondary,
-                                activeTrackColor = MaterialTheme.colorScheme.secondary,
-                                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
-                        )
+            value = sliderPosition,
+            onValueChange = { range ->
+                sliderPosition = range
+                onRangeChange(Pair(range.start, range.endInclusive))
+            },
+            valueRange = minValue..maxValue,
+            steps = (maxValue - minValue).toInt() - 1,
+            colors =
+            SliderDefaults.colors(
+                thumbColor = MaterialTheme.colorScheme.secondary,
+                activeTrackColor = MaterialTheme.colorScheme.secondary,
+                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
+            )
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                    text = minValue.toInt().toString(),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = minValue.toInt().toString(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                    text = maxValue.toInt().toString(),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = maxValue.toInt().toString(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
