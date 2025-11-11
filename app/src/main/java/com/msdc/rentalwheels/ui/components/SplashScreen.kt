@@ -49,9 +49,9 @@ import kotlinx.coroutines.delay
  */
 @Composable
 fun SplashScreen(
-        onSplashComplete: () -> Unit = {},
-        animationDuration: Long = 2500L,
-        modifier: Modifier = Modifier
+    onSplashComplete: () -> Unit = {},
+    animationDuration: Long = 2500L,
+    modifier: Modifier = Modifier
 ) {
     // Animation state for logo scaling
     val logoScale = remember { Animatable(0f) }
@@ -59,27 +59,27 @@ fun SplashScreen(
     // Infinite pulsing animation for the logo
     val infiniteTransition = rememberInfiniteTransition(label = "SplashPulse")
     val pulseAlpha by
-            infiniteTransition.animateFloat(
-                    initialValue = 0.7f,
-                    targetValue = 1f,
-                    animationSpec =
-                            infiniteRepeatable(
-                                    animation =
-                                            tween(
-                                                    durationMillis = 1000,
-                                                    easing = LinearOutSlowInEasing
-                                            ),
-                                    repeatMode = RepeatMode.Reverse
-                            ),
-                    label = "LogoPulse"
-            )
+    infiniteTransition.animateFloat(
+        initialValue = 0.7f,
+        targetValue = 1f,
+        animationSpec =
+        infiniteRepeatable(
+            animation =
+            tween(
+                durationMillis = 1000,
+                easing = LinearOutSlowInEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "LogoPulse"
+    )
 
     // Launch entrance animation
     LaunchedEffect(Unit) {
         // Scale logo from 0 to 1 with smooth easing
         logoScale.animateTo(
-                targetValue = 1f,
-                animationSpec = tween(durationMillis = 1200, easing = LinearOutSlowInEasing)
+            targetValue = 1f,
+            animationSpec = tween(durationMillis = 1200, easing = LinearOutSlowInEasing)
         )
 
         // Hold for a moment
@@ -90,55 +90,57 @@ fun SplashScreen(
     }
 
     Box(
-            modifier =
-                    modifier.fillMaxSize()
-                            .background(
-                                    brush =
-                                            Brush.verticalGradient(
-                                                    colors =
-                                                            listOf(
-                                                                    RentalWheelsDesignSystem.Colors
-                                                                            .BrandPrimary,
-                                                                    RentalWheelsDesignSystem.Colors
-                                                                            .BrandPrimary.copy(
-                                                                            alpha = 0.8f
-                                                                    ),
-                                                                    MaterialTheme.colorScheme
-                                                                            .surface
-                                                            )
-                                            )
+        modifier =
+        modifier
+            .fillMaxSize()
+            .background(
+                brush =
+                Brush.verticalGradient(
+                    colors =
+                    listOf(
+                        RentalWheelsDesignSystem.Colors
+                            .BrandPrimary,
+                        RentalWheelsDesignSystem.Colors
+                            .BrandPrimary.copy(
+                                alpha = 0.8f
                             ),
-            contentAlignment = Alignment.Center
+                        MaterialTheme.colorScheme
+                            .surface
+                    )
+                )
+            ),
+        contentAlignment = Alignment.Center
     ) {
         Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             // Logo Container with Professional Card Design
             Card(
-                    modifier =
-                            Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 1.875f)
-                                    .scale(logoScale.value)
-                                    .graphicsLayer { alpha = pulseAlpha },
-                    shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-                    colors =
-                            CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surface
-                            ),
-                    elevation =
-                            CardDefaults.cardElevation(
-                                    defaultElevation = RentalWheelsDesignSystem.Elevation.medium
-                            )
+                modifier =
+                Modifier
+                    .size(RentalWheelsDesignSystem.Spacing.Huge * 1.875f)
+                    .scale(logoScale.value)
+                    .graphicsLayer { alpha = pulseAlpha },
+                shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                elevation =
+                CardDefaults.cardElevation(
+                    defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+                )
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Icon(
-                            painter =
-                                    painterResource(
-                                            id = R.drawable.ic_car
-                                    ), // You'll need to add this icon
-                            contentDescription = "RentalWheels Logo",
-                            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 0.94f),
-                            tint = RentalWheelsDesignSystem.Colors.BrandPrimary
+                        painter =
+                        painterResource(
+                            id = R.drawable.ic_car
+                        ), // You'll need to add this icon
+                        contentDescription = "RentalWheels Logo",
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 0.94f),
+                        tint = RentalWheelsDesignSystem.Colors.BrandPrimary
                     )
                 }
             }
@@ -147,31 +149,35 @@ fun SplashScreen(
 
             // App Name with Professional Typography
             Text(
-                    text = "RentalWheels",
-                    style =
-                            MaterialTheme.typography.displaySmall.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onSurface
-                            ),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.scale(logoScale.value).graphicsLayer { alpha = pulseAlpha }
+                text = "RentalWheels",
+                style =
+                MaterialTheme.typography.displaySmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .scale(logoScale.value)
+                    .graphicsLayer { alpha = pulseAlpha }
             )
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
             // Tagline
             Text(
-                    text = "Your Journey Begins Here",
-                    style =
-                            MaterialTheme.typography.bodyLarge.copy(
-                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                                    fontWeight = FontWeight.Medium
-                            ),
-                    textAlign = TextAlign.Center,
-                    modifier =
-                            Modifier.scale(logoScale.value).graphicsLayer {
-                                alpha = pulseAlpha * 0.8f
-                            }
+                text = "Your Journey Begins Here",
+                style =
+                MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    fontWeight = FontWeight.Medium
+                ),
+                textAlign = TextAlign.Center,
+                modifier =
+                Modifier
+                    .scale(logoScale.value)
+                    .graphicsLayer {
+                        alpha = pulseAlpha * 0.8f
+                    }
             )
         }
     }
@@ -184,8 +190,8 @@ fun MinimalSplashScreen(onSplashComplete: () -> Unit = {}, modifier: Modifier = 
 
     LaunchedEffect(Unit) {
         logoScale.animateTo(
-                targetValue = 1f,
-                animationSpec = tween(durationMillis = 800, easing = LinearOutSlowInEasing)
+            targetValue = 1f,
+            animationSpec = tween(durationMillis = 800, easing = LinearOutSlowInEasing)
         )
 
         delay(1500)
@@ -193,45 +199,48 @@ fun MinimalSplashScreen(onSplashComplete: () -> Unit = {}, modifier: Modifier = 
     }
 
     Box(
-            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
-            contentAlignment = Alignment.Center
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface),
+        contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             // Simple logo
             Box(
-                    modifier =
-                            Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
-                                    .scale(logoScale.value)
-                                    .background(
-                                            color = RentalWheelsDesignSystem.Colors.BrandPrimary,
-                                            shape =
-                                                    RoundedCornerShape(
-                                                            RentalWheelsDesignSystem.CornerRadius
-                                                                    .medium
-                                                    )
-                                    ),
-                    contentAlignment = Alignment.Center
+                modifier =
+                Modifier
+                    .size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
+                    .scale(logoScale.value)
+                    .background(
+                        color = RentalWheelsDesignSystem.Colors.BrandPrimary,
+                        shape =
+                        RoundedCornerShape(
+                            RentalWheelsDesignSystem.CornerRadius
+                                .medium
+                        )
+                    ),
+                contentAlignment = Alignment.Center
             ) {
                 Text(
-                        text = "RW",
-                        style =
-                                MaterialTheme.typography.headlineMedium.copy(
-                                        fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colorScheme.onPrimary
-                                )
+                    text = "RW",
+                    style =
+                    MaterialTheme.typography.headlineMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
                 )
             }
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
             Text(
-                    text = "RentalWheels",
-                    style =
-                            MaterialTheme.typography.titleLarge.copy(
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colorScheme.onSurface
-                            ),
-                    modifier = Modifier.scale(logoScale.value)
+                text = "RentalWheels",
+                style =
+                MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
+                ),
+                modifier = Modifier.scale(logoScale.value)
             )
         }
     }
