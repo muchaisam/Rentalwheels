@@ -50,10 +50,10 @@ import kotlinx.coroutines.launch
 /** Professional Bottom Navigation Modern glassmorphism design with smooth animations */
 @Composable
 fun PremiumBottomNavigation(
-        currentDestination: NavDestination?,
-        onNavigate: (Screen) -> Unit,
-        themeState: ThemeState,
-        modifier: Modifier = Modifier
+    currentDestination: NavDestination?,
+    onNavigate: (Screen) -> Unit,
+    themeState: ThemeState,
+    modifier: Modifier = Modifier
 ) {
     val haptic = LocalHapticFeedback.current
     val scope = rememberCoroutineScope()
@@ -62,144 +62,146 @@ fun PremiumBottomNavigation(
 
     // Navigation Items
     val navigationItems =
-            listOf(
-                    NavigationItem(
-                            icon = R.drawable.car_home,
-                            label = "Home",
-                            route = Screen.Home.route,
-                            contentDescription = "Navigate to Home screen"
-                    ),
-                    NavigationItem(
-                            icon = R.drawable.maps,
-                            label = "Browse",
-                            route = Screen.Browse.route,
-                            contentDescription = "Navigate to Browse screen"
-                    ),
-                    NavigationItem(
-                            icon = R.drawable.bookings,
-                            label = "Bookings",
-                            route = Screen.Bookings.route,
-                            contentDescription = "Navigate to Bookings screen"
-                    ),
-                    NavigationItem(
-                            icon = R.drawable.settings,
-                            label = "Settings",
-                            route = Screen.Settings.route,
-                            contentDescription = "Navigate to Settings screen"
-                    )
+        listOf(
+            NavigationItem(
+                icon = R.drawable.car_home,
+                label = "Home",
+                route = Screen.Home.route,
+                contentDescription = "Navigate to Home screen"
+            ),
+            NavigationItem(
+                icon = R.drawable.maps,
+                label = "Browse",
+                route = Screen.Browse.route,
+                contentDescription = "Navigate to Browse screen"
+            ),
+            NavigationItem(
+                icon = R.drawable.bookings,
+                label = "Bookings",
+                route = Screen.Bookings.route,
+                contentDescription = "Navigate to Bookings screen"
+            ),
+            NavigationItem(
+                icon = R.drawable.settings,
+                label = "Settings",
+                route = Screen.Settings.route,
+                contentDescription = "Navigate to Settings screen"
             )
+        )
 
     // Glassmorphism Navigation Container
     Box(
-            modifier =
-                    modifier.fillMaxWidth()
-                            .navigationBarsPadding()
-                            .padding(
-                                    horizontal = RentalWheelsDesignSystem.Spacing.medium,
-                                    vertical = RentalWheelsDesignSystem.Spacing.extraSmall
-                            )
+        modifier =
+        modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
+            .padding(
+                horizontal = RentalWheelsDesignSystem.Spacing.medium,
+                vertical = RentalWheelsDesignSystem.Spacing.extraSmall
+            )
     ) {
         Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.XXL),
-                colors =
-                        CardDefaults.cardColors(
-                                containerColor =
-                                        if (isDarkTheme) {
-                                            RentalWheelsDesignSystem.Colors.SurfaceDark02.copy(
-                                                    alpha = 0.95f
-                                            )
-                                        } else {
-                                            RentalWheelsDesignSystem.Colors.Surface02.copy(
-                                                    alpha = 0.95f
-                                            )
-                                        }
-                        ),
-                elevation =
-                        CardDefaults.cardElevation(
-                                defaultElevation = RentalWheelsDesignSystem.Elevation.large
-                        )
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.XXL),
+            colors =
+            CardDefaults.cardColors(
+                containerColor =
+                if (isDarkTheme) {
+                    RentalWheelsDesignSystem.Colors.SurfaceDark02.copy(
+                        alpha = 0.95f
+                    )
+                } else {
+                    RentalWheelsDesignSystem.Colors.Surface02.copy(
+                        alpha = 0.95f
+                    )
+                }
+            ),
+            elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = RentalWheelsDesignSystem.Elevation.large
+            )
         ) {
             Box(
-                    modifier =
-                            Modifier.fillMaxWidth()
-                                    .background(
-                                            Brush.horizontalGradient(
-                                                    colors =
-                                                            if (isDarkTheme) {
-                                                                listOf(
-                                                                        RentalWheelsDesignSystem
-                                                                                .Colors
-                                                                                .SurfaceDark02.copy(
-                                                                                alpha = 0.9f
-                                                                        ),
-                                                                        RentalWheelsDesignSystem
-                                                                                .Colors
-                                                                                .SurfaceDark03.copy(
-                                                                                alpha = 0.8f
-                                                                        ),
-                                                                        RentalWheelsDesignSystem
-                                                                                .Colors
-                                                                                .SurfaceDark02.copy(
-                                                                                alpha = 0.9f
-                                                                        )
-                                                                )
-                                                            } else {
-                                                                listOf(
-                                                                        RentalWheelsDesignSystem
-                                                                                .Colors.Surface02
-                                                                                .copy(
-                                                                                        alpha =
-                                                                                                0.95f
-                                                                                ),
-                                                                        RentalWheelsDesignSystem
-                                                                                .Colors.BrandPrimary
-                                                                                .copy(
-                                                                                        alpha =
-                                                                                                0.05f
-                                                                                ),
-                                                                        RentalWheelsDesignSystem
-                                                                                .Colors.Surface02
-                                                                                .copy(alpha = 0.95f)
-                                                                )
-                                                            }
-                                            )
-                                    )
-                                    .padding(
-                                            vertical = RentalWheelsDesignSystem.Spacing.small,
-                                            horizontal = RentalWheelsDesignSystem.Spacing.extraSmall
-                                    )
+                modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(
+                        Brush.horizontalGradient(
+                            colors =
+                            if (isDarkTheme) {
+                                listOf(
+                                    RentalWheelsDesignSystem
+                                        .Colors
+                                        .SurfaceDark02.copy(
+                                            alpha = 0.9f
+                                        ),
+                                    RentalWheelsDesignSystem
+                                        .Colors
+                                        .SurfaceDark03.copy(
+                                            alpha = 0.8f
+                                        ),
+                                    RentalWheelsDesignSystem
+                                        .Colors
+                                        .SurfaceDark02.copy(
+                                            alpha = 0.9f
+                                        )
+                                )
+                            } else {
+                                listOf(
+                                    RentalWheelsDesignSystem
+                                        .Colors.Surface02
+                                        .copy(
+                                            alpha =
+                                            0.95f
+                                        ),
+                                    RentalWheelsDesignSystem
+                                        .Colors.BrandPrimary
+                                        .copy(
+                                            alpha =
+                                            0.05f
+                                        ),
+                                    RentalWheelsDesignSystem
+                                        .Colors.Surface02
+                                        .copy(alpha = 0.95f)
+                                )
+                            }
+                        )
+                    )
+                    .padding(
+                        vertical = RentalWheelsDesignSystem.Spacing.small,
+                        horizontal = RentalWheelsDesignSystem.Spacing.extraSmall
+                    )
             ) {
                 Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     navigationItems.forEachIndexed { index, item ->
                         val isSelected =
-                                currentDestination?.route == item.route ||
-                                        (currentDestination?.route == null && index == 0)
+                            currentDestination?.route == item.route ||
+                                    (currentDestination?.route == null && index == 0)
 
                         PremiumNavigationItem(
-                                icon = item.icon,
-                                label = item.label,
-                                selected = isSelected,
-                                contentDesc = item.contentDescription,
-                                isDarkTheme = isDarkTheme,
-                                onClick = {
-                                    scope.launch {
-                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                        delay(50) // Animation delay
-                                        onNavigate(
-                                                when (index) {
-                                                    0 -> Screen.Home
-                                                    1 -> Screen.Browse
-                                                    2 -> Screen.Bookings
-                                                    else -> Screen.Settings
-                                                }
-                                        )
-                                    }
+                            icon = item.icon,
+                            label = item.label,
+                            selected = isSelected,
+                            contentDesc = item.contentDescription,
+                            isDarkTheme = isDarkTheme,
+                            onClick = {
+                                scope.launch {
+                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    delay(50) // Animation delay
+                                    onNavigate(
+                                        when (index) {
+                                            0 -> Screen.Home
+                                            1 -> Screen.Browse
+                                            2 -> Screen.Bookings
+                                            else -> Screen.Settings
+                                        }
+                                    )
                                 }
+                            }
                         )
                     }
                 }
@@ -210,119 +212,122 @@ fun PremiumBottomNavigation(
 
 @Composable
 private fun PremiumNavigationItem(
-        icon: Int,
-        label: String,
-        selected: Boolean,
-        contentDesc: String,
-        isDarkTheme: Boolean,
-        onClick: () -> Unit,
-        modifier: Modifier = Modifier
+    icon: Int,
+    label: String,
+    selected: Boolean,
+    contentDesc: String,
+    isDarkTheme: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
     val scale by
-            animateFloatAsState(
-                    targetValue = if (selected) 1.1f else 1f,
-                    animationSpec = spring(dampingRatio = 0.6f, stiffness = 300f),
-                    label = "nav_item_scale"
-            )
+    animateFloatAsState(
+        targetValue = if (selected) 1.1f else 1f,
+        animationSpec = spring(dampingRatio = 0.6f, stiffness = 300f),
+        label = "nav_item_scale"
+    )
 
     val alpha by
-            animateFloatAsState(
-                    targetValue = if (selected) 1f else 0.6f,
-                    animationSpec = tween(RentalWheelsDesignSystem.Animation.Medium),
-                    label = "nav_item_alpha"
-            )
+    animateFloatAsState(
+        targetValue = if (selected) 1f else 0.6f,
+        animationSpec = tween(RentalWheelsDesignSystem.Animation.Medium),
+        label = "nav_item_alpha"
+    )
 
     Box(
-            modifier =
-                    modifier.clip(RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium))
-                            .clickable(
-                                    interactionSource = interactionSource,
-                                    indication = null,
-                                    role = Role.Tab,
-                                    onClickLabel = contentDesc
-                            ) { onClick() }
-                            .semantics {
-                                role = Role.Tab
-                                contentDescription = contentDesc
-                                this.selected = selected
-                            }
-                            .padding(RentalWheelsDesignSystem.Spacing.extraSmall)
-                            .scale(scale),
-            contentAlignment = Alignment.Center
+        modifier =
+        modifier
+            .clip(RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium))
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                role = Role.Tab,
+                onClickLabel = contentDesc
+            ) { onClick() }
+            .semantics {
+                role = Role.Tab
+                contentDescription = contentDesc
+                this.selected = selected
+            }
+            .padding(RentalWheelsDesignSystem.Spacing.extraSmall)
+            .scale(scale),
+        contentAlignment = Alignment.Center
     ) {
         Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.XXS)
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.XXS)
         ) {
             // Icon with Selection Background
             Box(
-                    modifier =
-                            Modifier.size(
-                                            RentalWheelsDesignSystem.Spacing.XXL
-                                    ) // Icon container size
-                                    .background(
-                                            color =
-                                                    if (selected) {
-                                                        RentalWheelsDesignSystem.Colors.BrandPrimary
-                                                                .copy(alpha = 0.2f)
-                                                    } else {
-                                                        Color.Transparent
-                                                    },
-                                            shape =
-                                                    RoundedCornerShape(
-                                                            RentalWheelsDesignSystem.CornerRadius
-                                                                    .small
-                                                    )
-                                    ),
-                    contentAlignment = Alignment.Center
+                modifier =
+                Modifier
+                    .size(
+                        RentalWheelsDesignSystem.Spacing.XXL
+                    ) // Icon container size
+                    .background(
+                        color =
+                        if (selected) {
+                            RentalWheelsDesignSystem.Colors.BrandPrimary
+                                .copy(alpha = 0.2f)
+                        } else {
+                            Color.Transparent
+                        },
+                        shape =
+                        RoundedCornerShape(
+                            RentalWheelsDesignSystem.CornerRadius
+                                .small
+                        )
+                    ),
+                contentAlignment = Alignment.Center
             ) {
                 Icon(
-                        painter = painterResource(id = icon),
-                        contentDescription = null,
-                        modifier =
-                                Modifier.size(
-                                                RentalWheelsDesignSystem.Spacing.large +
-                                                        RentalWheelsDesignSystem.Spacing.XXS
-                                        ) // 28dp (24+4)
-                                        .scale(if (selected) 1.05f else 1f),
-                        tint =
-                                if (selected) {
-                                            RentalWheelsDesignSystem.Colors.BrandPrimary
-                                        } else {
-                                            if (isDarkTheme) {
-                                                RentalWheelsDesignSystem.Colors.TextSecondaryDark
-                                            } else {
-                                                RentalWheelsDesignSystem.Colors.TextSecondary
-                                            }
-                                        }
-                                        .copy(alpha = alpha)
+                    painter = painterResource(id = icon),
+                    contentDescription = null,
+                    modifier =
+                    Modifier
+                        .size(
+                            RentalWheelsDesignSystem.Spacing.large +
+                                    RentalWheelsDesignSystem.Spacing.XXS
+                        ) // 28dp (24+4)
+                        .scale(if (selected) 1.05f else 1f),
+                    tint =
+                    if (selected) {
+                        RentalWheelsDesignSystem.Colors.BrandPrimary
+                    } else {
+                        if (isDarkTheme) {
+                            RentalWheelsDesignSystem.Colors.TextSecondaryDark
+                        } else {
+                            RentalWheelsDesignSystem.Colors.TextSecondary
+                        }
+                    }
+                        .copy(alpha = alpha)
                 )
             }
 
             // Label - ALWAYS VISIBLE with color change on selection
             Text(
-                    text = label,
-                    style =
-                            MaterialTheme.typography.labelSmall.copy(
-                                    fontWeight =
-                                            if (selected) FontWeight.SemiBold
-                                            else FontWeight.Normal,
-                                    color =
-                                            if (selected) {
-                                                RentalWheelsDesignSystem.Colors.BrandPrimary
-                                            } else {
-                                                if (isDarkTheme) {
-                                                    RentalWheelsDesignSystem.Colors
-                                                            .TextSecondaryDark.copy(alpha = 0.7f)
-                                                } else {
-                                                    RentalWheelsDesignSystem.Colors.TextSecondary
-                                                            .copy(alpha = 0.7f)
-                                                }
-                                            }
-                            ),
-                    modifier = Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
+                text = label,
+                style =
+                MaterialTheme.typography.labelSmall.copy(
+                    fontWeight =
+                    if (selected) FontWeight.SemiBold
+                    else FontWeight.Normal,
+                    color =
+                    if (selected) {
+                        RentalWheelsDesignSystem.Colors.BrandPrimary
+                    } else {
+                        if (isDarkTheme) {
+                            RentalWheelsDesignSystem.Colors
+                                .TextSecondaryDark.copy(alpha = 0.7f)
+                        } else {
+                            RentalWheelsDesignSystem.Colors.TextSecondary
+                                .copy(alpha = 0.7f)
+                        }
+                    }
+                ),
+                modifier = Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
             )
         }
     }
@@ -330,8 +335,8 @@ private fun PremiumNavigationItem(
 
 /** Navigation Item Data Class */
 data class NavigationItem(
-        val icon: Int,
-        val label: String,
-        val route: String,
-        val contentDescription: String
+    val icon: Int,
+    val label: String,
+    val route: String,
+    val contentDescription: String
 )
