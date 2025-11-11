@@ -56,9 +56,9 @@ import com.msdc.rentalwheels.viewmodel.AnalyticsViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnalyticsScreen(
-        onBackClick: () -> Unit,
-        modifier: Modifier = Modifier,
-        viewModel: AnalyticsViewModel = hiltViewModel()
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: AnalyticsViewModel = hiltViewModel()
 ) {
     val analyticsState by viewModel.analyticsState.collectAsState()
 
@@ -66,42 +66,44 @@ fun AnalyticsScreen(
 
     Box(modifier = modifier.fillMaxSize()) {
         Scaffold(
-                topBar = {
-                    TopAppBar(
-                            title = {
-                                Text(
-                                        text = "Booking Analytics",
-                                        style = RentalWheelsDesignSystem.Typography.headlineSmall,
-                                        fontWeight = FontWeight.Bold
-                                )
-                            },
-                            navigationIcon = {
-                                IconButton(onClick = onBackClick) {
-                                    Icon(
-                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                            contentDescription = "Back"
-                                    )
-                                }
-                            },
-                            colors =
-                                    TopAppBarDefaults.topAppBarColors(
-                                            containerColor = Color.Transparent
-                                    )
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = "Booking Analytics",
+                            style = RentalWheelsDesignSystem.Typography.headlineSmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onBackClick) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    },
+                    colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent
                     )
-                },
-                containerColor = Color.Transparent
+                )
+            },
+            containerColor = Color.Transparent
         ) { paddingValues ->
             when (val state = analyticsState) {
                 is AnalyticsViewModel.AnalyticsState.Loading -> {
                     LoadingScreen()
                 }
+
                 is AnalyticsViewModel.AnalyticsState.Error -> {
                     ErrorScreen(message = state.message, onRetry = { viewModel.loadAnalytics() })
                 }
+
                 is AnalyticsViewModel.AnalyticsState.Success -> {
                     AnalyticsContent(
-                            analytics = state.analytics,
-                            modifier = Modifier.padding(paddingValues)
+                        analytics = state.analytics,
+                        modifier = Modifier.padding(paddingValues)
                     )
                 }
             }
@@ -112,8 +114,10 @@ fun AnalyticsScreen(
 @Composable
 private fun AnalyticsContent(analytics: BookingAnalytics, modifier: Modifier = Modifier) {
     LazyColumn(
-            modifier = modifier.fillMaxSize().padding(RentalWheelsDesignSystem.Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+        modifier = modifier
+            .fillMaxSize()
+            .padding(RentalWheelsDesignSystem.Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
     ) {
         item {
             // Overview Cards
@@ -125,8 +129,8 @@ private fun AnalyticsContent(analytics: BookingAnalytics, modifier: Modifier = M
         item {
             // Monthly Spending Chart
             MonthlySpendingChart(
-                    monthlyData = analytics.monthlySpending,
-                    modifier = Modifier.fillMaxWidth()
+                monthlyData = analytics.monthlySpending,
+                modifier = Modifier.fillMaxWidth()
             )
         }
 
@@ -150,52 +154,52 @@ private fun AnalyticsContent(analytics: BookingAnalytics, modifier: Modifier = M
 private fun OverviewSection(analytics: BookingAnalytics) {
     Column(verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)) {
         Text(
-                text = "Overview",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                modifier =
-                        Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.extraSmall)
+            text = "Overview",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            modifier =
+            Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.extraSmall)
         )
 
         Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
         ) {
             StatCard(
-                    title = "Total Bookings",
-                    value = "${analytics.totalBookings}",
-                    icon = Icons.Default.DirectionsCar,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.weight(1f)
+                title = "Total Bookings",
+                value = "${analytics.totalBookings}",
+                icon = Icons.Default.DirectionsCar,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.weight(1f)
             )
 
             StatCard(
-                    title = "Total Spent",
-                    value = "$${String.format("%.0f", analytics.totalSpent)}",
-                    icon = Icons.Default.MonetizationOn,
-                    color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.weight(1f)
+                title = "Total Spent",
+                value = "$${String.format("%.0f", analytics.totalSpent)}",
+                icon = Icons.Default.MonetizationOn,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.weight(1f)
             )
         }
 
         Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
         ) {
             StatCard(
-                    title = "Avg Duration",
-                    value = "${analytics.averageRentalDuration} days",
-                    icon = Icons.AutoMirrored.Filled.TrendingUp,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    modifier = Modifier.weight(1f)
+                title = "Avg Duration",
+                value = "${analytics.averageRentalDuration} days",
+                icon = Icons.AutoMirrored.Filled.TrendingUp,
+                color = MaterialTheme.colorScheme.tertiary,
+                modifier = Modifier.weight(1f)
             )
 
             StatCard(
-                    title = "Favorite Brand",
-                    value = analytics.mostRentedCarBrand.ifEmpty { "N/A" },
-                    icon = Icons.Default.DirectionsCar,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.weight(1f)
+                title = "Favorite Brand",
+                value = analytics.mostRentedCarBrand.ifEmpty { "N/A" },
+                icon = Icons.Default.DirectionsCar,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.weight(1f)
             )
         }
     }
@@ -203,56 +207,57 @@ private fun OverviewSection(analytics: BookingAnalytics) {
 
 @Composable
 private fun StatCard(
-        title: String,
-        value: String,
-        icon: ImageVector,
-        color: Color,
-        modifier: Modifier = Modifier
+    title: String,
+    value: String,
+    icon: ImageVector,
+    color: Color,
+    modifier: Modifier = Modifier
 ) {
     Card(
-            modifier = modifier,
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = RentalWheelsDesignSystem.Colors.Surface02
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
-            elevation =
-                    CardDefaults.cardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
-                    )
+        modifier = modifier,
+        colors =
+        CardDefaults.cardColors(
+            containerColor = RentalWheelsDesignSystem.Colors.Surface02
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Column(
-                modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
-                horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
-                    modifier =
-                            Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 0.75f)
-                                    .background(color.copy(alpha = 0.1f), CircleShape),
-                    contentAlignment = Alignment.Center
+                modifier =
+                Modifier
+                    .size(RentalWheelsDesignSystem.Spacing.Huge * 0.75f)
+                    .background(color.copy(alpha = 0.1f), CircleShape),
+                contentAlignment = Alignment.Center
             ) {
                 Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = color,
-                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = color,
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
                 )
             }
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
             Text(
-                    text = value,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = color
+                text = value,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = color
             )
 
             Text(
-                    text = title,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center
+                text = title,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
             )
         }
     }
@@ -261,39 +266,41 @@ private fun StatCard(
 @Composable
 private fun MonthlySpendingChart(monthlyData: Map<String, Double>, modifier: Modifier = Modifier) {
     Card(
-            modifier = modifier,
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+        modifier = modifier,
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
         Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
-                    text = "Monthly Spending",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.medium)
+                text = "Monthly Spending",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.medium)
             )
 
             if (monthlyData.isNotEmpty()) {
                 SimpleBarChart(
-                        data = monthlyData,
-                        modifier =
-                                Modifier.fillMaxWidth()
-                                        .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f)
+                    data = monthlyData,
+                    modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f)
                 )
             } else {
                 Box(
-                        modifier =
-                                Modifier.fillMaxWidth()
-                                        .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f),
-                        contentAlignment = Alignment.Center
+                    modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(RentalWheelsDesignSystem.Spacing.Huge * 3.125f),
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
-                            text = "No spending data available",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = "No spending data available",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -322,13 +329,13 @@ private fun SimpleBarChart(data: Map<String, Double>, modifier: Modifier = Modif
 
             // Draw bar
             drawRoundRect(
-                    color = primaryColor,
-                    topLeft = Offset(x, y),
-                    size = Size(barWidth, barHeight),
-                    cornerRadius =
-                            androidx.compose.ui.geometry.CornerRadius(
-                                    RentalWheelsDesignSystem.CornerRadius.small.toPx()
-                            )
+                color = primaryColor,
+                topLeft = Offset(x, y),
+                size = Size(barWidth, barHeight),
+                cornerRadius =
+                androidx.compose.ui.geometry.CornerRadius(
+                    RentalWheelsDesignSystem.CornerRadius.small.toPx()
+                )
             )
         }
     }
@@ -337,31 +344,31 @@ private fun SimpleBarChart(data: Map<String, Double>, modifier: Modifier = Modif
 @Composable
 private fun FavoriteFeaturesSection(features: List<String>) {
     Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+        modifier = Modifier.fillMaxWidth(),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
         Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
-                    text = "Preferred Features",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
+                text = "Preferred Features",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
             )
 
             if (features.isNotEmpty()) {
                 LazyRow(
-                        horizontalArrangement =
-                                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+                    horizontalArrangement =
+                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
                 ) { items(features) { feature -> FeatureChip(feature = feature) } }
             } else {
                 Text(
-                        text = "No feature preferences available",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "No feature preferences available",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -371,22 +378,22 @@ private fun FavoriteFeaturesSection(features: List<String>) {
 @Composable
 private fun FeatureChip(feature: String) {
     Card(
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
     ) {
         Text(
-                text = feature,
-                modifier =
-                        Modifier.padding(
-                                horizontal = RentalWheelsDesignSystem.Spacing.small,
-                                vertical = RentalWheelsDesignSystem.Spacing.XXS
-                        ),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Medium
+            text = feature,
+            modifier =
+            Modifier.padding(
+                horizontal = RentalWheelsDesignSystem.Spacing.small,
+                vertical = RentalWheelsDesignSystem.Spacing.XXS
+            ),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Medium
         )
     }
 }
@@ -394,40 +401,40 @@ private fun FeatureChip(feature: String) {
 @Composable
 private fun QuickStatsSection(analytics: BookingAnalytics) {
     Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+        modifier = Modifier.fillMaxWidth(),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
         Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
-                    text = "Quick Stats",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
+                text = "Quick Stats",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
             )
 
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 QuickStatItem(
-                        icon = Icons.Default.LocationOn,
-                        label = "Preferred Location",
-                        value = analytics.preferredPickupLocation.ifEmpty { "Various" }
+                    icon = Icons.Default.LocationOn,
+                    label = "Preferred Location",
+                    value = analytics.preferredPickupLocation.ifEmpty { "Various" }
                 )
 
                 QuickStatItem(
-                        icon = Icons.Default.LocalGasStation,
-                        label = "Avg Spending",
-                        value =
-                                if (analytics.totalBookings > 0) {
-                                    "$${String.format("%.0f", analytics.totalSpent / analytics.totalBookings)}"
-                                } else {
-                                    "$0"
-                                }
+                    icon = Icons.Default.LocalGasStation,
+                    label = "Avg Spending",
+                    value =
+                    if (analytics.totalBookings > 0) {
+                        "$${String.format("%.0f", analytics.totalSpent / analytics.totalBookings)}"
+                    } else {
+                        "$0"
+                    }
                 )
             }
         }
@@ -438,10 +445,10 @@ private fun QuickStatsSection(analytics: BookingAnalytics) {
 private fun QuickStatItem(icon: ImageVector, label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
         )
 
         Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraSmall))
@@ -449,10 +456,10 @@ private fun QuickStatItem(icon: ImageVector, label: String, value: String) {
         Text(text = value, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
 
         Text(
-                text = label,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center
         )
     }
 }
