@@ -39,22 +39,24 @@ import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 @Composable
 fun CarSpecs(car: Car, modifier: Modifier = Modifier) {
     ElevatedCard(
-            modifier = modifier,
-            colors =
-                    CardDefaults.elevatedCardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                    )
+        modifier = modifier,
+        colors =
+        CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Row(
-                modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.medium),
-                horizontalArrangement = Arrangement.SpaceEvenly
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(RentalWheelsDesignSystem.Spacing.medium),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             SpecItem(icon = Icons.Rounded.Speed, label = "Transmission", value = car.transmission)
             VerticalDivider()
             SpecItem(
-                    icon = Icons.Rounded.LocalGasStation,
-                    label = "Fuel Type",
-                    value = car.fuelType
+                icon = Icons.Rounded.LocalGasStation,
+                label = "Fuel Type",
+                value = car.fuelType
             )
             VerticalDivider()
         }
@@ -63,42 +65,42 @@ fun CarSpecs(car: Car, modifier: Modifier = Modifier) {
 
 @Composable
 private fun SpecItem(
-        icon: ImageVector,
-        label: String,
-        value: String,
-        modifier: Modifier = Modifier
+    icon: ImageVector,
+    label: String,
+    value: String,
+    modifier: Modifier = Modifier
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed = interactionSource.collectIsPressedAsState()
     val scale by
-            animateFloatAsState(
-                    targetValue = if (isPressed.value) 0.95f else 1f,
-                    animationSpec =
-                            spring(
-                                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                                    stiffness = Spring.StiffnessLow
-                            ),
-                    label = "specItemScale"
-            )
+    animateFloatAsState(
+        targetValue = if (isPressed.value) 0.95f else 1f,
+        animationSpec =
+        spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "specItemScale"
+    )
 
     Column(
-            modifier =
-                    modifier.graphicsLayer {
-                        scaleX = scale
-                        scaleY = scale
-                    },
-            horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+        modifier.graphicsLayer {
+            scaleX = scale
+            scaleY = scale
+        },
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.XXS))
         Text(
-                text = label,
-                style = RentalWheelsDesignSystem.Typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            text = label,
+            style = RentalWheelsDesignSystem.Typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
         )
         Text(text = value, style = RentalWheelsDesignSystem.Typography.titleMedium)
     }
@@ -110,18 +112,18 @@ fun CarDescription(description: String, modifier: Modifier = Modifier) {
 
     Column(modifier = modifier) {
         Text(
-                text = "About this car",
-                style = RentalWheelsDesignSystem.Typography.titleLarge,
-                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
+            text = "About this car",
+            style = RentalWheelsDesignSystem.Typography.titleLarge,
+            modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
         )
 
         Text(
-                text = description,
-                style = RentalWheelsDesignSystem.Typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                maxLines = if (expanded) Int.MAX_VALUE else 3,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.clickable { expanded = !expanded }
+            text = description,
+            style = RentalWheelsDesignSystem.Typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+            maxLines = if (expanded) Int.MAX_VALUE else 3,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.clickable { expanded = !expanded }
         )
 
         if (!expanded && description.length > 150) {
