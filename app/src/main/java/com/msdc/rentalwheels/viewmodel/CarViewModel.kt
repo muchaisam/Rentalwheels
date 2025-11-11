@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.msdc.rentalwheels.data.model.Car
 import com.msdc.rentalwheels.data.model.Category
 import com.msdc.rentalwheels.data.model.Deal
+import com.msdc.rentalwheels.data.model.brand
 import com.msdc.rentalwheels.data.repository.CarRepository
 import com.msdc.rentalwheels.modules.IoDispatcher
 import com.msdc.rentalwheels.uistates.CarDetailState
 import com.msdc.rentalwheels.uistates.HomeScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,13 +24,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-
 
 @HiltViewModel
-class CarViewModel @Inject constructor(
-    private val repository: CarRepository,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+class CarViewModel
+@Inject
+constructor(
+        private val repository: CarRepository,
+        @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState: StateFlow<UiState> = _uiState
@@ -39,16 +41,11 @@ class CarViewModel @Inject constructor(
     val homeState = _homeState.asStateFlow()
 
     private val _selectedCarId = MutableStateFlow<String?>(null)
-    val selectedCar: StateFlow<Car?> = _selectedCarId
-        .filterNotNull()
-        .flatMapLatest { carId ->
-            repository.getCarById(carId)
-        }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            null
-        )
+    val selectedCar: StateFlow<Car?> =
+            _selectedCarId
+                    .filterNotNull()
+                    .flatMapLatest { carId -> repository.getCarById(carId) }
+                    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     init {
         loadInitialData()
@@ -57,25 +54,32 @@ class CarViewModel @Inject constructor(
     fun loadInitialData() {
         viewModelScope.launch(dispatcher) {
             try {
-                combine(
-                    repository.getCategories(),
-                    repository.getCars(),
-                    repository.getDeals()
-                ) { categories, cars, deals ->
+                combine(repository.getCategories(), repository.getCars(), repository.getDeals()) {
+                        categories,
+                        cars,
+                        deals ->
                     Triple(categories, cars, deals)
-                }.collect { (categories, cars, deals) ->
-                    val carsByFuelType = cars.groupBy { it.fuelType }
-                    val carsByYear = cars.groupBy { it.year.toString() }
-                    val recommendedCars = cars.filter { it.recommended }
-
-                    _homeState.value = HomeScreenState.Success(
-                        categories = categories,
-                        recommendedCars = recommendedCars,
-                        carsByFuelType = carsByFuelType,
-                        carsByYear = carsByYear,
-                        deals = deals
-                    )
                 }
+                        .collect { (categories, cars, deals) ->
+                            val carsByFuelType = cars.groupBy { it.fuelType }
+                            val carsByYear = cars.groupBy { it.year.toString() }
+                            val carsByBrand = cars.groupBy { it.brand }
+                            val carsByTransmission = cars.groupBy { it.transmission }
+                            val carsByModel = cars.groupBy { it.model }
+                            val recommendedCars = cars.filter { it.recommended }
+
+                            _homeState.value =
+                                    HomeScreenState.Success(
+                                            categories = categories,
+                                            recommendedCars = recommendedCars,
+                                            carsByFuelType = carsByFuelType,
+                                            carsByYear = carsByYear,
+                                            carsByBrand = carsByBrand,
+                                            carsByTransmission = carsByTransmission,
+                                            carsByModel = carsByModel,
+                                            deals = deals
+                                    )
+                        }
             } catch (e: Exception) {
                 _homeState.value = HomeScreenState.Error(e.message ?: "Unknown error occurred")
             }
@@ -98,7 +102,7 @@ class CarViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 _carDetailState.value =
-                    CarDetailState.Error(e.message ?: "An unknown error occurred")
+                        CarDetailState.Error(e.message ?: "An unknown error occurred")
             }
         }
     }
@@ -113,12 +117,13 @@ class CarViewModel @Inject constructor(
                 val cars = repository.getCars().first()
                 val deals = repository.getDeals().first()
 
-                _uiState.value = UiState.Success(
-                    categories = categories,
-                    recommendedCars = recommendedCars,
-                    cars = cars,
-                    deals = deals
-                )
+                _uiState.value =
+                        UiState.Success(
+                                categories = categories,
+                                recommendedCars = recommendedCars,
+                                cars = cars,
+                                deals = deals
+                        )
             } catch (e: Exception) {
                 _uiState.value = UiState.Error("Failed to refresh data: ${e.message}")
             }
@@ -136,29 +141,26 @@ class CarViewModel @Inject constructor(
         _carDetailState.value = CarDetailState.Initial
     }
 
-
     sealed class UiState {
         object Loading : UiState()
         data class Success(
-            val categories: List<Category>,
-            val recommendedCars: List<Car>,
-            val cars: List<Car>,
-            val deals: List<Deal>,
-            val loadMoreError: String? = null
+                val categories: List<Category>,
+                val recommendedCars: List<Car>,
+                val cars: List<Car>,
+                val deals: List<Deal>,
+                val loadMoreError: String? = null
         ) : UiState()
 
         data class Error(val message: String) : UiState()
     }
 
-
     class Factory(
-        private val repository: CarRepository,
-        private val dispatchers: CoroutineDispatcher
+            private val repository: CarRepository,
+            private val dispatchers: CoroutineDispatcher
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(CarViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return CarViewModel(repository, dispatchers) as T
+                @Suppress("UNCHECKED_CAST") return CarViewModel(repository, dispatchers) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
