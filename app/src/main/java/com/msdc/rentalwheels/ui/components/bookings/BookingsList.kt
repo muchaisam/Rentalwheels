@@ -22,55 +22,55 @@ import com.msdc.rentalwheels.uistates.BookingStatus
 
 @Composable
 fun BookingsList(
-        bookings: List<Booking>,
-        onBookingClick: (String) -> Unit,
-        onCarClick: (String) -> Unit,
-        onCancelBooking: (String) -> Unit,
-        onExtendBooking: (String) -> Unit,
-        onRebookCar: (String) -> Unit,
-        onToggleFavorite: (String) -> Unit = {},
-        favoriteBookingIds: Set<String> = emptySet(),
-        modifier: Modifier = Modifier,
-        statusFilter: BookingStatus? = null,
-        isLoading: Boolean = false
+    bookings: List<Booking>,
+    onBookingClick: (String) -> Unit,
+    onCarClick: (String) -> Unit,
+    onCancelBooking: (String) -> Unit,
+    onExtendBooking: (String) -> Unit,
+    onRebookCar: (String) -> Unit,
+    onToggleFavorite: (String) -> Unit = {},
+    favoriteBookingIds: Set<String> = emptySet(),
+    modifier: Modifier = Modifier,
+    statusFilter: BookingStatus? = null,
+    isLoading: Boolean = false
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         if (isLoading && bookings.isEmpty()) {
             CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.primary
+                modifier = Modifier.align(Alignment.Center),
+                color = MaterialTheme.colorScheme.primary
             )
         } else if (bookings.isEmpty()) {
             EmptyBookingsState(
-                    statusFilter = statusFilter,
-                    modifier = Modifier.align(Alignment.Center)
+                statusFilter = statusFilter,
+                modifier = Modifier.align(Alignment.Center)
             )
         } else {
             LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding =
-                            PaddingValues(vertical = RentalWheelsDesignSystem.Spacing.medium),
-                    verticalArrangement =
-                            Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+                modifier = Modifier.fillMaxSize(),
+                contentPadding =
+                PaddingValues(vertical = RentalWheelsDesignSystem.Spacing.medium),
+                verticalArrangement =
+                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 items(bookings) { booking ->
                     BookingCard(
-                            booking = booking,
-                            onBookingClick = { onBookingClick(booking.id) },
-                            onCarClick = { onCarClick(booking.carId) },
-                            onCancelBooking = { onCancelBooking(booking.id) },
-                            onExtendBooking = { onExtendBooking(booking.id) },
-                            onRebookCar = { onRebookCar(booking.carId) },
-                            onToggleFavorite = { onToggleFavorite(booking.id) },
-                            isFavorite = favoriteBookingIds.contains(booking.id)
+                        booking = booking,
+                        onBookingClick = { onBookingClick(booking.id) },
+                        onCarClick = { onCarClick(booking.carId) },
+                        onCancelBooking = { onCancelBooking(booking.id) },
+                        onExtendBooking = { onExtendBooking(booking.id) },
+                        onRebookCar = { onRebookCar(booking.carId) },
+                        onToggleFavorite = { onToggleFavorite(booking.id) },
+                        isFavorite = favoriteBookingIds.contains(booking.id)
                     )
                 }
 
                 // Add spacing at the bottom for FAB
                 item {
                     Spacer(
-                            modifier =
-                                    Modifier.height(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
+                        modifier =
+                        Modifier.height(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
                     )
                 } // ~80dp
             }
@@ -81,39 +81,39 @@ fun BookingsList(
 @Composable
 private fun EmptyBookingsState(statusFilter: BookingStatus?, modifier: Modifier = Modifier) {
     Column(
-            modifier = modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f),
-            horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val message =
-                when (statusFilter) {
-                    BookingStatus.CONFIRMED -> "No upcoming bookings"
-                    BookingStatus.ACTIVE -> "No active rentals"
-                    BookingStatus.COMPLETED -> "No past bookings"
-                    BookingStatus.CANCELLED -> "No cancelled bookings"
-                    else -> "No bookings yet"
-                }
+            when (statusFilter) {
+                BookingStatus.CONFIRMED -> "No upcoming bookings"
+                BookingStatus.ACTIVE -> "No active rentals"
+                BookingStatus.COMPLETED -> "No past bookings"
+                BookingStatus.CANCELLED -> "No cancelled bookings"
+                else -> "No bookings yet"
+            }
 
         val subtitle =
-                when (statusFilter) {
-                    BookingStatus.CONFIRMED -> "Ready to plan your next adventure?"
-                    BookingStatus.ACTIVE -> "All rentals completed"
-                    BookingStatus.COMPLETED -> "Your rental history will appear here"
-                    BookingStatus.CANCELLED -> "All your bookings are active"
-                    else -> "Browse available cars to start your journey"
-                }
+            when (statusFilter) {
+                BookingStatus.CONFIRMED -> "Ready to plan your next adventure?"
+                BookingStatus.ACTIVE -> "All rentals completed"
+                BookingStatus.COMPLETED -> "Your rental history will appear here"
+                BookingStatus.CANCELLED -> "All your bookings are active"
+                else -> "Browse available cars to start your journey"
+            }
 
         Text(
-                text = message,
-                style = RentalWheelsDesignSystem.Typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onSurface
+            text = message,
+            style = RentalWheelsDesignSystem.Typography.headlineSmall,
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
         Text(
-                text = subtitle,
-                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            text = subtitle,
+            style = RentalWheelsDesignSystem.Typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
         )
     }
 }
