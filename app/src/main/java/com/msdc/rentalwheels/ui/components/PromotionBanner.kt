@@ -64,9 +64,9 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun PromotionBanner(
-        deals: List<Deal>,
-        onBannerClick: (Deal) -> Unit = {},
-        modifier: Modifier = Modifier
+    deals: List<Deal>,
+    onBannerClick: (Deal) -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     // Handle empty deals list gracefully
     if (deals.isEmpty()) {
@@ -102,39 +102,40 @@ fun PromotionBanner(
 
     // Card with elevation and scaling effects
     ElevatedCard(
-            onClick = { onBannerClick(currentDeal) },
-            modifier =
-                    modifier.fillMaxWidth()
-                            .height(
-                                    RentalWheelsDesignSystem.Spacing.Huge * 2.2f
-                            ) // 140dp - reduced from 180dp for better screen balance
-                            .padding(
-                                    horizontal = RentalWheelsDesignSystem.Spacing.medium,
-                                    vertical = RentalWheelsDesignSystem.Spacing.extraSmall
-                            )
-                            .graphicsLayer {
-                                // Scale slightly when pressed for interactive feedback
-                                val scale = if (isPressed) 0.98f else 1f
-                                scaleX = scale
-                                scaleY = scale
-                            },
-            elevation =
-                    CardDefaults.elevatedCardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.small,
-                            pressedElevation = RentalWheelsDesignSystem.Elevation.medium,
-                            hoveredElevation = RentalWheelsDesignSystem.Elevation.small
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+        onClick = { onBannerClick(currentDeal) },
+        modifier =
+        modifier
+            .fillMaxWidth()
+            .height(
+                RentalWheelsDesignSystem.Spacing.Huge * 2.8f
+            ) // 180dp - increased from 140dp to prevent text cutoff
+            .padding(
+                horizontal = RentalWheelsDesignSystem.Spacing.medium,
+                vertical = RentalWheelsDesignSystem.Spacing.extraSmall
+            )
+            .graphicsLayer {
+                // Scale slightly when pressed for interactive feedback
+                val scale = if (isPressed) 0.98f else 1f
+                scaleX = scale
+                scaleY = scale
+            },
+        elevation =
+        CardDefaults.elevatedCardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small,
+            pressedElevation = RentalWheelsDesignSystem.Elevation.medium,
+            hoveredElevation = RentalWheelsDesignSystem.Elevation.small
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             // Animated transition between deals
             AnimatedContent(
-                    targetState = currentDealIndex,
-                    transitionSpec = {
-                        fadeIn(animationSpec = tween(500)) togetherWith
-                                fadeOut(animationSpec = tween(500))
-                    },
-                    label = "Deal Transition"
+                targetState = currentDealIndex,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(500)) togetherWith
+                            fadeOut(animationSpec = tween(500))
+                },
+                label = "Deal Transition"
             ) { targetIndex ->
                 // Image with loading state handling
                 DealImage(imageUrl = deals[targetIndex].imageUrl, title = deals[targetIndex].title)
@@ -142,60 +143,64 @@ fun PromotionBanner(
 
             // Gradient overlay for text readability - strengthened for better contrast
             Box(
-                    modifier =
-                            Modifier.fillMaxSize().drawWithCache {
-                                onDrawBehind {
-                                    drawRect(
-                                            brush =
-                                                    Brush.linearGradient(
-                                                            colors =
-                                                                    listOf(
-                                                                            Color.Black.copy(
-                                                                                    alpha = 0.85f
-                                                                            ),
-                                                                            Color.Black.copy(
-                                                                                    alpha = 0.5f
-                                                                            ),
-                                                                            Color.Transparent
-                                                                    ),
-                                                            start = Offset(0f, 0f),
-                                                            end =
-                                                                    Offset(
-                                                                            size.width,
-                                                                            size.height * 0.6f
-                                                                    )
-                                                    )
+                modifier =
+                Modifier
+                    .fillMaxSize()
+                    .drawWithCache {
+                        onDrawBehind {
+                            drawRect(
+                                brush =
+                                Brush.linearGradient(
+                                    colors =
+                                    listOf(
+                                        Color.Black.copy(
+                                            alpha = 0.85f
+                                        ),
+                                        Color.Black.copy(
+                                            alpha = 0.5f
+                                        ),
+                                        Color.Transparent
+                                    ),
+                                    start = Offset(0f, 0f),
+                                    end =
+                                    Offset(
+                                        size.width,
+                                        size.height * 0.6f
                                     )
-                                }
-                            }
+                                )
+                            )
+                        }
+                    }
             )
 
             // Deal content with improved layout
             Column(
-                    modifier =
-                            Modifier.fillMaxSize().padding(RentalWheelsDesignSystem.Spacing.large),
-                    verticalArrangement = Arrangement.SpaceBetween
+                modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(RentalWheelsDesignSystem.Spacing.large),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
                 // Upper section with title and description
                 Column {
                     // Title with animation
                     AnimatedContent(
-                            targetState = currentDeal.title,
-                            transitionSpec = {
-                                (slideInVertically { height -> height } + fadeIn()).togetherWith(
-                                        slideOutVertically { height -> -height } + fadeOut()
-                                )
-                            },
-                            label = "Title Animation"
+                        targetState = currentDeal.title,
+                        transitionSpec = {
+                            (slideInVertically { height -> height } + fadeIn()).togetherWith(
+                                slideOutVertically { height -> -height } + fadeOut()
+                            )
+                        },
+                        label = "Title Animation"
                     ) { title ->
                         Text(
-                                text = title,
-                                style = RentalWheelsDesignSystem.Typography.headlineSmall,
-                                color = Color.White,
-                                modifier =
-                                        Modifier.semantics {
-                                            contentDescription = "Promotion: $title"
-                                        }
+                            text = title,
+                            style = RentalWheelsDesignSystem.Typography.headlineSmall,
+                            color = Color.White,
+                            modifier =
+                            Modifier.semantics {
+                                contentDescription = "Promotion: $title"
+                            }
                         )
                     }
 
@@ -203,58 +208,58 @@ fun PromotionBanner(
 
                     // Description with animation
                     AnimatedContent(
-                            targetState = currentDeal.description,
-                            transitionSpec = {
-                                (slideInVertically { height -> height } + fadeIn()).togetherWith(
-                                        slideOutVertically { height -> -height } + fadeOut()
-                                )
-                            },
-                            label = "Description Animation"
+                        targetState = currentDeal.description,
+                        transitionSpec = {
+                            (slideInVertically { height -> height } + fadeIn()).togetherWith(
+                                slideOutVertically { height -> -height } + fadeOut()
+                            )
+                        },
+                        label = "Description Animation"
                     ) { description ->
                         Text(
-                                text = description,
-                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
-                                color = Color.White.copy(alpha = 0.9f),
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
+                            text = description,
+                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                            color = Color.White.copy(alpha = 0.9f),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
 
                 // Bottom row with discount badge and indicators
                 Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     // Animated discount badge
                     AnimatedContent(
-                            targetState = currentDeal.discountPercentage,
-                            transitionSpec = {
-                                (scaleIn() + fadeIn()).togetherWith(scaleOut() + fadeOut())
-                            },
-                            label = "Discount Animation"
+                        targetState = currentDeal.discountPercentage,
+                        transitionSpec = {
+                            (scaleIn() + fadeIn()).togetherWith(scaleOut() + fadeOut())
+                        },
+                        label = "Discount Animation"
                     ) { discount ->
                         Surface(
-                                color = MaterialTheme.colorScheme.tertiaryContainer,
-                                shape =
-                                        androidx.compose.foundation.shape.RoundedCornerShape(
-                                                RentalWheelsDesignSystem.CornerRadius.medium
-                                        ),
-                                shadowElevation = RentalWheelsDesignSystem.Elevation.small
+                            color = MaterialTheme.colorScheme.tertiaryContainer,
+                            shape =
+                            androidx.compose.foundation.shape.RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius.medium
+                            ),
+                            shadowElevation = RentalWheelsDesignSystem.Elevation.small
                         ) {
                             Text(
-                                    text = "$discount% off",
-                                    modifier =
-                                            Modifier.padding(
-                                                    horizontal =
-                                                            RentalWheelsDesignSystem.Spacing.medium,
-                                                    vertical =
-                                                            RentalWheelsDesignSystem.Spacing
-                                                                    .extraSmall
-                                            ),
-                                    color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                    style = RentalWheelsDesignSystem.Typography.labelLarge
+                                text = "$discount% off",
+                                modifier =
+                                Modifier.padding(
+                                    horizontal =
+                                    RentalWheelsDesignSystem.Spacing.medium,
+                                    vertical =
+                                    RentalWheelsDesignSystem.Spacing
+                                        .extraSmall
+                                ),
+                                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                                style = RentalWheelsDesignSystem.Typography.labelLarge
                             )
                         }
                     }
@@ -262,70 +267,72 @@ fun PromotionBanner(
                     // Deal progress indicators
                     if (deals.size > 1) {
                         Row(
-                                horizontalArrangement =
-                                        Arrangement.spacedBy(
-                                                RentalWheelsDesignSystem.Spacing.extraSmall
-                                        ),
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small)
+                            horizontalArrangement =
+                            Arrangement.spacedBy(
+                                RentalWheelsDesignSystem.Spacing.extraSmall
+                            ),
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small)
                         ) {
                             // Linear progress indicator for current deal time
                             LinearProgressIndicator(
-                                    progress = { progress.value },
-                                    modifier =
-                                            Modifier.width(
-                                                            RentalWheelsDesignSystem.Spacing.Huge *
-                                                                    0.75f
-                                                    ) // 48dp
-                                                    .height(
-                                                            RentalWheelsDesignSystem.Spacing
-                                                                    .extraSmall
-                                                    ),
-                                    color = MaterialTheme.colorScheme.inversePrimary,
-                                    trackColor =
-                                            MaterialTheme.colorScheme.inversePrimary.copy(
-                                                    alpha = 0.3f
-                                            ),
+                                progress = { progress.value },
+                                modifier =
+                                Modifier
+                                    .width(
+                                        RentalWheelsDesignSystem.Spacing.Huge *
+                                                0.75f
+                                    ) // 48dp
+                                    .height(
+                                        RentalWheelsDesignSystem.Spacing
+                                            .extraSmall
+                                    ),
+                                color = MaterialTheme.colorScheme.inversePrimary,
+                                trackColor =
+                                MaterialTheme.colorScheme.inversePrimary.copy(
+                                    alpha = 0.3f
+                                ),
                             )
 
                             // Page indicator dots
                             Row(
-                                    horizontalArrangement =
-                                            Arrangement.spacedBy(
-                                                    RentalWheelsDesignSystem.Spacing.extraSmall
-                                            )
+                                horizontalArrangement =
+                                Arrangement.spacedBy(
+                                    RentalWheelsDesignSystem.Spacing.extraSmall
+                                )
                             ) {
                                 deals.forEachIndexed { index, _ ->
                                     Box(
-                                            modifier =
-                                                    Modifier.size(
-                                                                    RentalWheelsDesignSystem.Spacing
-                                                                            .small
-                                                            )
-                                                            .clip(
-                                                                    RoundedCornerShape(
-                                                                            RentalWheelsDesignSystem
-                                                                                    .CornerRadius
-                                                                                    .extraSmall
-                                                                    )
-                                                            )
-                                                            .background(
-                                                                    color =
-                                                                            if (index ==
-                                                                                            currentDealIndex
-                                                                            )
-                                                                                    MaterialTheme
-                                                                                            .colorScheme
-                                                                                            .inversePrimary
-                                                                            else
-                                                                                    MaterialTheme
-                                                                                            .colorScheme
-                                                                                            .inversePrimary
-                                                                                            .copy(
-                                                                                                    alpha =
-                                                                                                            0.5f
-                                                                                            )
-                                                            )
+                                        modifier =
+                                        Modifier
+                                            .size(
+                                                RentalWheelsDesignSystem.Spacing
+                                                    .small
+                                            )
+                                            .clip(
+                                                RoundedCornerShape(
+                                                    RentalWheelsDesignSystem
+                                                        .CornerRadius
+                                                        .extraSmall
+                                                )
+                                            )
+                                            .background(
+                                                color =
+                                                if (index ==
+                                                    currentDealIndex
+                                                )
+                                                    MaterialTheme
+                                                        .colorScheme
+                                                        .inversePrimary
+                                                else
+                                                    MaterialTheme
+                                                        .colorScheme
+                                                        .inversePrimary
+                                                        .copy(
+                                                            alpha =
+                                                            0.5f
+                                                        )
+                                            )
                                     )
                                 }
                             }
@@ -340,61 +347,63 @@ fun PromotionBanner(
 @Composable
 private fun DealImage(imageUrl: String, title: String) {
     SubcomposeAsyncImage(
-            model =
-                    ImageRequest.Builder(LocalContext.current)
-                            .data(imageUrl)
-                            .crossfade(true)
-                            .build(),
-            contentDescription = "Promotion image for $title",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize(),
-            loading = {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    // Shimmer effect while loading
-                    ShimmerEffect()
-                }
-            },
-            error = {
-                // Fallback for error state
-                Box(
-                        modifier =
-                                Modifier.fillMaxSize()
-                                        .background(MaterialTheme.colorScheme.surfaceVariant),
-                        contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                            text = "Promotion",
-                            style = RentalWheelsDesignSystem.Typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
+        model =
+        ImageRequest.Builder(LocalContext.current)
+            .data(imageUrl)
+            .crossfade(true)
+            .build(),
+        contentDescription = "Promotion image for $title",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.fillMaxSize(),
+        loading = {
+            Box(modifier = Modifier.fillMaxSize()) {
+                // Shimmer effect while loading
+                ShimmerEffect()
             }
+        },
+        error = {
+            // Fallback for error state
+            Box(
+                modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Promotion",
+                    style = RentalWheelsDesignSystem.Typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
     )
 }
 
 @Composable
 private fun EmptyPromotionBanner(modifier: Modifier = Modifier) {
     Card(
-            modifier =
-                    modifier.fillMaxWidth()
-                            .height(
-                                    RentalWheelsDesignSystem.Spacing.Huge * 2.2f
-                            ) // 140dp - matches banner height
-                            .padding(
-                                    horizontal = RentalWheelsDesignSystem.Spacing.medium,
-                                    vertical = RentalWheelsDesignSystem.Spacing.extraSmall
-                            ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+        modifier =
+        modifier
+            .fillMaxWidth()
+            .height(
+                RentalWheelsDesignSystem.Spacing.Huge * 2.8f
+            ) // 180dp - matches banner height
+            .padding(
+                horizontal = RentalWheelsDesignSystem.Spacing.medium,
+                vertical = RentalWheelsDesignSystem.Spacing.extraSmall
+            ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                    text = "No active promotions",
-                    style = RentalWheelsDesignSystem.Typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = "No active promotions",
+                style = RentalWheelsDesignSystem.Typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -404,22 +413,22 @@ private fun EmptyPromotionBanner(modifier: Modifier = Modifier) {
 @Composable
 private fun PromotionBannerPreview() {
     val sampleDeals =
-            listOf(
-                    Deal(
-                            id = "1",
-                            title = "Summer Special",
-                            description = "Get 20% off on weekend rentals",
-                            discountPercentage = 20,
-                            imageUrl = ""
-                    ),
-                    Deal(
-                            id = "2",
-                            title = "Holiday Offer",
-                            description = "Enjoy 15% discount on long-term rentals",
-                            discountPercentage = 15,
-                            imageUrl = ""
-                    )
+        listOf(
+            Deal(
+                id = "1",
+                title = "Summer Special",
+                description = "Get 20% off on weekend rentals",
+                discountPercentage = 20,
+                imageUrl = ""
+            ),
+            Deal(
+                id = "2",
+                title = "Holiday Offer",
+                description = "Enjoy 15% discount on long-term rentals",
+                discountPercentage = 15,
+                imageUrl = ""
             )
+        )
 
     PromotionBanner(deals = sampleDeals)
 }
