@@ -45,79 +45,81 @@ import kotlin.math.roundToInt
 
 @Composable
 fun AdvancedFiltersSection(
-        filters: BrowseFilters,
-        onFiltersUpdate: (BrowseFilters) -> Unit,
-        modifier: Modifier = Modifier
+    filters: BrowseFilters,
+    onFiltersUpdate: (BrowseFilters) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var showAdvancedFilters by remember { mutableStateOf(false) }
 
     Card(
-            modifier =
-                    modifier.fillMaxWidth()
-                            .animateContentSize(
-                                    animationSpec =
-                                            spring(
-                                                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                                                    stiffness = Spring.StiffnessLow
-                                            )
-                            ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    ),
-            elevation =
-                    CardDefaults.cardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
-                    )
+        modifier =
+        modifier
+            .fillMaxWidth()
+            .animateContentSize(
+                animationSpec =
+                spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
+            ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Box(
-                modifier =
-                        Modifier.fillMaxWidth()
-                                .background(
-                                        brush =
-                                                Brush.verticalGradient(
-                                                        colors =
-                                                                listOf(
-                                                                        MaterialTheme.colorScheme
-                                                                                .tertiary.copy(
-                                                                                alpha = 0.05f
-                                                                        ),
-                                                                        Color.Transparent
-                                                                )
-                                                )
-                                )
+            modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(
+                    brush =
+                    Brush.verticalGradient(
+                        colors =
+                        listOf(
+                            MaterialTheme.colorScheme
+                                .tertiary.copy(
+                                    alpha = 0.05f
+                                ),
+                            Color.Transparent
+                        )
+                    )
+                )
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 // Advanced Filters Header
                 Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                                imageVector = Icons.Default.Settings,
-                                contentDescription = "Advanced Filters",
-                                tint = MaterialTheme.colorScheme.primary
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Advanced Filters",
+                            tint = MaterialTheme.colorScheme.primary
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                                text = "Advanced Filters",
-                                style = RentalWheelsDesignSystem.Typography.titleMedium,
-                                fontWeight = FontWeight.SemiBold,
-                                color = MaterialTheme.colorScheme.onSurface
+                            text = "Advanced Filters",
+                            style = RentalWheelsDesignSystem.Typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
 
                     IconButton(onClick = { showAdvancedFilters = !showAdvancedFilters }) {
                         Icon(
-                                imageVector =
-                                        if (showAdvancedFilters) Icons.Default.ExpandLess
-                                        else Icons.Default.ExpandMore,
-                                contentDescription =
-                                        if (showAdvancedFilters) "Collapse" else "Expand",
-                                tint = MaterialTheme.colorScheme.primary
+                            imageVector =
+                            if (showAdvancedFilters) Icons.Default.ExpandLess
+                            else Icons.Default.ExpandMore,
+                            contentDescription =
+                            if (showAdvancedFilters) "Collapse" else "Expand",
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -128,22 +130,22 @@ fun AdvancedFiltersSection(
 
                         // Price Range Slider
                         PriceRangeSection(
-                                minPrice = filters.minPrice,
-                                maxPrice = filters.maxPrice,
-                                onPriceRangeChange = { min, max ->
-                                    onFiltersUpdate(filters.copy(minPrice = min, maxPrice = max))
-                                }
+                            minPrice = filters.minPrice,
+                            maxPrice = filters.maxPrice,
+                            onPriceRangeChange = { min, max ->
+                                onFiltersUpdate(filters.copy(minPrice = min, maxPrice = max))
+                            }
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
 
                         // Year Range Slider
                         YearRangeSection(
-                                minYear = filters.minYear,
-                                maxYear = filters.maxYear,
-                                onYearRangeChange = { min, max ->
-                                    onFiltersUpdate(filters.copy(minYear = min, maxYear = max))
-                                }
+                            minYear = filters.minYear,
+                            maxYear = filters.maxYear,
+                            onYearRangeChange = { min, max ->
+                                onFiltersUpdate(filters.copy(minYear = min, maxYear = max))
+                            }
                         )
                     }
                 }
@@ -154,74 +156,74 @@ fun AdvancedFiltersSection(
 
 @Composable
 private fun PriceRangeSection(
-        minPrice: Int,
-        maxPrice: Int,
-        onPriceRangeChange: (Int, Int) -> Unit,
-        modifier: Modifier = Modifier
+    minPrice: Int,
+    maxPrice: Int,
+    onPriceRangeChange: (Int, Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val priceRange = 0f..1000f
     var currentRange by
-            remember(minPrice, maxPrice) { mutableStateOf(minPrice.toFloat()..maxPrice.toFloat()) }
+    remember(minPrice, maxPrice) { mutableStateOf(minPrice.toFloat()..maxPrice.toFloat()) }
 
     Column(modifier = modifier) {
         Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                        imageVector = Icons.Default.LocalOffer,
-                        contentDescription = "Price Range",
-                        tint = MaterialTheme.colorScheme.primary
+                    imageVector = Icons.Default.LocalOffer,
+                    contentDescription = "Price Range",
+                    tint = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                        text = "Price Range",
-                        style = RentalWheelsDesignSystem.Typography.bodyLarge,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onSurface
+                    text = "Price Range",
+                    style = RentalWheelsDesignSystem.Typography.bodyLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
             Text(
-                    text = "$${minPrice} - $${maxPrice}",
-                    style = RentalWheelsDesignSystem.Typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.SemiBold
+                text = "$${minPrice} - $${maxPrice}",
+                style = RentalWheelsDesignSystem.Typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
             )
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
         RangeSlider(
-                value = currentRange,
-                onValueChange = { range -> currentRange = range },
-                onValueChangeFinished = {
-                    onPriceRangeChange(
-                            currentRange.start.roundToInt(),
-                            currentRange.endInclusive.roundToInt()
-                    )
-                },
-                valueRange = priceRange,
-                colors =
-                        SliderDefaults.colors(
-                                thumbColor = MaterialTheme.colorScheme.primary,
-                                activeTrackColor = MaterialTheme.colorScheme.primary,
-                                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
-                        )
+            value = currentRange,
+            onValueChange = { range -> currentRange = range },
+            onValueChangeFinished = {
+                onPriceRangeChange(
+                    currentRange.start.roundToInt(),
+                    currentRange.endInclusive.roundToInt()
+                )
+            },
+            valueRange = priceRange,
+            colors =
+            SliderDefaults.colors(
+                thumbColor = MaterialTheme.colorScheme.primary,
+                activeTrackColor = MaterialTheme.colorScheme.primary,
+                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
+            )
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                    text = "$0",
-                    style = RentalWheelsDesignSystem.Typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = "$0",
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                    text = "$1000+",
-                    style = RentalWheelsDesignSystem.Typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = "$1000+",
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -229,66 +231,66 @@ private fun PriceRangeSection(
 
 @Composable
 private fun YearRangeSection(
-        minYear: Int,
-        maxYear: Int,
-        onYearRangeChange: (Int, Int) -> Unit,
-        modifier: Modifier = Modifier
+    minYear: Int,
+    maxYear: Int,
+    onYearRangeChange: (Int, Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val yearRange = 2010f..2024f
     var currentRange by
-            remember(minYear, maxYear) { mutableStateOf(minYear.toFloat()..maxYear.toFloat()) }
+    remember(minYear, maxYear) { mutableStateOf(minYear.toFloat()..maxYear.toFloat()) }
 
     Column(modifier = modifier) {
         Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                    text = "Year Range",
-                    style = RentalWheelsDesignSystem.Typography.bodyLarge,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSurface
+                text = "Year Range",
+                style = RentalWheelsDesignSystem.Typography.bodyLarge,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
-                    text = "$minYear - $maxYear",
-                    style = RentalWheelsDesignSystem.Typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.SemiBold
+                text = "$minYear - $maxYear",
+                style = RentalWheelsDesignSystem.Typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
             )
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
         RangeSlider(
-                value = currentRange,
-                onValueChange = { range -> currentRange = range },
-                onValueChangeFinished = {
-                    onYearRangeChange(
-                            currentRange.start.roundToInt(),
-                            currentRange.endInclusive.roundToInt()
-                    )
-                },
-                valueRange = yearRange,
-                colors =
-                        SliderDefaults.colors(
-                                thumbColor = MaterialTheme.colorScheme.secondary,
-                                activeTrackColor = MaterialTheme.colorScheme.secondary,
-                                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
-                        )
+            value = currentRange,
+            onValueChange = { range -> currentRange = range },
+            onValueChangeFinished = {
+                onYearRangeChange(
+                    currentRange.start.roundToInt(),
+                    currentRange.endInclusive.roundToInt()
+                )
+            },
+            valueRange = yearRange,
+            colors =
+            SliderDefaults.colors(
+                thumbColor = MaterialTheme.colorScheme.secondary,
+                activeTrackColor = MaterialTheme.colorScheme.secondary,
+                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
+            )
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                    text = "2010",
-                    style = RentalWheelsDesignSystem.Typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = "2010",
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                    text = "2024",
-                    style = RentalWheelsDesignSystem.Typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = "2024",
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
