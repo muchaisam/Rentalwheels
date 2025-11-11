@@ -18,22 +18,22 @@ import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
 fun EnhancedCarCard(
-        car: Car,
-        onClick: () -> Unit,
-        isFavorite: Boolean,
-        onToggleFavorite: () -> Unit,
-        isSelectedForComparison: Boolean,
-        canAddToComparison: Boolean,
-        onToggleComparison: () -> Unit,
-        modifier: Modifier = Modifier
+    car: Car,
+    onClick: () -> Unit,
+    isFavorite: Boolean,
+    onToggleFavorite: () -> Unit,
+    isSelectedForComparison: Boolean,
+    canAddToComparison: Boolean,
+    onToggleComparison: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-            modifier = modifier,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            elevation =
-                    CardDefaults.cardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.small
-                    )
+        modifier = modifier,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+        )
     ) {
         Box {
             // Base CarCard
@@ -41,9 +41,10 @@ fun EnhancedCarCard(
 
             // Enhanced features overlay
             Row(
-                    modifier =
-                            Modifier.align(Alignment.TopEnd)
-                                    .padding(RentalWheelsDesignSystem.Spacing.small)
+                modifier =
+                Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(RentalWheelsDesignSystem.Spacing.small)
             ) {
                 // Favorite Button
                 FavoriteButton(isFavorite = isFavorite, onToggleFavorite = onToggleFavorite)
@@ -52,9 +53,9 @@ fun EnhancedCarCard(
 
                 // Comparison Button
                 ComparisonButton(
-                        isSelected = isSelectedForComparison,
-                        canAdd = canAddToComparison,
-                        onToggleComparison = onToggleComparison
+                    isSelected = isSelectedForComparison,
+                    canAdd = canAddToComparison,
+                    onToggleComparison = onToggleComparison
                 )
             }
         }
