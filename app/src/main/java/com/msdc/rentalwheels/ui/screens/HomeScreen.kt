@@ -61,97 +61,89 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
     val density = LocalDensity.current
 
     val pullRefreshState =
-        rememberPullRefreshState(
-            refreshing = isRefreshing,
-            onRefresh = {
-                scope.launch {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    isRefreshing = true
-                    viewModel.loadInitialData()
-                    delay(300) // Brief delay for smooth animation
-                    isRefreshing = false
-                }
-            }
-        )
+            rememberPullRefreshState(
+                    refreshing = isRefreshing,
+                    onRefresh = {
+                        scope.launch {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            isRefreshing = true
+                            viewModel.loadInitialData()
+                            delay(300) // Brief delay for smooth animation
+                            isRefreshing = false
+                        }
+                    }
+            )
 
-    Box(
-        modifier =
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
+    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         // Pull-to-refresh wrapper
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .pullRefresh(pullRefreshState)
-        ) {
+        Box(modifier = Modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
             when (val state = homeState) {
                 is HomeScreenState.Loading -> {
                     AnimatedVisibility(
-                        visible = true,
-                        enter = fadeIn(tween(RentalWheelsDesignSystem.Animation.Medium)),
-                        exit = fadeOut(tween(RentalWheelsDesignSystem.Animation.Fast))
+                            visible = true,
+                            enter = fadeIn(tween(RentalWheelsDesignSystem.Animation.Medium)),
+                            exit = fadeOut(tween(RentalWheelsDesignSystem.Animation.Fast))
                     ) { LoadingScreen() }
                 }
-
                 is HomeScreenState.Error -> {
                     AnimatedVisibility(
-                        visible = true,
-                        enter =
-                        fadeIn(tween(RentalWheelsDesignSystem.Animation.Medium)) +
-                                slideInVertically {
-                                    with(density) { 30.dp.roundToPx() }
-                                },
-                        exit = fadeOut(tween(RentalWheelsDesignSystem.Animation.Fast))
+                            visible = true,
+                            enter =
+                                    fadeIn(tween(RentalWheelsDesignSystem.Animation.Medium)) +
+                                            slideInVertically {
+                                                with(density) { 30.dp.roundToPx() }
+                                            },
+                            exit = fadeOut(tween(RentalWheelsDesignSystem.Animation.Fast))
                     ) { ErrorScreen(message = state.message) }
                 }
-
                 is HomeScreenState.Success -> {
                     AnimatedVisibility(
-                        visible = true,
-                        enter = fadeIn(tween(RentalWheelsDesignSystem.Animation.Slow)),
-                        exit = fadeOut(tween(RentalWheelsDesignSystem.Animation.Medium))
+                            visible = true,
+                            enter = fadeIn(tween(RentalWheelsDesignSystem.Animation.Slow)),
+                            exit = fadeOut(tween(RentalWheelsDesignSystem.Animation.Medium))
                     ) {
                         // Content sections with staggered animations
                         val sections = buildList {
                             if (state.deals.isNotEmpty()) add("deals" to state.deals.size)
                             if (state.categories.isNotEmpty())
-                                add("categories" to state.categories.size)
+                                    add("categories" to state.categories.size)
                             if (state.recommendedCars.isNotEmpty())
-                                add("recommended" to state.recommendedCars.size)
+                                    add("recommended" to state.recommendedCars.size)
                             add("fuelType" to state.carsByFuelType.size)
                             add("year" to state.carsByYear.size)
+                            add("brand" to state.carsByBrand.size)
+                            add("transmission" to state.carsByTransmission.size)
+                            add("model" to state.carsByModel.size)
                         }
 
                         LazyColumn(
-                            state = listState,
-                            modifier = Modifier.fillMaxSize(),
-                            contentPadding =
-                            PaddingValues(
-                                start = RentalWheelsDesignSystem.Spacing.medium,
-                                end = RentalWheelsDesignSystem.Spacing.medium,
-                                top = RentalWheelsDesignSystem.Spacing.extraSmall,
-                                bottom =
-                                RentalWheelsDesignSystem.Spacing.Huge +
-                                        RentalWheelsDesignSystem.Spacing
-                                            .XXL // Space for bottom nav
-                            ),
-                            verticalArrangement =
-                            Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.large)
+                                state = listState,
+                                modifier = Modifier.fillMaxSize(),
+                                contentPadding =
+                                        PaddingValues(
+                                                start = RentalWheelsDesignSystem.Spacing.medium,
+                                                end = RentalWheelsDesignSystem.Spacing.medium,
+                                                top = RentalWheelsDesignSystem.Spacing.extraSmall,
+                                                bottom =
+                                                        RentalWheelsDesignSystem.Spacing.Huge +
+                                                                RentalWheelsDesignSystem.Spacing
+                                                                        .XXL // Space for bottom nav
+                                        ),
+                                verticalArrangement =
+                                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.large)
                         ) {
                             // Deals Section with staggered animation
                             if (state.deals.isNotEmpty()) {
                                 item(key = "deals") {
                                     AnimatedSection(delay = 0L) {
                                         PromotionBanner(
-                                            deals = state.deals,
-                                            modifier =
-                                            Modifier.padding(
-                                                vertical =
-                                                RentalWheelsDesignSystem
-                                                    .Spacing.extraSmall
-                                            )
+                                                deals = state.deals,
+                                                modifier =
+                                                        Modifier.padding(
+                                                                vertical =
+                                                                        RentalWheelsDesignSystem
+                                                                                .Spacing.extraSmall
+                                                        )
                                         )
                                     }
                                 }
@@ -171,8 +163,8 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
                                 item(key = "recommended") {
                                     AnimatedSection(delay = 200L) {
                                         RecommendedCarsSection(
-                                            cars = state.recommendedCars,
-                                            onCarClick = onCarClick
+                                                cars = state.recommendedCars,
+                                                onCarClick = onCarClick
                                         )
                                     }
                                 }
@@ -182,9 +174,9 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
                             item(key = "fuelType") {
                                 AnimatedSection(delay = 300L) {
                                     FilterableCarList(
-                                        carsByFilter = state.carsByFuelType,
-                                        filterName = "Fuel Type",
-                                        onCarClick = onCarClick
+                                            carsByFilter = state.carsByFuelType,
+                                            filterName = "Fuel Type",
+                                            onCarClick = onCarClick
                                     )
                                 }
                             }
@@ -193,9 +185,42 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
                             item(key = "year") {
                                 AnimatedSection(delay = 400L) {
                                     FilterableCarList(
-                                        carsByFilter = state.carsByYear,
-                                        filterName = "Year",
-                                        onCarClick = onCarClick
+                                            carsByFilter = state.carsByYear,
+                                            filterName = "Year",
+                                            onCarClick = onCarClick
+                                    )
+                                }
+                            }
+
+                            // Cars by Brand Section with staggered animation
+                            item(key = "brand") {
+                                AnimatedSection(delay = 500L) {
+                                    FilterableCarList(
+                                            carsByFilter = state.carsByBrand,
+                                            filterName = "Brand",
+                                            onCarClick = onCarClick
+                                    )
+                                }
+                            }
+
+                            // Cars by Transmission Section with staggered animation
+                            item(key = "transmission") {
+                                AnimatedSection(delay = 600L) {
+                                    FilterableCarList(
+                                            carsByFilter = state.carsByTransmission,
+                                            filterName = "Transmission",
+                                            onCarClick = onCarClick
+                                    )
+                                }
+                            }
+
+                            // Cars by Model Section with staggered animation
+                            item(key = "model") {
+                                AnimatedSection(delay = 700L) {
+                                    FilterableCarList(
+                                            carsByFilter = state.carsByModel,
+                                            filterName = "Model",
+                                            onCarClick = onCarClick
                                     )
                                 }
                             }
@@ -203,12 +228,12 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
 
                         // Enhanced pull refresh indicator
                         PullRefreshIndicator(
-                            refreshing = isRefreshing,
-                            state = pullRefreshState,
-                            modifier = Modifier.align(Alignment.TopCenter),
-                            backgroundColor = MaterialTheme.colorScheme.surface,
-                            contentColor = MaterialTheme.colorScheme.primary,
-                            scale = true
+                                refreshing = isRefreshing,
+                                state = pullRefreshState,
+                                modifier = Modifier.align(Alignment.TopCenter),
+                                backgroundColor = MaterialTheme.colorScheme.surface,
+                                contentColor = MaterialTheme.colorScheme.primary,
+                                scale = true
                         )
                     }
                 }
@@ -219,29 +244,26 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
 
 /** Reusable animated section wrapper with staggered delay */
 @Composable
-private fun AnimatedSection(
-    delay: Long = 0L,
-    content: @Composable () -> Unit
-) {
+private fun AnimatedSection(delay: Long = 0L, content: @Composable () -> Unit) {
     val animation = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
         kotlinx.coroutines.delay(delay)
         animation.animateTo(
-            targetValue = 1f,
-            animationSpec =
-            spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow
-            )
+                targetValue = 1f,
+                animationSpec =
+                        spring(
+                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                stiffness = Spring.StiffnessLow
+                        )
         )
     }
 
     Box(
-        modifier =
-        Modifier.graphicsLayer {
-            alpha = animation.value
-            translationY = (1 - animation.value) * 50
-        }
+            modifier =
+                    Modifier.graphicsLayer {
+                        alpha = animation.value
+                        translationY = (1 - animation.value) * 50
+                    }
     ) { content() }
 }
