@@ -30,10 +30,10 @@ import com.msdc.rentalwheels.viewmodel.SettingsViewModel
 
 @Composable
 fun RentalWheelsApp(
-    viewModel: CarViewModel = hiltViewModel(),
-    navController: NavHostController = rememberNavController(),
-    themeState: ThemeState = rememberThemeState(),
-    settingsViewModel: SettingsViewModel = hiltViewModel()
+        viewModel: CarViewModel = hiltViewModel(),
+        navController: NavHostController = rememberNavController(),
+        themeState: ThemeState = rememberThemeState(),
+        settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -45,102 +45,104 @@ fun RentalWheelsApp(
 
     // Check if current screen should show bottom navigation
     val shouldShowBottomBar =
-        when {
-            currentRoute?.startsWith("car_detail/") == true -> false
-            // Add other screens that should hide the bottom bar here
-            else -> true
-        }
+            when {
+                currentRoute?.startsWith("car_detail/") == true -> false
+                // Add other screens that should hide the bottom bar here
+                else -> true
+            }
 
     ThemeProvider(settingsViewModel = settingsViewModel) {
         Scaffold(
-            bottomBar = {
-                // Only show bottom navigation when shouldShowBottomBar is true
-                if (shouldShowBottomBar) {
-                    BottomNavigation(
-                        currentDestination = navController.currentDestination,
-                        onNavigate = { screen -> navController.navigate(screen.route) },
-                        themeState = themeState
-                    )
+                bottomBar = {
+                    // Only show bottom navigation when shouldShowBottomBar is true
+                    if (shouldShowBottomBar) {
+                        BottomNavigation(
+                                currentDestination = navController.currentDestination,
+                                onNavigate = { screen -> navController.navigate(screen.route) },
+                                themeState = themeState
+                        )
+                    }
                 }
-            }
         ) { paddingValues ->
             NavHost(
-                navController = navController,
-                startDestination = Screen.Home.route,
-                modifier = Modifier.padding(paddingValues)
+                    navController = navController,
+                    startDestination = Screen.Home.route,
+                    modifier = Modifier.padding(paddingValues)
             ) {
                 composable(Screen.Home.route) {
                     HomeScreen(
-                        viewModel = viewModel,
-                        onCarClick = { carId ->
-                            // Navigate to car detail screen
-                            navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
-                        }
+                            viewModel = viewModel,
+                            onCarClick = { carId ->
+                                // Navigate to car detail screen
+                                navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
+                            }
                     )
                 }
                 composable(
-                    route = Screen.DetailedCarScreen.route,
-                    arguments = listOf(navArgument("carId") { type = NavType.StringType })
+                        route = Screen.DetailedCarScreen.route,
+                        arguments = listOf(navArgument("carId") { type = NavType.StringType })
                 ) { backStackEntry ->
                     val carId = backStackEntry.arguments?.getString("carId") ?: ""
                     val bookingsViewModel: com.msdc.rentalwheels.viewmodel.BookingsViewModel =
-                        hiltViewModel()
+                            hiltViewModel()
                     CarDetailRoute(
-                        carId = carId,
-                        onBackClick = { navController.navigateUp() },
-                        onBookNowClick = { car ->
-                            // Create a quick booking and navigate to bookings screen
-                            bookingsViewModel.createQuickBooking(
-                                car = car,
-                                onSuccess = {
-                                    navController.navigate(Screen.Bookings.route)
-                                },
-                                onError = { error ->
-                                    // Handle error - could show a toast or dialog
-                                    // For now, just navigate to bookings anyway
-                                    navController.navigate(Screen.Bookings.route)
-                                }
-                            )
-                        }
+                            carId = carId,
+                            onBackClick = { navController.navigateUp() },
+                            onBookNowClick = { car ->
+                                // Create a quick booking and navigate to bookings screen
+                                bookingsViewModel.createQuickBooking(
+                                        car = car,
+                                        onSuccess = {
+                                            navController.navigate(Screen.Bookings.route)
+                                        },
+                                        onError = { error ->
+                                            // Handle error - could show a toast or dialog
+                                            // For now, just navigate to bookings anyway
+                                            navController.navigate(Screen.Bookings.route)
+                                        }
+                                )
+                            }
                     )
                 }
                 composable(Screen.Browse.route) {
                     BrowseScreen(
-                        onCarClick = { carId ->
-                            navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
-                        }
+                            onCarClick = { carId ->
+                                navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
+                            }
                     )
                 }
 
                 composable(Screen.Bookings.route) {
                     BookingsScreen(
-                        onBookingClick = { bookingId ->
-                            navController.navigate(Screen.BookingDetail.createRoute(bookingId))
-                        },
-                        onNewBookingClick = { navController.navigate(Screen.Browse.route) },
-                        onCarClick = { carId ->
-                            navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
-                        },
-                        onAnalyticsClick = { navController.navigate(Screen.Analytics.route) }
+                            onBookingClick = { bookingId ->
+                                navController.navigate(Screen.BookingDetail.createRoute(bookingId))
+                            },
+                            onNewBookingClick = {
+                                navController.navigate(Screen.BookingScreen.route)
+                            },
+                            onCarClick = { carId ->
+                                navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
+                            },
+                            onAnalyticsClick = { navController.navigate(Screen.Analytics.route) }
                     )
                 }
                 composable(
-                    route = Screen.BookingDetail.route,
-                    arguments = listOf(navArgument("bookingId") { type = NavType.StringType })
+                        route = Screen.BookingDetail.route,
+                        arguments = listOf(navArgument("bookingId") { type = NavType.StringType })
                 ) { backStackEntry ->
                     val bookingId = backStackEntry.arguments?.getString("bookingId") ?: ""
                     BookingDetailScreen(
-                        bookingId = bookingId,
-                        onBackClick = { navController.navigateUp() },
-                        onCarClick = { carId ->
-                            navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
-                        },
-                        onCancelBooking = { bookingId ->
-                            // Handle booking cancellation
-                        },
-                        onExtendBooking = { bookingId ->
-                            // Handle booking extension
-                        }
+                            bookingId = bookingId,
+                            onBackClick = { navController.navigateUp() },
+                            onCarClick = { carId ->
+                                navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
+                            },
+                            onCancelBooking = { bookingId ->
+                                // Handle booking cancellation
+                            },
+                            onExtendBooking = { bookingId ->
+                                // Handle booking extension
+                            }
                     )
                 }
                 composable(Screen.BookingScreen.route) {
