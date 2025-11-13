@@ -14,24 +14,26 @@ import com.msdc.rentalwheels.uistates.BookingStatus
 import com.msdc.rentalwheels.uistates.BookingsScreenState
 import com.msdc.rentalwheels.uistates.CartItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.LocalDateTime
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.time.LocalDateTime
-import javax.inject.Inject
 
 @HiltViewModel
 class BookingsViewModel
 @Inject
 constructor(
-    private val repository: BookingRepository,
-    private val carRepository: CarRepository,
-    private val userPreferencesManager: UserPreferencesManager,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+        private val repository: BookingRepository,
+        private val carRepository: CarRepository,
+        private val userPreferencesManager: UserPreferencesManager,
+        @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _bookingsState = MutableStateFlow<BookingsScreenState>(BookingsScreenState.Loading)
@@ -50,33 +52,33 @@ constructor(
 
                 // Combine bookings and recommended cars from Firestore
                 combine(
-                    repository.getUserBookings(),
-                    carRepository.getRecommendedCars(
-                        10
-                    ) // Get more recommended cars for better selection
-                ) { bookings, recommendedCars ->
+                                repository.getUserBookings(),
+                                carRepository.getRecommendedCars(
+                                        10
+                                ) // Get more recommended cars for better selection
+                        ) { bookings, recommendedCars ->
                     val now = LocalDateTime.now()
 
                     // Categorize bookings
                     val upcomingBookings =
-                        bookings.filter {
-                            it.status == BookingStatus.CONFIRMED && it.startDate.isAfter(now)
-                        }
+                            bookings.filter {
+                                it.status == BookingStatus.CONFIRMED && it.startDate.isAfter(now)
+                            }
 
                     val activeBookings =
-                        bookings.filter {
-                            it.status == BookingStatus.ACTIVE ||
-                                    (it.status == BookingStatus.CONFIRMED &&
-                                            it.startDate.isBefore(now) &&
-                                            it.endDate.isAfter(now))
-                        }
+                            bookings.filter {
+                                it.status == BookingStatus.ACTIVE ||
+                                        (it.status == BookingStatus.CONFIRMED &&
+                                                it.startDate.isBefore(now) &&
+                                                it.endDate.isAfter(now))
+                            }
 
                     val pastBookings =
-                        bookings.filter {
-                            it.status == BookingStatus.COMPLETED ||
-                                    (it.endDate.isBefore(now) &&
-                                            it.status != BookingStatus.CANCELLED)
-                        }
+                            bookings.filter {
+                                it.status == BookingStatus.COMPLETED ||
+                                        (it.endDate.isBefore(now) &&
+                                                it.status != BookingStatus.CANCELLED)
+                            }
 
                     val cancelledBookings = bookings.filter { it.status == BookingStatus.CANCELLED }
 
@@ -87,30 +89,30 @@ constructor(
                     val availableCars = recommendedCars.filter { it.isAvailable }.take(8)
 
                     BookingsScreenState.Success(
-                        allBookings = bookings,
-                        upcomingBookings = upcomingBookings,
-                        activeBookings = activeBookings,
-                        pastBookings = pastBookings,
-                        cancelledBookings = cancelledBookings,
-                        availableCars =
-                        availableCars, // Use real recommended cars from Firestore
-                        cartItems = _cartItems.value,
-                        isRefreshing = _isRefreshing.value,
-                        selectedFilter = _selectedFilter.value,
-                        searchQuery = _searchQuery.value,
-                        totalSpent = totalSpent,
-                        favoriteCarIds = extractFavoriteCarIds(bookings),
-                        hasBookings = hasBookings,
-                        showCartMode = _showCartMode.value
+                            allBookings = bookings,
+                            upcomingBookings = upcomingBookings,
+                            activeBookings = activeBookings,
+                            pastBookings = pastBookings,
+                            cancelledBookings = cancelledBookings,
+                            availableCars =
+                                    availableCars, // Use real recommended cars from Firestore
+                            cartItems = _cartItems.value,
+                            isRefreshing = _isRefreshing.value,
+                            selectedFilter = _selectedFilter.value,
+                            searchQuery = _searchQuery.value,
+                            totalSpent = totalSpent,
+                            favoriteCarIds = extractFavoriteCarIds(bookings),
+                            hasBookings = hasBookings,
+                            showCartMode = _showCartMode.value
                     )
                 }
-                    .collect { state -> _bookingsState.value = state }
+                        .collect { state -> _bookingsState.value = state }
             } catch (e: Exception) {
                 Timber.e(e, "Error loading bookings")
                 _bookingsState.value =
-                    BookingsScreenState.Error(
-                        message = e.message ?: "Failed to load bookings. Please try again."
-                    )
+                        BookingsScreenState.Error(
+                                message = e.message ?: "Failed to load bookings. Please try again."
+                        )
             }
         }
     }
@@ -184,23 +186,23 @@ constructor(
             val filter = _selectedFilter.value
 
             var filteredBookings =
-                when (filter) {
-                    BookingFilter.ALL -> currentState.allBookings
-                    BookingFilter.UPCOMING -> currentState.upcomingBookings
-                    BookingFilter.ACTIVE -> currentState.activeBookings
-                    BookingFilter.PAST -> currentState.pastBookings
-                    BookingFilter.CANCELLED -> currentState.cancelledBookings
-                }
+                    when (filter) {
+                        BookingFilter.ALL -> currentState.allBookings
+                        BookingFilter.UPCOMING -> currentState.upcomingBookings
+                        BookingFilter.ACTIVE -> currentState.activeBookings
+                        BookingFilter.PAST -> currentState.pastBookings
+                        BookingFilter.CANCELLED -> currentState.cancelledBookings
+                    }
 
             if (query.isNotBlank()) {
                 filteredBookings =
-                    filteredBookings.filter { booking ->
-                        booking.car.make.contains(query, ignoreCase = true) ||
-                                booking.car.model.contains(query, ignoreCase = true) ||
-                                booking.referenceNumber.contains(query, ignoreCase = true) ||
-                                booking.pickupLocation.contains(query, ignoreCase = true) ||
-                                booking.returnLocation.contains(query, ignoreCase = true)
-                    }
+                        filteredBookings.filter { booking ->
+                            booking.car.make.contains(query, ignoreCase = true) ||
+                                    booking.car.model.contains(query, ignoreCase = true) ||
+                                    booking.referenceNumber.contains(query, ignoreCase = true) ||
+                                    booking.pickupLocation.contains(query, ignoreCase = true) ||
+                                    booking.returnLocation.contains(query, ignoreCase = true)
+                        }
             }
 
             _bookingsState.value = currentState.copy(searchQuery = query, selectedFilter = filter)
@@ -213,14 +215,14 @@ constructor(
                 // Get original booking details and create a new booking
                 repository.getBookingById(originalBookingId)?.let { originalBooking ->
                     val newBooking =
-                        originalBooking.copy(
-                            id = "", // Will be generated by repository
-                            status = BookingStatus.PENDING,
-                            startDate = LocalDateTime.now().plusDays(1),
-                            endDate = LocalDateTime.now().plusDays(2),
-                            createdAt = LocalDateTime.now(),
-                            updatedAt = LocalDateTime.now()
-                        )
+                            originalBooking.copy(
+                                    id = "", // Will be generated by repository
+                                    status = BookingStatus.PENDING,
+                                    startDate = LocalDateTime.now().plusDays(1),
+                                    endDate = LocalDateTime.now().plusDays(2),
+                                    createdAt = LocalDateTime.now(),
+                                    updatedAt = LocalDateTime.now()
+                            )
                     repository.createBooking(newBooking)
                     loadBookings()
                 }
@@ -236,13 +238,13 @@ constructor(
             val completedBookings = currentState.pastBookings
 
             BookingAnalytics(
-                totalBookings = currentState.allBookings.size,
-                totalSpent = currentState.totalSpent,
-                averageRentalDuration = calculateAverageRentalDuration(completedBookings),
-                mostRentedCarBrand = findMostRentedCarBrand(completedBookings),
-                preferredPickupLocation = findPreferredLocation(completedBookings),
-                monthlySpending = calculateMonthlySpending(completedBookings),
-                favoriteFeatures = extractFavoriteFeatures(completedBookings)
+                    totalBookings = currentState.allBookings.size,
+                    totalSpent = currentState.totalSpent,
+                    averageRentalDuration = calculateAverageRentalDuration(completedBookings),
+                    mostRentedCarBrand = findMostRentedCarBrand(completedBookings),
+                    preferredPickupLocation = findPreferredLocation(completedBookings),
+                    monthlySpending = calculateMonthlySpending(completedBookings),
+                    favoriteFeatures = extractFavoriteFeatures(completedBookings)
             )
         } else {
             BookingAnalytics()
@@ -258,19 +260,19 @@ constructor(
 
     private fun extractFavoriteCarIds(bookings: List<Booking>): Set<String> {
         return bookings
-            .groupBy { it.carId }
-            .filter { it.value.size >= 2 } // Cars booked at least twice
-            .keys
-            .toSet()
+                .groupBy { it.carId }
+                .filter { it.value.size >= 2 } // Cars booked at least twice
+                .keys
+                .toSet()
     }
 
     private fun calculateAverageRentalDuration(bookings: List<Booking>): Int {
         if (bookings.isEmpty()) return 0
 
         val totalDays =
-            bookings.sumOf { booking ->
-                java.time.Duration.between(booking.startDate, booking.endDate).toDays()
-            }
+                bookings.sumOf { booking ->
+                    java.time.Duration.between(booking.startDate, booking.endDate).toDays()
+                }
 
         return (totalDays / bookings.size).toInt()
     }
@@ -285,20 +287,20 @@ constructor(
 
     private fun calculateMonthlySpending(bookings: List<Booking>): Map<String, Double> {
         return bookings
-            .groupBy {
-                "${it.startDate.year}-${it.startDate.monthValue.toString().padStart(2, '0')}"
-            }
-            .mapValues { (_, bookingsInMonth) -> bookingsInMonth.sumOf { it.totalCost } }
+                .groupBy {
+                    "${it.startDate.year}-${it.startDate.monthValue.toString().padStart(2, '0')}"
+                }
+                .mapValues { (_, bookingsInMonth) -> bookingsInMonth.sumOf { it.totalCost } }
     }
 
     private fun extractFavoriteFeatures(bookings: List<Booking>): List<String> {
         return bookings
-            .flatMap { it.car.features }
-            .groupBy { it }
-            .toList()
-            .sortedByDescending { it.second.size }
-            .take(5)
-            .map { it.first }
+                .flatMap { it.car.features }
+                .groupBy { it }
+                .toList()
+                .sortedByDescending { it.second.size }
+                .take(5)
+                .map { it.first }
     }
 
     // User Action Persistence Methods
@@ -328,11 +330,11 @@ constructor(
         viewModelScope.launch(dispatcher) {
             try {
                 userPreferencesManager.trackUserAction(
-                    action,
-                    mapOf(
-                        "bookingId" to bookingId,
-                        "timestamp" to System.currentTimeMillis().toString()
-                    )
+                        action,
+                        mapOf(
+                                "bookingId" to bookingId,
+                                "timestamp" to System.currentTimeMillis().toString()
+                        )
                 )
                 Timber.d("Tracked booking action: $action for booking $bookingId")
             } catch (e: Exception) {
@@ -354,7 +356,7 @@ constructor(
             } catch (e: Exception) {
                 Timber.e(e, "Error refreshing Firebase data")
                 _bookingsState.value =
-                    BookingsScreenState.Error(message = "Failed to refresh data from server")
+                        BookingsScreenState.Error(message = "Failed to refresh data from server")
             } finally {
                 _isRefreshing.value = false
             }
@@ -366,41 +368,41 @@ constructor(
 
         // Categorize bookings
         val upcomingBookings =
-            bookings.filter {
-                it.status == BookingStatus.CONFIRMED && it.startDate.isAfter(now)
-            }
+                bookings.filter {
+                    it.status == BookingStatus.CONFIRMED && it.startDate.isAfter(now)
+                }
 
         val activeBookings =
-            bookings.filter {
-                it.status == BookingStatus.ACTIVE ||
-                        (it.status == BookingStatus.CONFIRMED &&
-                                it.startDate.isBefore(now) &&
-                                it.endDate.isAfter(now))
-            }
+                bookings.filter {
+                    it.status == BookingStatus.ACTIVE ||
+                            (it.status == BookingStatus.CONFIRMED &&
+                                    it.startDate.isBefore(now) &&
+                                    it.endDate.isAfter(now))
+                }
 
         val pastBookings =
-            bookings.filter {
-                it.status == BookingStatus.COMPLETED ||
-                        (it.endDate.isBefore(now) && it.status != BookingStatus.CANCELLED)
-            }
+                bookings.filter {
+                    it.status == BookingStatus.COMPLETED ||
+                            (it.endDate.isBefore(now) && it.status != BookingStatus.CANCELLED)
+                }
 
         val cancelledBookings = bookings.filter { it.status == BookingStatus.CANCELLED }
 
         val totalSpent = pastBookings.sumOf { it.totalCost }
 
         _bookingsState.value =
-            BookingsScreenState.Success(
-                allBookings = bookings,
-                upcomingBookings = upcomingBookings,
-                activeBookings = activeBookings,
-                pastBookings = pastBookings,
-                cancelledBookings = cancelledBookings,
-                isRefreshing = _isRefreshing.value,
-                selectedFilter = _selectedFilter.value,
-                searchQuery = _searchQuery.value,
-                totalSpent = totalSpent,
-                favoriteCarIds = extractFavoriteCarIds(bookings)
-            )
+                BookingsScreenState.Success(
+                        allBookings = bookings,
+                        upcomingBookings = upcomingBookings,
+                        activeBookings = activeBookings,
+                        pastBookings = pastBookings,
+                        cancelledBookings = cancelledBookings,
+                        isRefreshing = _isRefreshing.value,
+                        selectedFilter = _selectedFilter.value,
+                        searchQuery = _searchQuery.value,
+                        totalSpent = totalSpent,
+                        favoriteCarIds = extractFavoriteCarIds(bookings)
+                )
     }
 
     // Cart Management Methods
@@ -418,11 +420,11 @@ constructor(
             currentItems[index] = existingItem.copy(quantity = existingItem.quantity + 1)
         } else {
             currentItems.add(
-                CartItem(
-                    car = car,
-                    startDate = LocalDateTime.now().plusDays(1),
-                    endDate = LocalDateTime.now().plusDays(2)
-                )
+                    CartItem(
+                            car = car,
+                            startDate = LocalDateTime.now().plusDays(1),
+                            endDate = LocalDateTime.now().plusDays(2)
+                    )
             )
         }
 
@@ -468,18 +470,18 @@ constructor(
                 // Create bookings from cart items
                 cartItems.forEach { cartItem ->
                     val booking =
-                        Booking(
-                            carId = cartItem.car.id,
-                            car = cartItem.car,
-                            status = BookingStatus.PENDING,
-                            startDate = cartItem.startDate,
-                            endDate = cartItem.endDate,
-                            pickupLocation = cartItem.pickupLocation,
-                            totalCost = cartItem.totalCost,
-                            withDriver = cartItem.withDriver,
-                            createdAt = LocalDateTime.now(),
-                            updatedAt = LocalDateTime.now()
-                        )
+                            Booking(
+                                    carId = cartItem.car.id,
+                                    car = cartItem.car,
+                                    status = BookingStatus.PENDING,
+                                    startDate = cartItem.startDate,
+                                    endDate = cartItem.endDate,
+                                    pickupLocation = cartItem.pickupLocation,
+                                    totalCost = cartItem.totalCost,
+                                    withDriver = cartItem.withDriver,
+                                    createdAt = LocalDateTime.now(),
+                                    updatedAt = LocalDateTime.now()
+                            )
                     repository.createBooking(booking)
                 }
 
@@ -499,10 +501,10 @@ constructor(
         val currentState = _bookingsState.value
         if (currentState is BookingsScreenState.Success) {
             _bookingsState.value =
-                currentState.copy(
-                    cartItems = _cartItems.value,
-                    showCartMode = _showCartMode.value
-                )
+                    currentState.copy(
+                            cartItems = _cartItems.value,
+                            showCartMode = _showCartMode.value
+                    )
         }
     }
 
@@ -510,23 +512,23 @@ constructor(
         viewModelScope.launch(dispatcher) {
             try {
                 val booking =
-                    Booking(
-                        carId = car.id,
-                        car = car,
-                        status = BookingStatus.PENDING,
-                        startDate = LocalDateTime.now().plusDays(1), // Default: tomorrow
-                        endDate =
-                        LocalDateTime.now()
-                            .plusDays(2), // Default: day after tomorrow
-                        pickupLocation = "Main Office", // Default pickup location
-                        returnLocation = "Main Office", // Default return location
-                        totalCost = car.pricePerDay * 1, // 1 day rental
-                        withDriver = false,
-                        createdAt = LocalDateTime.now(),
-                        updatedAt = LocalDateTime.now(),
-                        referenceNumber =
-                        "RW${System.currentTimeMillis().toString().takeLast(6)}"
-                    )
+                        Booking(
+                                carId = car.id,
+                                car = car,
+                                status = BookingStatus.PENDING,
+                                startDate = LocalDateTime.now().plusDays(1), // Default: tomorrow
+                                endDate =
+                                        LocalDateTime.now()
+                                                .plusDays(2), // Default: day after tomorrow
+                                pickupLocation = "Main Office", // Default pickup location
+                                returnLocation = "Main Office", // Default return location
+                                totalCost = car.pricePerDay * 1, // 1 day rental
+                                withDriver = false,
+                                createdAt = LocalDateTime.now(),
+                                updatedAt = LocalDateTime.now(),
+                                referenceNumber =
+                                        "RW${System.currentTimeMillis().toString().takeLast(6)}"
+                        )
 
                 val bookingId = repository.createBooking(booking)
 
@@ -536,10 +538,11 @@ constructor(
                 // Track analytics
                 trackBookingAction("quick_booking_created", car.id)
 
-                onSuccess()
+                // Ensure UI callbacks run on main thread
+                withContext(Dispatchers.Main) { onSuccess() }
             } catch (e: Exception) {
                 Timber.e(e, "Error creating quick booking for car: ${car.id}")
-                onError("Failed to create booking: ${e.message}")
+                withContext(Dispatchers.Main) { onError("Failed to create booking: ${e.message}") }
             }
         }
     }
