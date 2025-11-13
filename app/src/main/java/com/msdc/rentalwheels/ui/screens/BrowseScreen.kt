@@ -5,7 +5,15 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,10 +43,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BrowseScreen(
-        onCarClick: (String) -> Unit,
-        onViewComparison: () -> Unit = {},
-        modifier: Modifier = Modifier,
-        viewModel: BrowseViewModel = hiltViewModel()
+    onCarClick: (String) -> Unit,
+    onViewComparison: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    viewModel: BrowseViewModel = hiltViewModel()
 ) {
     val browseState by viewModel.browseState.collectAsState()
     val comparisonState by viewModel.comparisonState.collectAsState()
@@ -57,52 +65,55 @@ fun BrowseScreen(
         is BrowseScreenState.Loading -> {
             LoadingScreen()
         }
+
         is BrowseScreenState.Error -> {
             ErrorScreen(message = state.message, onRetry = { viewModel.onRefreshData() })
         }
+
         is BrowseScreenState.Success -> {
             Box(modifier = modifier.fillMaxSize()) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     // Fixed header - no scrolling
                     BrowseSearchHeader(
-                            searchQuery = state.searchQuery,
-                            onSearchQueryChange = { query -> viewModel.updateSearchQuery(query) },
-                            onFilterClick = { showFilters = !showFilters },
-                            totalVehicles = state.totalVehicles,
-                            modifier =
-                                    Modifier.fillMaxWidth()
-                                            .padding(
-                                                    horizontal =
-                                                            RentalWheelsDesignSystem.Spacing.medium,
-                                                    vertical =
-                                                            RentalWheelsDesignSystem.Spacing.small
-                                            )
+                        searchQuery = state.searchQuery,
+                        onSearchQueryChange = { query -> viewModel.updateSearchQuery(query) },
+                        onFilterClick = { showFilters = !showFilters },
+                        totalVehicles = state.totalVehicles,
+                        modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal =
+                                RentalWheelsDesignSystem.Spacing.medium,
+                                vertical =
+                                RentalWheelsDesignSystem.Spacing.small
+                            )
                     )
 
                     // Filters section - fixed, no scrolling
                     AnimatedVisibility(
-                            visible = showFilters,
-                            enter = slideInVertically() + fadeIn(),
-                            exit = slideOutVertically() + fadeOut()
+                        visible = showFilters,
+                        enter = slideInVertically() + fadeIn(),
+                        exit = slideOutVertically() + fadeOut()
                     ) {
                         Column(
-                                modifier =
-                                        Modifier.padding(
-                                                horizontal = RentalWheelsDesignSystem.Spacing.medium
-                                        )
+                            modifier =
+                            Modifier.padding(
+                                horizontal = RentalWheelsDesignSystem.Spacing.medium
+                            )
                         ) {
                             BrowseFiltersSection(
-                                    filters = state.filters,
-                                    availableCategories = state.availableCategories,
-                                    availableFuelTypes = state.availableFuelTypes,
-                                    availableTransmissions = state.availableTransmissions,
-                                    onFiltersUpdate = { newFilters ->
-                                        viewModel.updateFilters(newFilters)
-                                    }
+                                filters = state.filters,
+                                availableCategories = state.availableCategories,
+                                availableFuelTypes = state.availableFuelTypes,
+                                availableTransmissions = state.availableTransmissions,
+                                onFiltersUpdate = { newFilters ->
+                                    viewModel.updateFilters(newFilters)
+                                }
                             )
                             Spacer(
-                                    modifier =
-                                            Modifier.height(RentalWheelsDesignSystem.Spacing.small)
+                                modifier =
+                                Modifier.height(RentalWheelsDesignSystem.Spacing.small)
                             )
                         }
                     }
@@ -110,40 +121,41 @@ fun BrowseScreen(
                     // Active filters display - fixed, no scrolling
                     if (state.filters != com.msdc.rentalwheels.uistates.BrowseFilters()) {
                         ActiveFiltersDisplay(
-                                filters = state.filters,
-                                onRemoveFilter = { filterType ->
-                                    when (filterType) {
-                                        "category" -> viewModel.filterByCategory("All")
-                                        "fuelType" -> viewModel.filterByFuelType("All")
-                                        "transmission" -> viewModel.filterByTransmission("All")
-                                        else -> viewModel.clearFilters()
-                                    }
-                                },
-                                onClearAll = { viewModel.clearFilters() },
-                                modifier =
-                                        Modifier.fillMaxWidth()
-                                                .padding(
-                                                        horizontal =
-                                                                RentalWheelsDesignSystem.Spacing
-                                                                        .medium
-                                                )
+                            filters = state.filters,
+                            onRemoveFilter = { filterType ->
+                                when (filterType) {
+                                    "category" -> viewModel.filterByCategory("All")
+                                    "fuelType" -> viewModel.filterByFuelType("All")
+                                    "transmission" -> viewModel.filterByTransmission("All")
+                                    else -> viewModel.clearFilters()
+                                }
+                            },
+                            onClearAll = { viewModel.clearFilters() },
+                            modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal =
+                                    RentalWheelsDesignSystem.Spacing
+                                        .medium
+                                )
                         )
                     }
 
                     // Only scrollable content: Car List (Single Column)
                     LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            contentPadding =
-                                    PaddingValues(
-                                            start = RentalWheelsDesignSystem.Spacing.medium,
-                                            end = RentalWheelsDesignSystem.Spacing.medium,
-                                            top = RentalWheelsDesignSystem.Spacing.medium,
-                                            bottom =
-                                                    RentalWheelsDesignSystem.Spacing.Huge +
-                                                            RentalWheelsDesignSystem.Spacing.XXL
-                                    ),
-                            verticalArrangement =
-                                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.large)
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding =
+                        PaddingValues(
+                            start = RentalWheelsDesignSystem.Spacing.medium,
+                            end = RentalWheelsDesignSystem.Spacing.medium,
+                            top = RentalWheelsDesignSystem.Spacing.medium,
+                            bottom =
+                            RentalWheelsDesignSystem.Spacing.Huge +
+                                    RentalWheelsDesignSystem.Spacing.XXL
+                        ),
+                        verticalArrangement =
+                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.large)
                     ) {
                         // Car List Items with comparison support
                         items(items = state.filteredCars, key = { car -> car.id }) { car ->
@@ -151,17 +163,17 @@ fun BrowseScreen(
                             val canSelect = viewModel.canAddToComparison(car.id)
 
                             com.msdc.rentalwheels.ui.components.home.CarCard(
-                                    car = car,
-                                    onClick = { onCarClick(car.id) },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    isSelectable =
-                                            comparisonState.selectedCars.isNotEmpty() || isSelected,
-                                    isSelected = isSelected,
-                                    onSelectionToggle = {
-                                        if (canSelect || isSelected) {
-                                            viewModel.toggleCarComparison(car)
-                                        }
+                                car = car,
+                                onClick = { onCarClick(car.id) },
+                                modifier = Modifier.fillMaxWidth(),
+                                isSelectable =
+                                comparisonState.selectedCars.isNotEmpty() || isSelected,
+                                isSelected = isSelected,
+                                onSelectionToggle = {
+                                    if (canSelect || isSelected) {
+                                        viewModel.toggleCarComparison(car)
                                     }
+                                }
                             )
                         }
 
@@ -169,15 +181,16 @@ fun BrowseScreen(
                         if (state.isLoadingMore) {
                             item {
                                 Box(
-                                        modifier =
-                                                Modifier.fillMaxWidth()
-                                                        .padding(
-                                                                RentalWheelsDesignSystem.Spacing
-                                                                        .large
-                                                        )
+                                    modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(
+                                            RentalWheelsDesignSystem.Spacing
+                                                .large
+                                        )
                                 ) {
                                     androidx.compose.material3.CircularProgressIndicator(
-                                            modifier = Modifier.align(Alignment.Center)
+                                        modifier = Modifier.align(Alignment.Center)
                                     )
                                 }
                             }
@@ -187,17 +200,18 @@ fun BrowseScreen(
 
                 // Comparison Floating Button
                 ComparisonFloatingButton(
-                        selectedCount = comparisonState.selectedCars.size,
-                        onClick = { showComparisonSheet = true },
-                        modifier =
-                                Modifier.align(Alignment.BottomEnd)
-                                        .padding(
-                                                end = RentalWheelsDesignSystem.Spacing.extraLarge,
-                                                bottom =
-                                                        RentalWheelsDesignSystem.Spacing.Huge +
-                                                                RentalWheelsDesignSystem.Spacing
-                                                                        .large
-                                        )
+                    selectedCount = comparisonState.selectedCars.size,
+                    onClick = { showComparisonSheet = true },
+                    modifier =
+                    Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(
+                            end = RentalWheelsDesignSystem.Spacing.extraLarge,
+                            bottom =
+                            RentalWheelsDesignSystem.Spacing.Huge +
+                                    RentalWheelsDesignSystem.Spacing
+                                        .large
+                        )
                 )
             }
         }
@@ -206,30 +220,30 @@ fun BrowseScreen(
     // Comparison Bottom Sheet
     if (showComparisonSheet && comparisonState.selectedCars.isNotEmpty()) {
         ComparisonBottomSheet(
-                cars = comparisonState.selectedCars,
-                onDismiss = {
+            cars = comparisonState.selectedCars,
+            onDismiss = {
+                coroutineScope.launch {
+                    sheetState.hide()
+                    showComparisonSheet = false
+                }
+            },
+            onSelectCar = { car ->
+                onCarClick(car.id)
+                coroutineScope.launch {
+                    sheetState.hide()
+                    showComparisonSheet = false
+                }
+            },
+            onRemoveCar = { carId ->
+                viewModel.removeFromComparison(carId)
+                if (comparisonState.selectedCars.size <= 1) {
                     coroutineScope.launch {
                         sheetState.hide()
                         showComparisonSheet = false
                     }
-                },
-                onSelectCar = { car ->
-                    onCarClick(car.id)
-                    coroutineScope.launch {
-                        sheetState.hide()
-                        showComparisonSheet = false
-                    }
-                },
-                onRemoveCar = { carId ->
-                    viewModel.removeFromComparison(carId)
-                    if (comparisonState.selectedCars.size <= 1) {
-                        coroutineScope.launch {
-                            sheetState.hide()
-                            showComparisonSheet = false
-                        }
-                    }
-                },
-                sheetState = sheetState
+                }
+            },
+            sheetState = sheetState
         )
     }
 
@@ -243,15 +257,15 @@ fun BrowseScreen(
 
 @Composable
 private fun ActiveFiltersDisplay(
-        filters: com.msdc.rentalwheels.uistates.BrowseFilters,
-        onRemoveFilter: (String) -> Unit,
-        onClearAll: () -> Unit,
-        modifier: Modifier = Modifier
+    filters: com.msdc.rentalwheels.uistates.BrowseFilters,
+    onRemoveFilter: (String) -> Unit,
+    onClearAll: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     // Simple implementation for now - can be enhanced later
     androidx.compose.material3.Text(
-            text = "Active Filters Applied",
-            style = RentalWheelsDesignSystem.Typography.bodyMedium,
-            modifier = modifier.padding(RentalWheelsDesignSystem.Spacing.small)
+        text = "Active Filters Applied",
+        style = RentalWheelsDesignSystem.Typography.bodyMedium,
+        modifier = modifier.padding(RentalWheelsDesignSystem.Spacing.small)
     )
 }
