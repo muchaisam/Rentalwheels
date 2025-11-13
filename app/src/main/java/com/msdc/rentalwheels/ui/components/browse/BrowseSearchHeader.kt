@@ -44,8 +44,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
 fun BrowseSearchHeader(
@@ -72,9 +71,9 @@ fun BrowseSearchHeader(
                     stiffness = Spring.StiffnessLow
                 )
             ),
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = RentalWheelsDesignSystem.Elevation.medium)
     ) {
         Box(
             modifier =
@@ -94,7 +93,7 @@ fun BrowseSearchHeader(
                     )
                 )
         ) {
-            Column(modifier = Modifier.padding(20.dp)) {
+            Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.large)) {
                 // Header Title
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -103,7 +102,7 @@ fun BrowseSearchHeader(
                 ) {
                     Text(
                         text = "Browse Cars",
-                        style = Typography.headlineMedium,
+                        style = RentalWheelsDesignSystem.Typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -115,7 +114,7 @@ fun BrowseSearchHeader(
                             MaterialTheme.colorScheme.primaryContainer.copy(
                                 alpha = 0.3f
                             ),
-                            RoundedCornerShape(12.dp)
+                            RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium)
                         )
                     ) {
                         Icon(
@@ -126,7 +125,7 @@ fun BrowseSearchHeader(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                 // Search Bar
                 OutlinedTextField(
@@ -176,15 +175,15 @@ fun BrowseSearchHeader(
                         focusedContainerColor = MaterialTheme.colorScheme.surface,
                         unfocusedContainerColor = MaterialTheme.colorScheme.surface
                     ),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium)
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                 // Location and Date Info
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
                 ) {
                     // Date Range
                     Card(
@@ -196,22 +195,22 @@ fun BrowseSearchHeader(
                                 alpha = 0.3f
                             )
                         ),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium)
                     ) {
                         Row(
-                            modifier = Modifier.padding(12.dp),
+                            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
                                 imageVector = Icons.Default.DateRange,
                                 contentDescription = "Date Range",
                                 tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(16.dp)
+                                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
                             )
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
                             Text(
                                 text = selectedDateRange,
-                                style = Typography.bodySmall,
+                                style = RentalWheelsDesignSystem.Typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1
                             )
@@ -228,39 +227,40 @@ fun BrowseSearchHeader(
                                 alpha = 0.3f
                             )
                         ),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium)
                     ) {
                         Row(
-                            modifier = Modifier.padding(12.dp),
+                            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
                                 contentDescription = "Location",
                                 tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(16.dp)
+                                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
                             )
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
                             Text(
                                 text = selectedLocation,
-                                style = Typography.bodySmall,
+                                style = RentalWheelsDesignSystem.Typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1
                             )
                         }
                     }
+
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
+
+                    // Vehicle Count
+                    Text(
+                        text = "$totalVehicles vehicles available",
+                        style = RentalWheelsDesignSystem.Typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Vehicle Count
-                Text(
-                    text = "$totalVehicles vehicles available",
-                    style = Typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
             }
         }
     }
+
 }

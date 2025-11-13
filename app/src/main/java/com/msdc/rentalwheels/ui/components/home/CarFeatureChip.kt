@@ -13,15 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
+/** Premium Car Feature Chip with design system spacing */
 @Composable
-fun CarFeatureChip(
-    icon: ImageVector,
-    text: String,
-    modifier: Modifier = Modifier
-) {
+fun CarFeatureChip(icon: ImageVector, text: String, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Center,
@@ -30,13 +26,13 @@ fun CarFeatureChip(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium),
             tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Spacer(modifier = Modifier.width(4.dp))
+        Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.XXS))
         Text(
             text = text,
-            style = Typography.bodySmall,
+            style = RentalWheelsDesignSystem.Typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

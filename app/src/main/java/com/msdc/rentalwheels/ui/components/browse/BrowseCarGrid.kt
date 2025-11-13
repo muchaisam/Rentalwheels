@@ -43,7 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
@@ -134,12 +134,12 @@ private fun EmptyStateCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
-        ),
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.large
+        )
     ) {
         Column(
             modifier = Modifier
@@ -152,12 +152,12 @@ private fun EmptyStateCard() {
                 imageVector = Icons.Default.SearchOff,
                 contentDescription = "No results",
                 modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
             )
 
             Text(
                 text = "No cars found",
-                style = Typography.headlineSmall,
+                style = RentalWheelsDesignSystem.Typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(top = 16.dp)
@@ -165,7 +165,7 @@ private fun EmptyStateCard() {
 
             Text(
                 text = "Try adjusting your filters or search criteria to find more vehicles.",
-                style = Typography.bodyMedium,
+                style = RentalWheelsDesignSystem.Typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 8.dp)
@@ -196,10 +196,9 @@ private fun LoadMoreIndicator() {
             .padding(vertical = 16.dp),
         colors =
         CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
         ),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium)
     ) {
         Row(
             modifier = Modifier

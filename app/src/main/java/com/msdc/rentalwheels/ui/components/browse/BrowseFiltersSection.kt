@@ -19,10 +19,10 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -44,8 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.BrowseFilters
 import com.msdc.rentalwheels.uistates.SortOption
 
@@ -71,9 +70,12 @@ fun BrowseFiltersSection(
                     stiffness = Spring.StiffnessLow
                 )
             ),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+        )
     ) {
         Box(
             modifier =
@@ -93,7 +95,7 @@ fun BrowseFiltersSection(
                     )
                 )
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
                 // Quick Filters Header
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -102,7 +104,7 @@ fun BrowseFiltersSection(
                 ) {
                     Text(
                         text = "Quick Filters",
-                        style = Typography.titleMedium,
+                        style = RentalWheelsDesignSystem.Typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -115,25 +117,38 @@ fun BrowseFiltersSection(
                             CardDefaults.cardColors(
                                 containerColor =
                                 MaterialTheme.colorScheme.primaryContainer
-                                    .copy(alpha = 0.3f)
                             ),
-                            shape = RoundedCornerShape(12.dp)
+                            shape =
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius.medium
+                            )
                         ) {
                             Row(
                                 modifier =
-                                Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                                Modifier.padding(
+                                    horizontal =
+                                    RentalWheelsDesignSystem.Spacing.small,
+                                    vertical =
+                                    RentalWheelsDesignSystem.Spacing.small
+                                ),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Sort,
+                                    imageVector = Icons.AutoMirrored.Filled.Sort,
                                     contentDescription = "Sort",
                                     tint = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.size(16.dp)
+                                    modifier =
+                                    Modifier.size(
+                                        RentalWheelsDesignSystem.Spacing.medium
+                                    )
                                 )
-                                Spacer(modifier = Modifier.width(4.dp))
+                                Spacer(
+                                    modifier =
+                                    Modifier.width(RentalWheelsDesignSystem.Spacing.XXS)
+                                )
                                 Text(
                                     text = "Sort",
-                                    style = Typography.labelMedium,
+                                    style = RentalWheelsDesignSystem.Typography.labelMedium,
                                     color = MaterialTheme.colorScheme.primary,
                                     fontWeight = FontWeight.Medium
                                 )
@@ -143,7 +158,10 @@ fun BrowseFiltersSection(
                                     else Icons.Default.KeyboardArrowDown,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.size(16.dp)
+                                    modifier =
+                                    Modifier.size(
+                                        RentalWheelsDesignSystem.Spacing.medium
+                                    )
                                 )
                             }
                         }
@@ -158,17 +176,29 @@ fun BrowseFiltersSection(
                                         Row(verticalAlignment = Alignment.CenterVertically) {
                                             Text(
                                                 text = option.displayName,
-                                                style = Typography.bodyMedium
+                                                style =
+                                                RentalWheelsDesignSystem.Typography
+                                                    .bodyMedium
                                             )
                                             if (filters.sortBy == option) {
-                                                Spacer(modifier = Modifier.width(8.dp))
+                                                Spacer(
+                                                    modifier =
+                                                    Modifier.width(
+                                                        RentalWheelsDesignSystem
+                                                            .Spacing.small
+                                                    )
+                                                )
                                                 Icon(
                                                     imageVector = Icons.Default.Check,
                                                     contentDescription = "Selected",
                                                     tint =
                                                     MaterialTheme.colorScheme
                                                         .primary,
-                                                    modifier = Modifier.size(16.dp)
+                                                    modifier =
+                                                    Modifier.size(
+                                                        RentalWheelsDesignSystem
+                                                            .Spacing.medium
+                                                    )
                                                 )
                                             }
                                         }
@@ -183,30 +213,41 @@ fun BrowseFiltersSection(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                 // Category Filters
                 if (availableCategories.isNotEmpty()) {
                     Text(
                         text = "Categories",
-                        style = Typography.titleSmall,
+                        style = RentalWheelsDesignSystem.Typography.titleSmall,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier =
+                        Modifier.padding(
+                            bottom = RentalWheelsDesignSystem.Spacing.small
+                        )
                     )
 
                     LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(horizontal = 4.dp)
+                        horizontalArrangement =
+                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
+                        contentPadding =
+                        PaddingValues(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
                     ) {
-                        items(listOf("All") + availableCategories) { category ->
+                        items(listOf("All") + availableCategories.filter { it != "All" }) { category
+                            ->
                             FilterChip(
                                 selected = filters.selectedCategory == category,
                                 onClick = {
                                     onFiltersUpdate(filters.copy(selectedCategory = category))
                                 },
                                 label = {
-                                    Text(text = category, style = Typography.labelMedium)
+                                    Text(
+                                        text = category,
+                                        style =
+                                        RentalWheelsDesignSystem.Typography
+                                            .labelMedium
+                                    )
                                 },
                                 colors =
                                 FilterChipDefaults.filterChipColors(
@@ -216,37 +257,47 @@ fun BrowseFiltersSection(
                                     MaterialTheme.colorScheme.onPrimary,
                                     containerColor =
                                     MaterialTheme.colorScheme.surfaceVariant
-                                        .copy(alpha = 0.5f)
                                 )
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                 }
 
                 // Fuel Type Filters
                 if (availableFuelTypes.isNotEmpty()) {
                     Text(
                         text = "Fuel Type",
-                        style = Typography.titleSmall,
+                        style = RentalWheelsDesignSystem.Typography.titleSmall,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier =
+                        Modifier.padding(
+                            bottom = RentalWheelsDesignSystem.Spacing.small
+                        )
                     )
 
                     LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(horizontal = 4.dp)
+                        horizontalArrangement =
+                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
+                        contentPadding =
+                        PaddingValues(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
                     ) {
-                        items(listOf("All") + availableFuelTypes) { fuelType ->
+                        items(listOf("All") + availableFuelTypes.filter { it != "All" }) { fuelType
+                            ->
                             FilterChip(
                                 selected = filters.selectedFuelType == fuelType,
                                 onClick = {
                                     onFiltersUpdate(filters.copy(selectedFuelType = fuelType))
                                 },
                                 label = {
-                                    Text(text = fuelType, style = Typography.labelMedium)
+                                    Text(
+                                        text = fuelType,
+                                        style =
+                                        RentalWheelsDesignSystem.Typography
+                                            .labelMedium
+                                    )
                                 },
                                 colors =
                                 FilterChipDefaults.filterChipColors(
@@ -256,30 +307,34 @@ fun BrowseFiltersSection(
                                     MaterialTheme.colorScheme.onSecondary,
                                     containerColor =
                                     MaterialTheme.colorScheme.surfaceVariant
-                                        .copy(alpha = 0.5f)
                                 )
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                 }
 
                 // Transmission Filters
                 if (availableTransmissions.isNotEmpty()) {
                     Text(
                         text = "Transmission",
-                        style = Typography.titleSmall,
+                        style = RentalWheelsDesignSystem.Typography.titleSmall,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier =
+                        Modifier.padding(
+                            bottom = RentalWheelsDesignSystem.Spacing.small
+                        )
                     )
 
                     LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(horizontal = 4.dp)
+                        horizontalArrangement =
+                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
+                        contentPadding =
+                        PaddingValues(horizontal = RentalWheelsDesignSystem.Spacing.XXS)
                     ) {
-                        items(listOf("All") + availableTransmissions) { transmission ->
+                        items(listOf("All") + availableTransmissions.filter { it != "All" }) { transmission ->
                             FilterChip(
                                 selected = filters.selectedTransmission == transmission,
                                 onClick = {
@@ -288,7 +343,12 @@ fun BrowseFiltersSection(
                                     )
                                 },
                                 label = {
-                                    Text(text = transmission, style = Typography.labelMedium)
+                                    Text(
+                                        text = transmission,
+                                        style =
+                                        RentalWheelsDesignSystem.Typography
+                                            .labelMedium
+                                    )
                                 },
                                 colors =
                                 FilterChipDefaults.filterChipColors(
@@ -298,44 +358,41 @@ fun BrowseFiltersSection(
                                     MaterialTheme.colorScheme.onTertiary,
                                     containerColor =
                                     MaterialTheme.colorScheme.surfaceVariant
-                                        .copy(alpha = 0.5f)
                                 )
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                 }
 
                 // Driver Option
                 Card(
                     colors =
                     CardDefaults.cardColors(
-                        containerColor =
-                        MaterialTheme.colorScheme.surfaceVariant.copy(
-                            alpha = 0.3f
-                        )
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium)
                 ) {
                     Row(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
+                            .padding(RentalWheelsDesignSystem.Spacing.medium),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column {
                             Text(
                                 text = "With Driver",
-                                style = Typography.bodyLarge,
+                                style = RentalWheelsDesignSystem.Typography.bodyLarge,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
                                 text = "Include cars with driver service",
-                                style = Typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                style = RentalWheelsDesignSystem.Typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                             )
                         }
 

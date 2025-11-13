@@ -45,9 +45,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.msdc.rentalwheels.data.model.brand
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.Booking
 import com.msdc.rentalwheels.uistates.BookingStatus
 import java.time.format.DateTimeFormatter
@@ -77,14 +77,14 @@ fun BookingCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onBookingClick() },
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-        ),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.medium),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+        )
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             // Header Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -96,32 +96,45 @@ fun BookingCard(
                     modifier =
                     Modifier
                         .background(
-                            color = statusColor.copy(alpha = 0.2f),
-                            shape = RoundedCornerShape(12.dp)
+                            color = statusColor.copy(alpha = 0.15f),
+                            shape =
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem
+                                    .CornerRadius.medium
+                            )
                         )
-                        .padding(horizontal = 12.dp, vertical = 4.dp)
+                        .padding(
+                            horizontal =
+                            RentalWheelsDesignSystem.Spacing.medium,
+                            vertical =
+                            RentalWheelsDesignSystem.Spacing.extraSmall
+                        )
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier =
                             Modifier
-                                .size(8.dp)
+                                .size(RentalWheelsDesignSystem.Spacing.small)
                                 .background(
                                     color = statusColor,
                                     shape = CircleShape
                                 )
                         )
-                        Spacer(modifier = Modifier.width(6.dp))
+                        Spacer(
+                            modifier =
+                            Modifier.width(RentalWheelsDesignSystem.Spacing.extraSmall)
+                        )
                         Text(
                             text = booking.status.displayName,
-                            style = MaterialTheme.typography.labelSmall,
+                            style = RentalWheelsDesignSystem.Typography.labelSmall,
                             fontWeight = FontWeight.Medium,
                             color = statusColor
                         )
                     }
                 } // Actions Row
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement =
+                    Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     // Favorite Button
@@ -135,7 +148,7 @@ fun BookingCard(
                             else "Add to favorites",
                             tint =
                             if (isFavorite) MaterialTheme.colorScheme.error
-                            else MaterialTheme.colorScheme.onSurfaceVariant
+                            else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                         )
                     }
 
@@ -207,7 +220,7 @@ fun BookingCard(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                 // Car Information Row
                 Row(
@@ -223,19 +236,31 @@ fun BookingCard(
                         contentDescription = "${booking.car.brand} ${booking.car.model}",
                         modifier =
                         Modifier
-                            .size(80.dp, 50.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .size(
+                                width =
+                                RentalWheelsDesignSystem.Spacing.Huge *
+                                        1.5f, // ~96dp
+                                height =
+                                RentalWheelsDesignSystem.Spacing
+                                    .Huge // ~64dp
+                            )
+                            .clip(
+                                RoundedCornerShape(
+                                    RentalWheelsDesignSystem.CornerRadius
+                                        .small
+                                )
+                            )
                             .clickable { onCarClick() },
                         contentScale = ContentScale.Crop
                     )
 
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Car Details
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "${booking.car.brand} ${booking.car.model}",
-                            style = MaterialTheme.typography.titleMedium,
+                            style = RentalWheelsDesignSystem.Typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
@@ -243,20 +268,20 @@ fun BookingCard(
 
                         Text(
                             text = booking.car.category,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                         )
 
                         Text(
                             text = "$${booking.totalCost.toInt()} total",
-                            style = MaterialTheme.typography.titleSmall,
+                            style = RentalWheelsDesignSystem.Typography.titleSmall,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                 // Booking Details
                 BookingDetailRow(
@@ -265,7 +290,7 @@ fun BookingCard(
                     value = formatBookingDuration(booking)
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
                 BookingDetailRow(
                     icon = Icons.Default.LocationOn,
@@ -274,7 +299,7 @@ fun BookingCard(
                 )
 
                 if (booking.returnLocation != booking.pickupLocation) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                     BookingDetailRow(
                         icon = Icons.Default.LocationOn,
                         label = "Return",
@@ -282,7 +307,7 @@ fun BookingCard(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
                 BookingDetailRow(
                     icon = Icons.Default.AccessTime,
@@ -292,7 +317,7 @@ fun BookingCard(
 
                 // Driver Information (if applicable)
                 if (booking.withDriver && booking.driverInfo != null) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                     DriverInfoSection(driverInfo = booking.driverInfo)
                 }
             }
@@ -311,21 +336,21 @@ private fun BookingDetailRow(
         Icon(
             imageVector = icon,
             contentDescription = label,
-            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-            modifier = Modifier.size(16.dp)
+            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
 
         Text(
             text = "$label: ",
-            style = MaterialTheme.typography.bodySmall,
+            style = RentalWheelsDesignSystem.Typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
         )
 
         Text(
             text = value,
-            style = MaterialTheme.typography.bodySmall,
+            style = RentalWheelsDesignSystem.Typography.bodySmall,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -341,35 +366,40 @@ private fun DriverInfoSection(
         modifier = modifier.fillMaxWidth(),
         colors =
         CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f)
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.small)
     ) {
-        Row(modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.small),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             AsyncImage(
                 model =
                 driverInfo.imageUrl.ifEmpty {
                     "https://via.placeholder.com/40x40?text=${driverInfo.name.firstOrNull()}"
                 },
                 contentDescription = driverInfo.name,
-                modifier = Modifier
-                    .size(32.dp)
+                modifier =
+                Modifier
+                    .size(
+                        RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                    ) // ~32dp
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
 
             Column {
                 Text(
                     text = "Driver: ${driverInfo.name}",
-                    style = MaterialTheme.typography.bodySmall,
+                    style = RentalWheelsDesignSystem.Typography.bodySmall,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = "★ ${driverInfo.rating} • ${driverInfo.experience}",
-                    style = MaterialTheme.typography.labelSmall,
+                    style = RentalWheelsDesignSystem.Typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.7f)
                 )
             }

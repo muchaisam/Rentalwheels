@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -32,11 +31,8 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -63,9 +59,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.components.PremiumButton
+import com.msdc.rentalwheels.ui.components.PremiumButtonVariant
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlinx.coroutines.delay
 
 @Composable
@@ -109,9 +106,9 @@ fun LoginScreen(
         Brush.verticalGradient(
             colors =
             listOf(
-                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.05f),
                 MaterialTheme.colorScheme.surface,
-                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                MaterialTheme.colorScheme.surfaceVariant
             )
         )
     Box(
@@ -126,7 +123,7 @@ fun LoginScreen(
             Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(24.dp),
+                .padding(RentalWheelsDesignSystem.Spacing.large),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -138,16 +135,23 @@ fun LoginScreen(
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(bottom = 48.dp)
+                    modifier =
+                    Modifier.padding(
+                        bottom = RentalWheelsDesignSystem.Spacing.extraLarge * 2
+                    )
                 ) { // App Logo
                     Card(
-                        modifier = Modifier.size(80.dp),
-                        shape = RoundedCornerShape(20.dp),
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
                         colors =
                         CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.primary
                         ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                        elevation =
+                        CardDefaults.cardElevation(
+                            defaultElevation =
+                            RentalWheelsDesignSystem.Elevation.small
+                        )
                     ) {
                         Box(
                             modifier = Modifier.fillMaxSize(),
@@ -156,24 +160,27 @@ fun LoginScreen(
                             Image(
                                 painter = painterResource(id = R.drawable.rental_logo),
                                 contentDescription = "App Logo",
-                                modifier = Modifier.size(48.dp)
+                                modifier =
+                                Modifier.size(
+                                    RentalWheelsDesignSystem.Spacing.Huge * 0.75f
+                                )
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     Text(
                         text = "Welcome Back",
-                        style = Typography.headlineLarge,
+                        style = RentalWheelsDesignSystem.Typography.headlineLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
                     Text(
                         text = "Sign in to your account",
-                        style = Typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = RentalWheelsDesignSystem.Typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                         textAlign = TextAlign.Center
                     )
                 }
@@ -184,15 +191,18 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .scale(formScale),
-                shape = RoundedCornerShape(24.dp),
+                shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
                 colors =
                 CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                elevation =
+                CardDefaults.cardElevation(
+                    defaultElevation = RentalWheelsDesignSystem.Elevation.small
+                )
             ) {
                 Column(
-                    modifier = Modifier.padding(32.dp),
+                    modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     // Error Message
@@ -203,20 +213,31 @@ fun LoginScreen(
                     ) {
                         errorMessage?.let {
                             Card(
-                                modifier = Modifier
+                                modifier =
+                                Modifier
                                     .fillMaxWidth()
-                                    .padding(bottom = 16.dp),
+                                    .padding(
+                                        bottom =
+                                        RentalWheelsDesignSystem.Spacing
+                                            .medium
+                                    ),
                                 colors =
                                 CardDefaults.cardColors(
                                     containerColor =
                                     MaterialTheme.colorScheme.errorContainer
                                 ),
-                                shape = RoundedCornerShape(12.dp)
+                                shape =
+                                RoundedCornerShape(
+                                    RentalWheelsDesignSystem.CornerRadius.medium
+                                )
                             ) {
                                 Text(
                                     text = it,
-                                    modifier = Modifier.padding(16.dp),
-                                    style = Typography.bodyMedium,
+                                    modifier =
+                                    Modifier.padding(
+                                        RentalWheelsDesignSystem.Spacing.medium
+                                    ),
+                                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onErrorContainer
                                 )
                             }
@@ -258,10 +279,10 @@ fun LoginScreen(
                         ),
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp)
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Password Field
                     OutlinedTextField(
@@ -321,10 +342,10 @@ fun LoginScreen(
                         ),
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp)
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
                     // Forgot Password
                     TextButton(
@@ -333,15 +354,15 @@ fun LoginScreen(
                     ) {
                         Text(
                             text = "Forgot Password?",
-                            style = Typography.bodyMedium,
+                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.large))
 
-                    // Login Button
-                    Button(
+                    // Login Button - Premium Design
+                    PremiumButton(
                         onClick = {
                             if (email.isNotEmpty() &&
                                 password.isNotEmpty() &&
@@ -351,48 +372,17 @@ fun LoginScreen(
                                 onLoginClick(email, password)
                             }
                         },
+                        variant = PremiumButtonVariant.Primary,
                         enabled =
                         !isLoading &&
                                 email.isNotEmpty() &&
                                 password.isNotEmpty() &&
                                 isEmailValid &&
                                 isPasswordValid,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors =
-                        ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        )
-                    ) {
-                        if (isLoading) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(20.dp),
-                                    color = MaterialTheme.colorScheme.onPrimary,
-                                    strokeWidth = 2.dp
-                                )
-                                Spacer(modifier = Modifier.width(12.dp))
-                                Text(
-                                    text = "Signing In...",
-                                    style = Typography.labelLarge,
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                            }
-                        } else {
-                            Text(
-                                text = "Sign In",
-                                style = Typography.labelLarge,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-                    }
+                        modifier = Modifier.fillMaxWidth()
+                    ) { Text(if (isLoading) "Signing In..." else "Sign In") }
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.large))
 
                     // Register Link
                     Row(
@@ -401,13 +391,13 @@ fun LoginScreen(
                     ) {
                         Text(
                             text = "Don't have an account? ",
-                            style = Typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                         )
                         TextButton(onClick = onRegisterClick) {
                             Text(
                                 text = "Sign Up",
-                                style = Typography.bodyMedium,
+                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.primary
                             )

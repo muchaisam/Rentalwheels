@@ -15,31 +15,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
-fun LanguageSelector(
-    selectedLanguage: String,
-    onLanguageSelected: (String) -> Unit
-) {
+fun LanguageSelector(selectedLanguage: String, onLanguageSelected: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     val languages = listOf("English", "Spanish", "French", "German")
 
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .clickable { expanded = true }
-            .padding(vertical = 12.dp),
+            .padding(vertical = RentalWheelsDesignSystem.Spacing.small),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text("Language")
         Text(selectedLanguage)
 
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             languages.forEach { language ->
                 DropdownMenuItem(
                     text = { Text(language) },

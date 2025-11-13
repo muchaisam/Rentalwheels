@@ -1,6 +1,7 @@
 package com.msdc.rentalwheels.viewmodel
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -46,13 +47,18 @@ constructor(
                 ThemePreference.DARK -> true
                 ThemePreference.LIGHT -> false
                 ThemePreference.SYSTEM_DEFAULT -> {
-                    // You can implement system theme detection here
-                    // For now, default to light theme
-                    false
+                    // Detect system theme from configuration
+                    isSystemInDarkMode()
                 }
             }
 
         _settingsState.value = SettingsState(isDarkMode = isDarkMode, themePreference = savedTheme)
+    }
+
+    private fun isSystemInDarkMode(): Boolean {
+        val currentNightMode =
+            context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
 
     fun updateDarkMode(isDarkMode: Boolean) {
@@ -69,8 +75,8 @@ constructor(
                 ThemePreference.DARK -> true
                 ThemePreference.LIGHT -> false
                 ThemePreference.SYSTEM_DEFAULT -> {
-                    // You can implement system theme detection here
-                    false
+                    // Detect system theme from configuration
+                    isSystemInDarkMode()
                 }
             }
         _settingsState.value =

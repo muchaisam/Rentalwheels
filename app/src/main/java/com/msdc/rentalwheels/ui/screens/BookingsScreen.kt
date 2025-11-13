@@ -34,7 +34,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.msdc.rentalwheels.ui.components.ErrorScreen
 import com.msdc.rentalwheels.ui.components.LoadingScreen
@@ -42,6 +41,7 @@ import com.msdc.rentalwheels.ui.components.bookings.AvailableCarsSection
 import com.msdc.rentalwheels.ui.components.bookings.BookingsHeader
 import com.msdc.rentalwheels.ui.components.bookings.BookingsList
 import com.msdc.rentalwheels.ui.components.bookings.CartView
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.BookingStatus
 import com.msdc.rentalwheels.uistates.BookingsScreenState
 import com.msdc.rentalwheels.viewmodel.BookingsViewModel
@@ -62,7 +62,7 @@ fun BookingsScreen(
 
     Box(modifier = modifier.fillMaxSize()) {
         Scaffold(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.0f),
+            containerColor = MaterialTheme.colorScheme.background,
             floatingActionButton = {
                 val state = bookingsState
                 if (state is BookingsScreenState.Success) {
@@ -141,7 +141,11 @@ fun BookingsScreen(
                                 Modifier
                                     .fillMaxSize()
                                     .padding(paddingValues)
-                                    .padding(horizontal = 16.dp)
+                                    .padding(
+                                        horizontal =
+                                        RentalWheelsDesignSystem.Spacing
+                                            .medium
+                                    )
                             )
                         } else {
                             // User has no bookings - show available cars or cart
@@ -150,7 +154,11 @@ fun BookingsScreen(
                                 Modifier
                                     .fillMaxSize()
                                     .padding(paddingValues)
-                                    .padding(horizontal = 16.dp)
+                                    .padding(
+                                        horizontal =
+                                        RentalWheelsDesignSystem.Spacing
+                                            .medium
+                                    )
                             ) {
                                 AnimatedContent(
                                     targetState = state.showCartMode,
@@ -227,13 +235,13 @@ private fun BookingManagementView(
             activeBookings = state.activeBookings.size,
             upcomingBookings = state.upcomingBookings.size,
             onAnalyticsClick = onAnalyticsClick,
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(vertical = RentalWheelsDesignSystem.Spacing.medium)
         )
 
         // Tab Row
         TabRow(
             selectedTabIndex = selectedTabIndex,
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
+            containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface
         ) {
             tabs.forEachIndexed { index, title ->
@@ -246,6 +254,7 @@ private fun BookingManagementView(
                     text = {
                         Text(
                             text = title,
+                            style = RentalWheelsDesignSystem.Typography.labelLarge,
                             fontWeight =
                             if (selectedTabIndex == index) FontWeight.Bold
                             else FontWeight.Normal

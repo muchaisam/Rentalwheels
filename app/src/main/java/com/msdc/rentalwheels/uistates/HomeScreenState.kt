@@ -11,6 +11,9 @@ sealed interface HomeScreenState {
         val recommendedCars: List<Car>,
         val carsByFuelType: Map<String, List<Car>>,
         val carsByYear: Map<String, List<Car>>,
+        val carsByBrand: Map<String, List<Car>>,
+        val carsByTransmission: Map<String, List<Car>>,
+        val carsByModel: Map<String, List<Car>>,
         val deals: List<Deal>,
         val isLoadingMore: Boolean = false,
         val loadMoreError: String? = null

@@ -60,10 +60,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlinx.coroutines.delay
 
 @Composable
@@ -116,7 +114,7 @@ fun ForgotPasswordScreen(
             modifier =
             Modifier
                 .fillMaxSize()
-                .padding(24.dp)
+                .padding(RentalWheelsDesignSystem.Spacing.extraLarge)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -124,9 +122,10 @@ fun ForgotPasswordScreen(
             // Back Button
             IconButton(
                 onClick = onBackClick,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .align(Alignment.Start)
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -135,7 +134,7 @@ fun ForgotPasswordScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f))
 
             // Header Section
             Column(
@@ -150,13 +149,20 @@ fun ForgotPasswordScreen(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         // App Icon
                         Card(
-                            modifier = Modifier.size(80.dp),
-                            shape = RoundedCornerShape(20.dp),
+                            modifier =
+                            Modifier.size(
+                                RentalWheelsDesignSystem.Spacing.Huge * 1.25f
+                            ),
+                            shape = RoundedCornerShape(RentalWheelsDesignSystem.Spacing.large),
                             colors =
                             CardDefaults.cardColors(
                                 containerColor = MaterialTheme.colorScheme.primary
                             ),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                            elevation =
+                            CardDefaults.cardElevation(
+                                defaultElevation =
+                                RentalWheelsDesignSystem.Elevation.medium
+                            )
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
@@ -165,29 +171,37 @@ fun ForgotPasswordScreen(
                                 Image(
                                     painter = painterResource(id = R.mipmap.launc),
                                     contentDescription = "App Logo",
-                                    modifier = Modifier.size(48.dp)
+                                    modifier =
+                                    Modifier.size(
+                                        RentalWheelsDesignSystem.Spacing.Huge *
+                                                0.75f
+                                    )
                                 )
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(24.dp))
+                        Spacer(
+                            modifier =
+                            Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge)
+                        )
 
                         Text(
                             text = "Reset Password",
-                            style = Typography.headlineLarge,
+                            style = RentalWheelsDesignSystem.Typography.headlineLarge,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurface
                         )
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
                         Text(
                             text =
                             "Enter your email address and we'll send you a link to reset your password",
-                            style = Typography.bodyLarge,
+                            style = RentalWheelsDesignSystem.Typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
-                            lineHeight = 24.sp
+                            lineHeight =
+                            RentalWheelsDesignSystem.Typography.bodyLarge.lineHeight
                         )
                     }
                 }
@@ -202,49 +216,62 @@ fun ForgotPasswordScreen(
                         Icon(
                             imageVector = Icons.Default.CheckCircle,
                             contentDescription = "Success",
-                            modifier = Modifier.size(80.dp),
+                            modifier =
+                            Modifier.size(
+                                RentalWheelsDesignSystem.Spacing.Huge * 1.25f
+                            ),
                             tint = MaterialTheme.colorScheme.primary
                         )
 
-                        Spacer(modifier = Modifier.height(24.dp))
+                        Spacer(
+                            modifier =
+                            Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge)
+                        )
 
                         Text(
                             text = "Email Sent!",
-                            style = Typography.headlineLarge,
+                            style = RentalWheelsDesignSystem.Typography.headlineLarge,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurface
                         )
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
                         Text(
                             text =
                             "We've sent a password reset link to your email address. Please check your inbox and follow the instructions.",
-                            style = Typography.bodyLarge,
+                            style = RentalWheelsDesignSystem.Typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
-                            lineHeight = 24.sp
+                            lineHeight =
+                            RentalWheelsDesignSystem.Typography.bodyLarge.lineHeight
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.Huge * 0.75f))
 
             // Form Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .scale(formScale),
-                shape = RoundedCornerShape(24.dp),
+                shape = RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge),
                 colors =
                 CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                elevation =
+                CardDefaults.cardElevation(
+                    defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+                )
             ) {
                 Column(
-                    modifier = Modifier.padding(32.dp),
+                    modifier =
+                    Modifier.padding(
+                        RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                    ),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     // Error Message
@@ -255,21 +282,32 @@ fun ForgotPasswordScreen(
                     ) {
                         errorMessage?.let {
                             Card(
-                                modifier = Modifier
+                                modifier =
+                                Modifier
                                     .fillMaxWidth()
-                                    .padding(bottom = 16.dp),
+                                    .padding(
+                                        bottom =
+                                        RentalWheelsDesignSystem.Spacing
+                                            .medium
+                                    ),
                                 colors =
                                 CardDefaults.cardColors(
                                     containerColor =
                                     MaterialTheme.colorScheme.errorContainer
                                 ),
-                                shape = RoundedCornerShape(12.dp)
+                                shape =
+                                RoundedCornerShape(
+                                    RentalWheelsDesignSystem.CornerRadius.medium
+                                )
                             ) {
                                 Text(
                                     text = it,
                                     color = MaterialTheme.colorScheme.onErrorContainer,
-                                    style = Typography.bodyMedium,
-                                    modifier = Modifier.padding(16.dp)
+                                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                                    modifier =
+                                    Modifier.padding(
+                                        RentalWheelsDesignSystem.Spacing.medium
+                                    )
                                 )
                             }
                         }
@@ -329,7 +367,13 @@ fun ForgotPasswordScreen(
                                 }
                             )
 
-                            Spacer(modifier = Modifier.height(32.dp))
+                            Spacer(
+                                modifier =
+                                Modifier.height(
+                                    RentalWheelsDesignSystem.Spacing.extraLarge *
+                                            1.33f
+                                )
+                            )
 
                             // Send Reset Email Button
                             Button(
@@ -340,9 +384,13 @@ fun ForgotPasswordScreen(
                                         onSendResetEmail(email)
                                     }
                                 },
-                                modifier = Modifier
+                                modifier =
+                                Modifier
                                     .fillMaxWidth()
-                                    .height(56.dp),
+                                    .height(
+                                        RentalWheelsDesignSystem.Spacing.Huge *
+                                                0.875f
+                                    ),
                                 enabled = !isLoading && email.isNotBlank() && isEmailValid,
                                 colors =
                                 ButtonDefaults.buttonColors(
@@ -351,18 +399,25 @@ fun ForgotPasswordScreen(
                                     contentColor =
                                     MaterialTheme.colorScheme.onPrimary
                                 ),
-                                shape = RoundedCornerShape(16.dp)
+                                shape =
+                                RoundedCornerShape(
+                                    RentalWheelsDesignSystem.CornerRadius.large
+                                )
                             ) {
                                 if (isLoading) {
                                     CircularProgressIndicator(
-                                        modifier = Modifier.size(24.dp),
+                                        modifier =
+                                        Modifier.size(
+                                            RentalWheelsDesignSystem.Spacing
+                                                .extraLarge
+                                        ),
                                         color = MaterialTheme.colorScheme.onPrimary,
-                                        strokeWidth = 2.dp
+                                        strokeWidth = RentalWheelsDesignSystem.Spacing.XXS
                                     )
                                 } else {
                                     Text(
                                         text = "Send Reset Link",
-                                        style = Typography.bodyLarge,
+                                        style = RentalWheelsDesignSystem.Typography.bodyLarge,
                                         fontWeight = FontWeight.SemiBold
                                     )
                                 }
@@ -380,9 +435,13 @@ fun ForgotPasswordScreen(
                             // Retry Button
                             Button(
                                 onClick = onRetryClick,
-                                modifier = Modifier
+                                modifier =
+                                Modifier
                                     .fillMaxWidth()
-                                    .height(56.dp),
+                                    .height(
+                                        RentalWheelsDesignSystem.Spacing.Huge *
+                                                0.875f
+                                    ),
                                 colors =
                                 ButtonDefaults.buttonColors(
                                     containerColor =
@@ -390,28 +449,42 @@ fun ForgotPasswordScreen(
                                     contentColor =
                                     MaterialTheme.colorScheme.onSecondary
                                 ),
-                                shape = RoundedCornerShape(16.dp)
+                                shape =
+                                RoundedCornerShape(
+                                    RentalWheelsDesignSystem.CornerRadius.large
+                                )
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Refresh,
                                     contentDescription = "Resend",
-                                    modifier = Modifier.size(20.dp)
+                                    modifier =
+                                    Modifier.size(
+                                        RentalWheelsDesignSystem.Spacing.large
+                                    )
                                 )
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(
+                                    modifier =
+                                    Modifier.width(
+                                        RentalWheelsDesignSystem.Spacing.small
+                                    )
+                                )
                                 Text(
                                     text = "Resend Email",
-                                    style = Typography.bodyLarge,
+                                    style = RentalWheelsDesignSystem.Typography.bodyLarge,
                                     fontWeight = FontWeight.SemiBold
                                 )
                             }
 
-                            Spacer(modifier = Modifier.height(16.dp))
+                            Spacer(
+                                modifier =
+                                Modifier.height(RentalWheelsDesignSystem.Spacing.medium)
+                            )
 
                             // Back to Login Button
                             TextButton(onClick = onBackClick, modifier = Modifier.fillMaxWidth()) {
                                 Text(
                                     text = "Back to Login",
-                                    style = Typography.bodyLarge,
+                                    style = RentalWheelsDesignSystem.Typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.primary
                                 )
                             }
@@ -420,7 +493,7 @@ fun ForgotPasswordScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f))
         }
     }
 

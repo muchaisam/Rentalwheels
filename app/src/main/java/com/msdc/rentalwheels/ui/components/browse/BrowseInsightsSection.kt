@@ -21,11 +21,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.ElectricCar
 import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -45,7 +45,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.utils.CurrencyUtils
 import kotlinx.coroutines.delay
 
@@ -84,7 +84,7 @@ fun BrowseInsightsSection(cars: List<Car>, modifier: Modifier = Modifier) {
         ) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
                 colors =
                 CardDefaults.cardColors(
                     containerColor =
@@ -92,7 +92,10 @@ fun BrowseInsightsSection(cars: List<Car>, modifier: Modifier = Modifier) {
                         alpha = 0.3f
                     )
                 ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                elevation =
+                CardDefaults.cardElevation(
+                    defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+                )
             ) {
                 Box(
                     modifier =
@@ -118,14 +121,14 @@ fun BrowseInsightsSection(cars: List<Car>, modifier: Modifier = Modifier) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
-                                imageVector = Icons.Default.TrendingUp,
+                                imageVector = Icons.AutoMirrored.Filled.TrendingUp,
                                 contentDescription = "Insights",
                                 tint = MaterialTheme.colorScheme.primary
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = "Browse Insights",
-                                style = Typography.titleMedium,
+                                style = RentalWheelsDesignSystem.Typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -171,12 +174,12 @@ fun BrowseInsightsSection(cars: List<Car>, modifier: Modifier = Modifier) {
 private fun InsightCard(insight: BrowseInsight, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.width(140.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.Card
+        )
     ) {
         Column(
             modifier = Modifier.padding(12.dp),
@@ -193,22 +196,22 @@ private fun InsightCard(insight: BrowseInsight, modifier: Modifier = Modifier) {
 
             Text(
                 text = insight.value,
-                style = Typography.titleLarge,
+                style = RentalWheelsDesignSystem.Typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
                 text = insight.title,
-                style = Typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                 fontWeight = FontWeight.Medium
             )
 
             Text(
                 text = insight.description,
-                style = Typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                style = RentalWheelsDesignSystem.Typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
         }
     }
@@ -225,7 +228,7 @@ private fun generateInsights(cars: List<Car>): List<BrowseInsight> {
                 title = "Avg Price",
                 value = CurrencyUtils.formatToKSH(avgPrice),
                 description = "per day",
-                icon = Icons.Default.TrendingUp,
+                icon = Icons.AutoMirrored.Filled.TrendingUp,
                 color = Color(0xFF4CAF50)
             )
         )

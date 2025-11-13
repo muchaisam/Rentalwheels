@@ -12,9 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.data.model.Car
 import com.msdc.rentalwheels.ui.components.home.CarCard
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
 fun EnhancedCarCard(
@@ -29,11 +29,11 @@ fun EnhancedCarCard(
 ) {
     Card(
         modifier = modifier,
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+        )
     ) {
         Box {
             // Base CarCard
@@ -41,14 +41,15 @@ fun EnhancedCarCard(
 
             // Enhanced features overlay
             Row(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .align(Alignment.TopEnd)
-                    .padding(8.dp)
+                    .padding(RentalWheelsDesignSystem.Spacing.small)
             ) {
                 // Favorite Button
                 FavoriteButton(isFavorite = isFavorite, onToggleFavorite = onToggleFavorite)
 
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.XXS))
 
                 // Comparison Button
                 ComparisonButton(

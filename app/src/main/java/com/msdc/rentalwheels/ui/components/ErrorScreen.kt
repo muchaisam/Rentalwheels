@@ -17,28 +17,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
 fun ErrorScreen(message: String, modifier: Modifier = Modifier, onRetry: (() -> Unit)? = null) {
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .fillMaxHeight(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight(), contentAlignment = Alignment.Center
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = message,
-                style = Typography.headlineSmall,
+                style = RentalWheelsDesignSystem.Typography.headlineSmall,
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier =
+                Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.medium)
             )
 
             onRetry?.let { retryAction ->
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = retryAction, modifier = Modifier.padding(horizontal = 16.dp)) {
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
+                Button(
+                    onClick = retryAction,
+                    modifier =
+                    Modifier.padding(
+                        horizontal = RentalWheelsDesignSystem.Spacing.medium
+                    )
+                ) {
                     Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                     Text("Retry")
                 }
             }

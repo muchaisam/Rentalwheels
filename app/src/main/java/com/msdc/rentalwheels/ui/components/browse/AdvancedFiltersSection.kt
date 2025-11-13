@@ -39,7 +39,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.BrowseFilters
 import kotlin.math.roundToInt
 
@@ -62,13 +62,15 @@ fun AdvancedFiltersSection(
                     stiffness = Spring.StiffnessLow
                 )
             ),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
         colors =
         CardDefaults.cardColors(
-            containerColor =
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Box(
             modifier =
@@ -104,7 +106,7 @@ fun AdvancedFiltersSection(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "Advanced Filters",
-                            style = Typography.titleMedium,
+                            style = RentalWheelsDesignSystem.Typography.titleMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -178,7 +180,7 @@ private fun PriceRangeSection(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Price Range",
-                    style = Typography.bodyLarge,
+                    style = RentalWheelsDesignSystem.Typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -186,7 +188,7 @@ private fun PriceRangeSection(
 
             Text(
                 text = "$${minPrice} - $${maxPrice}",
-                style = Typography.labelLarge,
+                style = RentalWheelsDesignSystem.Typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
             )
@@ -208,20 +210,19 @@ private fun PriceRangeSection(
             SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.primary,
                 activeTrackColor = MaterialTheme.colorScheme.primary,
-                inactiveTrackColor =
-                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
             )
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
                 text = "$0",
-                style = Typography.bodySmall,
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
                 text = "$1000+",
-                style = Typography.bodySmall,
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
@@ -247,14 +248,14 @@ private fun YearRangeSection(
         ) {
             Text(
                 text = "Year Range",
-                style = Typography.bodyLarge,
+                style = RentalWheelsDesignSystem.Typography.bodyLarge,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
                 text = "$minYear - $maxYear",
-                style = Typography.labelLarge,
+                style = RentalWheelsDesignSystem.Typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
             )
@@ -276,20 +277,19 @@ private fun YearRangeSection(
             SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.secondary,
                 activeTrackColor = MaterialTheme.colorScheme.secondary,
-                inactiveTrackColor =
-                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
             )
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
                 text = "2010",
-                style = Typography.bodySmall,
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
                 text = "2024",
-                style = Typography.bodySmall,
+                style = RentalWheelsDesignSystem.Typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }

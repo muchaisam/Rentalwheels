@@ -1,30 +1,16 @@
 package com.msdc.rentalwheels.ui.components.home
 
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,46 +21,41 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.ThumbUp
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.msdc.rentalwheels.data.model.Car
-import com.msdc.rentalwheels.ui.theme.Typography
-import kotlinx.coroutines.launch
+import com.msdc.rentalwheels.ui.components.PremiumCarCard
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlin.math.absoluteValue
 
+/** Premium Recommended Cars Section with Glassmorphic Design */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RecommendedCarsSection(
@@ -87,14 +68,12 @@ fun RecommendedCarsSection(
     // Animation for section entrance
     val sectionAnimation = remember { Animatable(0f) }
 
-    // Coroutine scope for animations
-    val coroutineScope = rememberCoroutineScope()
-
     // Start entrance animation
     LaunchedEffect(Unit) {
         sectionAnimation.animateTo(
             targetValue = 1f,
-            animationSpec = spring(
+            animationSpec =
+            spring(
                 dampingRatio = Spring.DampingRatioLowBouncy,
                 stiffness = Spring.StiffnessLow
             )
@@ -104,278 +83,384 @@ fun RecommendedCarsSection(
     // LazyList state for scroll position tracking
     val lazyListState = rememberLazyListState()
 
-    // Track if we can scroll in either direction
-    val canScrollForward by remember {
-        derivedStateOf { lazyListState.canScrollForward }
-    }
-
-    val canScrollBackward by remember {
-        derivedStateOf { lazyListState.canScrollBackward }
-    }
-
-    // Snap fling behavior for scroll snapping
-    val snapFlingBehavior = rememberSnapFlingBehavior(lazyListState)
-
-    // Surface with elevation for the entire section
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 1.dp,
-        shadowElevation = 2.dp,
-        shape = MaterialTheme.shapes.medium,
-        modifier = modifier
+    // Premium glassmorphic container
+    Card(
+        modifier =
+        modifier
             .fillMaxWidth()
-            .padding(8.dp)
             .graphicsLayer {
                 // Entry animation
                 alpha = sectionAnimation.value
                 translationY = (1 - sectionAnimation.value) * 50
             }
             .semantics {
-                contentDescription = "Recommended cars section with ${cars.size} cars"
+                contentDescription =
+                    "Recommended cars section with ${cars.size} premium vehicles"
                 heading()
-            }
+            },
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-        ) {
-            // Enhanced section header with animations
-            Row(
-                modifier = Modifier
+        Box {
+            // Gradient background overlay for premium feel
+            Box(
+                modifier =
+                Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    // Icon with primary color
-                    Surface(
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
-                        shape = CircleShape,
-                        modifier = Modifier.size(32.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.ThumbUp,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-                                .size(16.dp)
-                                .padding(8.dp)
+                    .height(RentalWheelsDesignSystem.Spacing.Huge * 0.625f)
+                    .background(
+                        brush =
+                        Brush.horizontalGradient(
+                            colors =
+                            listOf(
+                                MaterialTheme
+                                    .colorScheme
+                                    .primary.copy(
+                                        alpha = 0.08f
+                                    ),
+                                MaterialTheme
+                                    .colorScheme
+                                    .primaryContainer
+                                    .copy(
+                                        alpha =
+                                        0.12f
+                                    )
+                            )
                         )
-                    }
-
-                    // Title with primary color accent
-                    Text(
-                        text = "Recommended Cars",
-                        style = Typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface
                     )
-                }
+            )
 
-                // Enhanced "See All" button with improved interaction
-                val interactionSource = remember { MutableInteractionSource() }
-                val isPressed by interactionSource.collectIsPressedAsState()
-
-                Button(
-                    onClick = onSeeAllClick,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                    ),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                    modifier = Modifier
-                        .graphicsLayer {
-                            val scale = if (isPressed) 0.95f else 1f
-                            scaleX = scale
-                            scaleY = scale
-                        },
-                    interactionSource = interactionSource
+            Column(
+                modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(RentalWheelsDesignSystem.Spacing.extraLarge)
+            ) {
+                // Enhanced Premium Header
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement =
+                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
                     ) {
-                        Text(
-                            text = "See All",
-                            style = Typography.labelLarge
-                        )
-                        Icon(
-                            imageVector = Icons.Rounded.ArrowForward,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-            ) {
-                // Left scroll indicator
-                androidx.compose.animation.AnimatedVisibility(
-                    visible = canScrollBackward,
-                    enter = fadeIn() + expandHorizontally(expandFrom = Alignment.Start),
-                    exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.Start),
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 4.dp)
-                        .zIndex(10f)
-                ) {
-                    ScrollIndicator(isStart = true) {
-                        coroutineScope.launch {
-                            lazyListState.animateScrollToItem(0)
-                        }
-                    }
-                }
-
-                // Right scroll indicator
-                androidx.compose.animation.AnimatedVisibility(
-                    visible = canScrollForward,
-                    enter = fadeIn() + expandHorizontally(expandFrom = Alignment.End),
-                    exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.End),
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 4.dp)
-                        .zIndex(10f)
-                ) {
-                    ScrollIndicator(isStart = false) {
-                        coroutineScope.launch {
-                            // Scroll to last visible item that's completely visible
-                            val lastVisibleItem =
-                                lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()
-                            lastVisibleItem?.index?.let { index ->
-                                lazyListState.animateScrollToItem(
-                                    index.coerceAtMost(cars.size - 1)
-                                )
-                            }
-                        }
-                    }
-                }
-
-                // Gradient overlay for scroll indication at edges
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp) // Same as LazyRow height
-                        .zIndex(5f)
-                ) {
-                    // Left fade effect
-                    Box(
-                        modifier = Modifier
-                            .width(32.dp)
-                            .fillMaxHeight()
-                            .alpha(if (canScrollBackward) 0.7f else 0f)
-                            .background(
-                                Brush.horizontalGradient(
-                                    colors = listOf(
-                                        MaterialTheme.colorScheme.surface,
-                                        Color.Transparent
-                                    )
-                                )
-                            )
-                    )
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    // Right fade effect
-                    Box(
-                        modifier = Modifier
-                            .width(32.dp)
-                            .fillMaxHeight()
-                            .alpha(if (canScrollForward) 0.7f else 0f)
-                            .background(
-                                Brush.horizontalGradient(
-                                    colors = listOf(
-                                        Color.Transparent,
-                                        MaterialTheme.colorScheme.surface
-                                    )
-                                )
-                            )
-                    )
-                }
-
-                if (isLoading) {
-                    // Placeholder loading state
-                    CarListShimmer()
-                } else if (cars.isEmpty()) {
-                    // Empty state
-                    EmptyState()
-                } else {
-                    // Enhanced LazyRow with card animations and scroll snapping
-                    LazyRow(
-                        state = lazyListState,
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        flingBehavior = snapFlingBehavior,
-                        modifier = Modifier
-                            .height(200.dp)
-                            .fillMaxWidth()
-                            .semantics {
-                                contentDescription = "Scroll to see more recommended cars"
-                            }
-                    ) {
-                        itemsIndexed(
-                            items = cars,
-                            key = { _, car -> car.id }
-                        ) { index, car ->
-                            val density = LocalDensity.current
-
-                            // Staggered animation for card entry
-                            Box(
-                                modifier = Modifier
-                                    .graphicsLayer {
-                                        val pageOffset = calculateCurrentItemOffset(
-                                            lazyListState,
-                                            index,
-                                            280.dp + 16.dp
+                        // Premium icon with gradient background
+                        Box(
+                            modifier =
+                            Modifier
+                                .size(RentalWheelsDesignSystem.Spacing.Huge * 0.75f)
+                                .clip(CircleShape)
+                                .background(
+                                    brush =
+                                    Brush.linearGradient(
+                                        colors =
+                                        listOf(
+                                            MaterialTheme
+                                                .colorScheme
+                                                .primary,
+                                            MaterialTheme
+                                                .colorScheme
+                                                .primaryContainer
                                         )
+                                    )
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.ThumbUp,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimary,
+                                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large)
+                            )
+                        }
 
-                                        // Apply transformations with proper syntax
-                                        val rotation = pageOffset * 5f
-                                        val scale = 0.9f + (1f - pageOffset.absoluteValue) * 0.1f
+                        Column {
+                            Text(
+                                text = "Recommended Cars",
+                                style = RentalWheelsDesignSystem.Typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Text(
+                                text = "${cars.size} top picks for you",
+                                style = RentalWheelsDesignSystem.Typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
 
-                                        transformOrigin = TransformOrigin(0.5f, 0.5f)
-                                        rotationY = rotation
-                                        scaleX = scale
-                                        scaleY = scale
-                                        this.alpha = 0.5f + (1f - pageOffset.absoluteValue) * 0.5f
-                                    }
-                            ) {
-                                // Enhanced Car Card with improved elevation and interaction
-                                CarCard(
+                    // Premium See All Button
+                    Surface(
+                        onClick = onSeeAllClick,
+                        shape =
+                        RoundedCornerShape(
+                            RentalWheelsDesignSystem.CornerRadius.medium
+                        ),
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        tonalElevation = RentalWheelsDesignSystem.Elevation.small,
+                        modifier = Modifier.semantics { contentDescription = "View all cars" }
+                    ) {
+                        Row(
+                            modifier =
+                            Modifier.padding(
+                                horizontal =
+                                RentalWheelsDesignSystem.Spacing.medium,
+                                vertical = RentalWheelsDesignSystem.Spacing.small
+                            ),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement =
+                            Arrangement.spacedBy(
+                                RentalWheelsDesignSystem.Spacing.extraSmall
+                            )
+                        ) {
+                            Text(
+                                text = "See All",
+                                style = RentalWheelsDesignSystem.Typography.labelLarge,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                            Icon(
+                                imageVector = Icons.Rounded.ArrowForward,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier =
+                                Modifier.size(RentalWheelsDesignSystem.Spacing.medium)
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.large))
+
+                // Content Section
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    if (isLoading) {
+                        CarListShimmer()
+                    } else if (cars.isEmpty()) {
+                        EmptyState()
+                    } else {
+                        // Enhanced Premium Car Carousel
+                        LazyRow(
+                            state = lazyListState,
+                            contentPadding =
+                            PaddingValues(
+                                horizontal = RentalWheelsDesignSystem.Spacing.XXS
+                            ),
+                            horizontalArrangement =
+                            Arrangement.spacedBy(
+                                RentalWheelsDesignSystem.Spacing.medium
+                            ),
+                            modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .semantics {
+                                    contentDescription =
+                                        "Scroll to see more recommended cars"
+                                }
+                        ) {
+                            itemsIndexed(items = cars, key = { _, car -> car.id }) { index, car ->
+                                // Premium Car Card with parallax effect
+                                PremiumCarCard(
                                     car = car,
                                     onClick = { onCarClick(car.id) },
-                                    modifier = Modifier.width(280.dp)
+                                    modifier =
+                                    Modifier
+                                        .width(
+                                            RentalWheelsDesignSystem.Spacing
+                                                .Huge * 4.375f
+                                        )
+                                        .graphicsLayer {
+                                            // Subtle parallax effect based on
+                                            // scroll
+                                            val scrollOffset =
+                                                lazyListState
+                                                    .firstVisibleItemScrollOffset
+                                                    .toFloat()
+                                            val itemIndex =
+                                                lazyListState
+                                                    .firstVisibleItemIndex
+                                            if (index == itemIndex) {
+                                                translationX = scrollOffset * 0.1f
+                                            }
+                                        }
                                 )
                             }
                         }
                     }
                 }
-            }
 
-            // Scroll position indicator dots
-            if (cars.isNotEmpty() && !isLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    ScrollIndicatorDots(
-                        itemCount = cars.size,
-                        lazyListState = lazyListState,
-                        itemWidthDp = 280.dp + 16.dp // Card width + spacing
-                    )
+                // Premium scroll indicators with enhanced styling
+                if (cars.isNotEmpty() && !isLoading) {
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.large))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Navigation buttons
+                        Row(
+                            horizontalArrangement =
+                            Arrangement.spacedBy(
+                                RentalWheelsDesignSystem.Spacing.extraSmall
+                            )
+                        ) {
+                            // Previous button
+                            IconButton(
+                                onClick = {
+                                    // Scroll to previous item (implement scroll logic)
+                                },
+                                enabled = lazyListState.firstVisibleItemIndex > 0
+                            ) {
+                                Surface(
+                                    shape = CircleShape,
+                                    color =
+                                    if (lazyListState.firstVisibleItemIndex > 0)
+                                        MaterialTheme.colorScheme.primaryContainer
+                                    else MaterialTheme.colorScheme.surfaceVariant,
+                                    modifier =
+                                    Modifier.size(RentalWheelsDesignSystem.Spacing.XXL)
+                                ) {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.ChevronLeft,
+                                            contentDescription = "Previous",
+                                            tint =
+                                            if (lazyListState.firstVisibleItemIndex > 0)
+                                                MaterialTheme.colorScheme
+                                                    .onPrimaryContainer
+                                            else
+                                                MaterialTheme.colorScheme
+                                                    .onSurfaceVariant.copy(
+                                                        alpha = 0.4f
+                                                    ),
+                                            modifier =
+                                            Modifier.size(
+                                                RentalWheelsDesignSystem.Spacing
+                                                    .large
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
+                            // Next button
+                            IconButton(
+                                onClick = {
+                                    // Scroll to next item (implement scroll logic)
+                                },
+                                enabled = lazyListState.firstVisibleItemIndex < cars.size - 1
+                            ) {
+                                Surface(
+                                    shape = CircleShape,
+                                    color =
+                                    if (lazyListState.firstVisibleItemIndex <
+                                        cars.size - 1
+                                    )
+                                        MaterialTheme.colorScheme.primaryContainer
+                                    else MaterialTheme.colorScheme.surfaceVariant,
+                                    modifier =
+                                    Modifier.size(RentalWheelsDesignSystem.Spacing.XXL)
+                                ) {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.ChevronRight,
+                                            contentDescription = "Next",
+                                            tint =
+                                            if (lazyListState.firstVisibleItemIndex <
+                                                cars.size - 1
+                                            )
+                                                MaterialTheme.colorScheme
+                                                    .onPrimaryContainer
+                                            else
+                                                MaterialTheme.colorScheme
+                                                    .onSurfaceVariant.copy(
+                                                        alpha = 0.4f
+                                                    ),
+                                            modifier =
+                                            Modifier.size(
+                                                RentalWheelsDesignSystem.Spacing
+                                                    .large
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        // Enhanced position indicators
+                        Row(
+                            horizontalArrangement =
+                            Arrangement.spacedBy(
+                                RentalWheelsDesignSystem.Spacing.extraSmall
+                            ),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            val firstVisibleIndex = lazyListState.firstVisibleItemIndex
+                            val maxIndicators = 5 // Show max 5 dots
+                            val totalItems = cars.size
+
+                            if (totalItems <= maxIndicators) {
+                                // Show all dots if items <= maxIndicators
+                                for (i in 0 until totalItems) {
+                                    IndicatorDot(isActive = i == firstVisibleIndex)
+                                }
+                            } else {
+                                // Show condensed view with numbers
+                                Text(
+                                    text = "${firstVisibleIndex + 1}",
+                                    style = RentalWheelsDesignSystem.Typography.labelMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                Text(
+                                    text = "/",
+                                    style = RentalWheelsDesignSystem.Typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Text(
+                                    text = "$totalItems",
+                                    style = RentalWheelsDesignSystem.Typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+/** Premium indicator dot with animation */
+@Composable
+private fun IndicatorDot(isActive: Boolean) {
+    Box(
+        modifier =
+        Modifier
+            .size(
+                if (isActive) RentalWheelsDesignSystem.Spacing.small
+                else RentalWheelsDesignSystem.Spacing.extraSmall
+            )
+            .clip(CircleShape)
+            .background(
+                if (isActive) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+            )
+    )
 }
 
 @Composable
@@ -383,28 +468,25 @@ private fun ScrollIndicator(isStart: Boolean, onClick: () -> Unit) {
     Surface(
         onClick = onClick,
         shape = CircleShape,
-        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f),
-        tonalElevation = 2.dp,
-        shadowElevation = 4.dp,
-        modifier = Modifier.size(40.dp)
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        tonalElevation = RentalWheelsDesignSystem.Elevation.small,
+        shadowElevation = RentalWheelsDesignSystem.Elevation.medium,
+        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.XXXL)
     ) {
         Box(contentAlignment = Alignment.Center) {
             Icon(
-                imageVector = if (isStart) Icons.Rounded.ChevronLeft else Icons.Rounded.ChevronRight,
+                imageVector =
+                if (isStart) Icons.Rounded.ChevronLeft else Icons.Rounded.ChevronRight,
                 contentDescription = if (isStart) "Scroll to start" else "Scroll to end",
                 tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.extraLarge)
             )
         }
     }
 }
 
 @Composable
-private fun ScrollIndicatorDots(
-    itemCount: Int,
-    lazyListState: LazyListState,
-    itemWidthDp: Dp
-) {
+private fun ScrollIndicatorDots(itemCount: Int, lazyListState: LazyListState, itemWidthDp: Dp) {
     val density = LocalDensity.current
     val itemWidthPx = with(density) { itemWidthDp.toPx() }
 
@@ -416,105 +498,135 @@ private fun ScrollIndicatorDots(
     val position = firstVisibleItem + (scrollOffset / itemWidthPx)
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement =
+        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall),
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 0 until itemCount) {
             // Calculate how close we are to this dot's position
-            val distanceFromCenter = (i - position).absoluteValue
+            val distanceFromCenter = (i.toFloat() - position).absoluteValue
             val scale = 1f - (distanceFromCenter * 0.25f).coerceIn(0f, 0.5f)
             val alpha = 0.3f + (1f - distanceFromCenter).coerceIn(0f, 0.7f)
 
             Box(
-                modifier = Modifier
-                    .size(8.dp * scale)
+                modifier =
+                Modifier
+                    .size(RentalWheelsDesignSystem.Spacing.extraSmall * scale)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = alpha))
+                    .background(
+                        MaterialTheme.colorScheme.primary.copy(alpha = alpha)
+                    )
             )
         }
     }
 }
 
+/** Premium shimmer loading state */
 @Composable
 private fun CarListShimmer() {
-    val infiniteTransition = rememberInfiniteTransition()
-    val alpha by infiniteTransition.animateFloat(
-        initialValue = 0.2f,
-        targetValue = 0.9f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
-
     LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        contentPadding = PaddingValues(horizontal = RentalWheelsDesignSystem.Spacing.XXS),
+        horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
     ) {
         items(3) {
-            Surface(
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = alpha),
-                modifier = Modifier
-                    .width(280.dp)
-                    .height(200.dp)
-                    .shadow(
-                        elevation = 2.dp,
-                        shape = MaterialTheme.shapes.medium,
-                        spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                    )
-            ) {}
+            Card(
+                shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.extraLarge),
+                colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                ),
+                modifier =
+                Modifier
+                    .width(RentalWheelsDesignSystem.Spacing.Huge * 4.375f)
+                    .height(RentalWheelsDesignSystem.Spacing.Huge * 5.625f)
+            ) {
+                // Shimmer animation effect here
+                Box(
+                    modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(
+                            brush =
+                            Brush.linearGradient(
+                                colors =
+                                listOf(
+                                    MaterialTheme
+                                        .colorScheme
+                                        .surfaceVariant,
+                                    MaterialTheme
+                                        .colorScheme
+                                        .surfaceVariant
+                                        .copy(
+                                            alpha =
+                                            0.7f
+                                        ),
+                                    MaterialTheme
+                                        .colorScheme
+                                        .surfaceVariant
+                                )
+                            )
+                        )
+                )
+            }
         }
     }
 }
 
+/** Premium empty state with enhanced styling */
 @Composable
 private fun EmptyState() {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .padding(horizontal = 16.dp),
+            .height(RentalWheelsDesignSystem.Spacing.Huge * 5f)
+            .padding(RentalWheelsDesignSystem.Spacing.large),
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
         ) {
-            Icon(
-                imageVector = Icons.Rounded.Info,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(40.dp)
-            )
+            // Icon with gradient background
+            Box(
+                modifier =
+                Modifier
+                    .size(RentalWheelsDesignSystem.Spacing.Huge)
+                    .clip(CircleShape)
+                    .background(
+                        MaterialTheme.colorScheme.primaryContainer.copy(
+                            alpha = 0.3f
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Info,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.XXL)
+                )
+            }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "No recommended cars available",
-                style = Typography.bodyLarge,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement =
+                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.extraSmall)
+            ) {
+                Text(
+                    text = "No Recommendations Yet",
+                    style = RentalWheelsDesignSystem.Typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = "Check back later for personalized car recommendations",
+                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
-}
-
-// Helper function to calculate current item offset for parallax effects
-private fun calculateCurrentItemOffset(
-    lazyListState: LazyListState,
-    index: Int,
-    itemWidthDp: Dp
-): Float {
-    val layoutInfo = lazyListState.layoutInfo
-    val visibleItemsInfo = layoutInfo.visibleItemsInfo
-    val itemInfo = visibleItemsInfo.firstOrNull { it.index == index } ?: return 0f
-
-    // Calculate the center position of the item
-    val itemCenter = itemInfo.offset + (itemInfo.size / 2)
-    val viewportCenter =
-        layoutInfo.viewportStartOffset + (layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset) / 2
-
-    // Convert offset to a value between -1 and 1
-    return (itemCenter - viewportCenter) / itemWidthDp.value
 }

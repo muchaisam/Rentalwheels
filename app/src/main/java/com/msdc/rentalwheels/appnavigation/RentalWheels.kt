@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.msdc.rentalwheels.ui.screens.AnalyticsScreen
 import com.msdc.rentalwheels.ui.screens.BookingDetailScreen
+import com.msdc.rentalwheels.ui.screens.BookingScreen
 import com.msdc.rentalwheels.ui.screens.BookingsScreen
 import com.msdc.rentalwheels.ui.screens.BrowseScreen
 import com.msdc.rentalwheels.ui.screens.HomeScreen
@@ -116,7 +117,9 @@ fun RentalWheelsApp(
                         onBookingClick = { bookingId ->
                             navController.navigate(Screen.BookingDetail.createRoute(bookingId))
                         },
-                        onNewBookingClick = { navController.navigate(Screen.Browse.route) },
+                        onNewBookingClick = {
+                            navController.navigate(Screen.BookingScreen.route)
+                        },
                         onCarClick = { carId ->
                             navController.navigate(Screen.DetailedCarScreen.createRoute(carId))
                         },
@@ -141,6 +144,9 @@ fun RentalWheelsApp(
                             // Handle booking extension
                         }
                     )
+                }
+                composable(Screen.BookingScreen.route) {
+                    BookingScreen(onNavigateBack = { navController.navigateUp() })
                 }
                 composable(Screen.Analytics.route) {
                     AnalyticsScreen(onBackClick = { navController.navigateUp() })

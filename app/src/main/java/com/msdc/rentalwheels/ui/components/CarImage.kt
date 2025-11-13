@@ -33,7 +33,8 @@ fun CarImage(
 
     Box(modifier = modifier) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
+            model =
+            ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl)
                 .crossfade(true)
                 .build(),
@@ -49,9 +50,7 @@ fun CarImage(
         )
 
         if (isLoading) {
-            LoadingPlaceholder(
-                modifier = Modifier.fillMaxSize()
-            )
+            LoadingPlaceholder(modifier = Modifier.fillMaxSize())
         }
 
         if (isError) {
@@ -64,7 +63,7 @@ fun CarImage(
                 Icon(
                     imageVector = Icons.Rounded.BrokenImage,
                     contentDescription = "Image load error",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
             }
         }

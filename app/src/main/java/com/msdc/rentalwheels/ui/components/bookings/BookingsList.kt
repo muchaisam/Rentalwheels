@@ -12,10 +12,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.Booking
 import com.msdc.rentalwheels.uistates.BookingStatus
 
@@ -47,8 +48,10 @@ fun BookingsList(
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(vertical = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                contentPadding =
+                PaddingValues(vertical = RentalWheelsDesignSystem.Spacing.medium),
+                verticalArrangement =
+                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 items(bookings) { booking ->
                     BookingCard(
@@ -64,7 +67,12 @@ fun BookingsList(
                 }
 
                 // Add spacing at the bottom for FAB
-                item { Spacer(modifier = Modifier.height(80.dp)) }
+                item {
+                    Spacer(
+                        modifier =
+                        Modifier.height(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
+                    )
+                } // ~80dp
             }
         }
     }
@@ -72,36 +80,39 @@ fun BookingsList(
 
 @Composable
 private fun EmptyBookingsState(statusFilter: BookingStatus?, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier.padding(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         val message =
             when (statusFilter) {
                 BookingStatus.CONFIRMED -> "No upcoming bookings"
                 BookingStatus.ACTIVE -> "No active rentals"
                 BookingStatus.COMPLETED -> "No past bookings"
                 BookingStatus.CANCELLED -> "No cancelled bookings"
-                else -> "No bookings found"
+                else -> "No bookings yet"
             }
 
         val subtitle =
             when (statusFilter) {
-                BookingStatus.CONFIRMED -> "Plan your next adventure!"
-                BookingStatus.ACTIVE -> "All set for now"
-                BookingStatus.COMPLETED -> "Start exploring to build your history"
+                BookingStatus.CONFIRMED -> "Ready to plan your next adventure?"
+                BookingStatus.ACTIVE -> "All rentals completed"
+                BookingStatus.COMPLETED -> "Your rental history will appear here"
                 BookingStatus.CANCELLED -> "All your bookings are active"
-                else -> "Start your car rental journey"
+                else -> "Browse available cars to start your journey"
             }
 
-        androidx.compose.material3.Text(
+        Text(
             text = message,
-            style = MaterialTheme.typography.headlineSmall,
+            style = RentalWheelsDesignSystem.Typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
-        androidx.compose.material3.Text(
+        Text(
             text = subtitle,
-            style = MaterialTheme.typography.bodyMedium,
+            style = RentalWheelsDesignSystem.Typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
         )
     }

@@ -11,7 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -22,8 +22,9 @@ fun PullRefreshIndicator(
 ) {
     val trigger = state.progress
     Box(
-        modifier = modifier
-            .size(40.dp)
+        modifier =
+        modifier
+            .size(RentalWheelsDesignSystem.Spacing.XXXL)
             .offset(y = (trigger * 80).dp)
     ) {
         if (refreshing) {

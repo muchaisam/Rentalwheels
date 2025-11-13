@@ -21,74 +21,86 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
+/** Premium Car Card Placeholder with shimmer effect using design system */
 @Composable
-fun CarCardPlaceholder(
-    modifier: Modifier = Modifier
-) {
+fun CarCardPlaceholder(modifier: Modifier = Modifier) {
     val shimmerColor = MaterialTheme.colorScheme.surfaceVariant
-    val transition = rememberInfiniteTransition()
-    val alpha by transition.animateFloat(
+    val transition = rememberInfiniteTransition(label = "car_placeholder_shimmer")
+    val alpha by
+    transition.animateFloat(
         initialValue = 0.2f,
         targetValue = 0.8f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000),
+        animationSpec =
+        infiniteRepeatable(
+            animation = tween(RentalWheelsDesignSystem.Animation.Slower),
             repeatMode = RepeatMode.Reverse
-        )
+        ),
+        label = "shimmer_alpha"
     )
 
     Card(
-        modifier = modifier.height(320.dp),
+        modifier = modifier.height(RentalWheelsDesignSystem.Spacing.Huge * 5), // ~320dp
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+        )
     ) {
         Column {
             // Image placeholder
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
-                    .height(180.dp)
-                    .background(
-                        shimmerColor.copy(alpha = alpha)
-                    )
+                    .height(
+                        RentalWheelsDesignSystem.Spacing.Huge * 2.8125f
+                    ) // ~180dp
+                    .background(shimmerColor.copy(alpha = alpha))
             )
 
             // Content placeholders
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(RentalWheelsDesignSystem.Spacing.medium)
             ) {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth(0.7f)
-                        .height(24.dp)
+                        .height(RentalWheelsDesignSystem.Spacing.extraLarge)
                         .background(
                             shimmerColor.copy(alpha = alpha),
                             shape = MaterialTheme.shapes.small
                         )
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraSmall))
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth(0.5f)
-                        .height(16.dp)
+                        .height(RentalWheelsDesignSystem.Spacing.medium)
                         .background(
                             shimmerColor.copy(alpha = alpha),
                             shape = MaterialTheme.shapes.small
                         )
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     repeat(3) {
                         Box(
-                            modifier = Modifier
-                                .width(80.dp)
-                                .height(16.dp)
+                            modifier =
+                            Modifier
+                                .width(
+                                    RentalWheelsDesignSystem.Spacing.Huge * 1.25f
+                                ) // ~80dp
+                                .height(RentalWheelsDesignSystem.Spacing.medium)
                                 .background(
                                     shimmerColor.copy(alpha = alpha),
                                     shape = MaterialTheme.shapes.small

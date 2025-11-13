@@ -15,11 +15,13 @@ import com.msdc.rentalwheels.uistates.BookingsScreenState
 import com.msdc.rentalwheels.uistates.CartItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -536,10 +538,11 @@ constructor(
                 // Track analytics
                 trackBookingAction("quick_booking_created", car.id)
 
-                onSuccess()
+                // Ensure UI callbacks run on main thread
+                withContext(Dispatchers.Main) { onSuccess() }
             } catch (e: Exception) {
                 Timber.e(e, "Error creating quick booking for car: ${car.id}")
-                onError("Failed to create booking: ${e.message}")
+                withContext(Dispatchers.Main) { onError("Failed to create booking: ${e.message}") }
             }
         }
     }

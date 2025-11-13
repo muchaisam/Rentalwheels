@@ -44,6 +44,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -68,9 +69,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.R
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import kotlinx.coroutines.delay
 
 data class RegisterFormData(
@@ -81,6 +81,21 @@ data class RegisterFormData(
     val password: String = "",
     val confirmPassword: String = ""
 )
+
+/** Enhanced text field colors for better dark theme contrast */
+@Composable
+private fun registerTextFieldColors() =
+    OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = MaterialTheme.colorScheme.primary,
+        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+        focusedLabelColor = MaterialTheme.colorScheme.primary,
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+        cursorColor = MaterialTheme.colorScheme.primary,
+        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+    )
 
 @Composable
 fun RegisterScreen(
@@ -167,9 +182,9 @@ fun RegisterScreen(
         Brush.verticalGradient(
             colors =
             listOf(
-                MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
+                MaterialTheme.colorScheme.secondary,
                 MaterialTheme.colorScheme.surface,
-                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                MaterialTheme.colorScheme.surfaceVariant
             )
         )
     Box(
@@ -184,7 +199,7 @@ fun RegisterScreen(
             Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(24.dp),
+                .padding(RentalWheelsDesignSystem.Spacing.extraLarge),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -196,17 +211,24 @@ fun RegisterScreen(
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(bottom = 32.dp)
+                    modifier =
+                    Modifier.padding(
+                        bottom = RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                    )
                 ) {
                     // Logo placeholder                    // App Logo
                     Card(
-                        modifier = Modifier.size(64.dp),
-                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
                         colors =
                         CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.secondary
                         ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                        elevation =
+                        CardDefaults.cardElevation(
+                            defaultElevation =
+                            RentalWheelsDesignSystem.Elevation.medium
+                        )
                     ) {
                         Box(
                             modifier = Modifier.fillMaxSize(),
@@ -215,23 +237,27 @@ fun RegisterScreen(
                             Image(
                                 painter = painterResource(id = R.drawable.rental_logo),
                                 contentDescription = "App Logo",
-                                modifier = Modifier.size(36.dp)
+                                modifier =
+                                Modifier.size(
+                                    RentalWheelsDesignSystem.Spacing.extraLarge *
+                                            1.5f
+                                )
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     Text(
                         text = "Create Account",
-                        style = Typography.headlineLarge,
+                        style = RentalWheelsDesignSystem.Typography.headlineLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
                     Text(
                         text = "Join us for seamless car rental experience",
-                        style = Typography.bodyLarge,
+                        style = RentalWheelsDesignSystem.Typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center
                     )
@@ -243,15 +269,21 @@ fun RegisterScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .scale(formScale),
-                shape = RoundedCornerShape(24.dp),
+                shape = RoundedCornerShape(RentalWheelsDesignSystem.Spacing.extraLarge),
                 colors =
                 CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                elevation =
+                CardDefaults.cardElevation(
+                    defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+                )
             ) {
                 Column(
-                    modifier = Modifier.padding(32.dp),
+                    modifier =
+                    Modifier.padding(
+                        RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                    ),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     // Error Message
@@ -262,20 +294,31 @@ fun RegisterScreen(
                     ) {
                         errorMessage?.let {
                             Card(
-                                modifier = Modifier
+                                modifier =
+                                Modifier
                                     .fillMaxWidth()
-                                    .padding(bottom = 16.dp),
+                                    .padding(
+                                        bottom =
+                                        RentalWheelsDesignSystem.Spacing
+                                            .medium
+                                    ),
                                 colors =
                                 CardDefaults.cardColors(
                                     containerColor =
                                     MaterialTheme.colorScheme.errorContainer
                                 ),
-                                shape = RoundedCornerShape(12.dp)
+                                shape =
+                                RoundedCornerShape(
+                                    RentalWheelsDesignSystem.CornerRadius.medium
+                                )
                             ) {
                                 Text(
                                     text = it,
-                                    modifier = Modifier.padding(16.dp),
-                                    style = Typography.bodyMedium,
+                                    modifier =
+                                    Modifier.padding(
+                                        RentalWheelsDesignSystem.Spacing.medium
+                                    ),
+                                    style = RentalWheelsDesignSystem.Typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onErrorContainer
                                 )
                             }
@@ -285,7 +328,8 @@ fun RegisterScreen(
                     // Name Fields Row
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        horizontalArrangement =
+                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
                     ) {
                         // First Name
                         OutlinedTextField(
@@ -312,7 +356,11 @@ fun RegisterScreen(
                             ),
                             singleLine = true,
                             modifier = Modifier.weight(1f),
-                            shape = RoundedCornerShape(16.dp)
+                            shape =
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius.large
+                            ),
+                            colors = registerTextFieldColors()
                         )
 
                         // Last Name
@@ -333,11 +381,15 @@ fun RegisterScreen(
                             ),
                             singleLine = true,
                             modifier = Modifier.weight(1f),
-                            shape = RoundedCornerShape(16.dp)
+                            shape =
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius.large
+                            ),
+                            colors = registerTextFieldColors()
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Email Field
                     OutlinedTextField(
@@ -369,10 +421,11 @@ fun RegisterScreen(
                         ),
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp)
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors = registerTextFieldColors()
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Phone Field
                     OutlinedTextField(
@@ -404,10 +457,11 @@ fun RegisterScreen(
                         ),
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp)
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors = registerTextFieldColors()
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Password Field
                     OutlinedTextField(
@@ -455,12 +509,13 @@ fun RegisterScreen(
                         ),
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp)
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors = registerTextFieldColors()
                     )
 
                     // Password Strength Indicator
                     if (formData.password.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
                         Column(modifier = Modifier.fillMaxWidth()) {
                             Text(
                                 text =
@@ -469,7 +524,7 @@ fun RegisterScreen(
                                     passwordStrength < 0.75f -> "Medium"
                                     else -> "Strong"
                                 },
-                                style = Typography.bodySmall,
+                                style = RentalWheelsDesignSystem.Typography.bodySmall,
                                 color =
                                 when {
                                     passwordStrength < 0.5f ->
@@ -480,10 +535,14 @@ fun RegisterScreen(
                                 }
                             )
                             LinearProgressIndicator(
-                                progress = passwordStrength,
-                                modifier = Modifier
+                                progress = { passwordStrength },
+                                modifier =
+                                Modifier
                                     .fillMaxWidth()
-                                    .height(4.dp),
+                                    .height(
+                                        RentalWheelsDesignSystem.Spacing
+                                            .extraSmall
+                                    ),
                                 color =
                                 when {
                                     passwordStrength < 0.5f ->
@@ -492,12 +551,12 @@ fun RegisterScreen(
                                     passwordStrength < 0.75f -> Color(0xFFFF9800)
                                     else -> Color(0xFF4CAF50)
                                 },
-                                trackColor = MaterialTheme.colorScheme.surfaceVariant
+                                trackColor = MaterialTheme.colorScheme.surfaceVariant,
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.medium))
 
                     // Confirm Password Field
                     OutlinedTextField(
@@ -555,19 +614,26 @@ fun RegisterScreen(
                         ),
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp)
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
+                        colors = registerTextFieldColors()
                     )
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(
+                        modifier =
+                        Modifier.height(
+                            RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f
+                        )
+                    )
 
                     // Register Button
                     Button(
                         onClick = { onRegisterClick(formData) },
                         enabled = !isLoading && isFormValid,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
-                            .height(56.dp),
-                        shape = RoundedCornerShape(16.dp),
+                            .height(RentalWheelsDesignSystem.Spacing.Huge * 0.875f),
+                        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large),
                         colors =
                         ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.secondary
@@ -579,27 +645,35 @@ fun RegisterScreen(
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 CircularProgressIndicator(
-                                    modifier = Modifier.size(20.dp),
+                                    modifier =
+                                    Modifier.size(
+                                        RentalWheelsDesignSystem.Spacing.large
+                                    ),
                                     color = MaterialTheme.colorScheme.onSecondary,
-                                    strokeWidth = 2.dp
+                                    strokeWidth = RentalWheelsDesignSystem.Spacing.XXS
                                 )
-                                Spacer(modifier = Modifier.width(12.dp))
+                                Spacer(
+                                    modifier =
+                                    Modifier.width(
+                                        RentalWheelsDesignSystem.Spacing.small
+                                    )
+                                )
                                 Text(
                                     text = "Creating Account...",
-                                    style = Typography.labelLarge,
+                                    style = RentalWheelsDesignSystem.Typography.labelLarge,
                                     fontWeight = FontWeight.SemiBold
                                 )
                             }
                         } else {
                             Text(
                                 text = "Create Account",
-                                style = Typography.labelLarge,
+                                style = RentalWheelsDesignSystem.Typography.labelLarge,
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge))
 
                     // Login Link
                     Row(
@@ -608,13 +682,13 @@ fun RegisterScreen(
                     ) {
                         Text(
                             text = "Already have an account? ",
-                            style = Typography.bodyMedium,
+                            style = RentalWheelsDesignSystem.Typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         TextButton(onClick = onLoginClick) {
                             Text(
                                 text = "Sign In",
-                                style = Typography.bodyMedium,
+                                style = RentalWheelsDesignSystem.Typography.bodyMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.primary
                             )

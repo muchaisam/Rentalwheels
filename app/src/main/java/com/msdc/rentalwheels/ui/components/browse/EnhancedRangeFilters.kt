@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.RangeFilterState
 
 @Composable
@@ -33,11 +34,11 @@ fun EnhancedRangeFilters(
 ) {
     Card(
         modifier = modifier,
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.Card
+        )
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Text(
@@ -112,8 +113,7 @@ private fun PriceRangeSlider(
             SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.primary,
                 activeTrackColor = MaterialTheme.colorScheme.primary,
-                inactiveTrackColor =
-                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
             )
         )
 
@@ -176,8 +176,7 @@ private fun YearRangeSlider(
             SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.secondary,
                 activeTrackColor = MaterialTheme.colorScheme.secondary,
-                inactiveTrackColor =
-                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
             )
         )
 

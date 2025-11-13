@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.msdc.rentalwheels.data.model.Car
 import com.msdc.rentalwheels.data.model.brand
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 import com.msdc.rentalwheels.uistates.ComparisonState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +60,7 @@ fun ComparisonButton(
         when {
             isSelected -> MaterialTheme.colorScheme.primary
             canAdd -> MaterialTheme.colorScheme.surfaceVariant
-            else -> MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+            else -> MaterialTheme.colorScheme.outlineVariant
         }
 
     val contentColor =
@@ -72,8 +73,7 @@ fun ComparisonButton(
     IconButton(
         onClick = onToggleComparison,
         enabled = canAdd || isSelected,
-        modifier =
-        modifier
+        modifier = modifier
             .size(40.dp)
             .background(color = backgroundColor, shape = CircleShape)
     ) {
@@ -109,10 +109,7 @@ fun ComparisonFloatingButton(
                     )
                     if (comparisonState.selectedCars.isNotEmpty()) {
                         Badge(modifier = Modifier.align(Alignment.TopEnd)) {
-                            Text(
-                                comparisonState.selectedCars.size
-                                    .toString()
-                            )
+                            Text(comparisonState.selectedCars.size.toString())
                         }
                     }
                 }
@@ -146,7 +143,10 @@ fun ComparisonPreview(
                     alpha = 0.7f
                 )
             ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = RentalWheelsDesignSystem.Elevation.Card
+            )
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Row(
@@ -159,9 +159,7 @@ fun ComparisonPreview(
                         "Compare Cars (${comparisonState.selectedCars.size}/${comparisonState.maxComparisons})",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold,
-                        color =
-                        MaterialTheme.colorScheme
-                            .onSecondaryContainer
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
                     )
 
                     ExtendedFloatingActionButton(
@@ -170,8 +168,7 @@ fun ComparisonPreview(
                         icon = {
                             Icon(
                                 imageVector = Icons.Default.Compare,
-                                contentDescription =
-                                "View comparison"
+                                contentDescription = "View comparison"
                             )
                         },
                         modifier = Modifier.height(32.dp)
@@ -182,10 +179,7 @@ fun ComparisonPreview(
 
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(comparisonState.selectedCars) { car ->
-                        ComparisonCarItem(
-                            car = car,
-                            onRemove = { onRemoveCar(car.id) }
-                        )
+                        ComparisonCarItem(car = car, onRemove = { onRemoveCar(car.id) })
                     }
                 }
             }
@@ -197,9 +191,11 @@ fun ComparisonPreview(
 private fun ComparisonCarItem(car: Car, onRemove: () -> Unit, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.width(120.dp),
-        colors =
-        CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.small
+        )
     ) {
         Box {
             Column(modifier = Modifier.padding(8.dp)) {
@@ -213,7 +209,12 @@ private fun ComparisonCarItem(car: Car, onRemove: () -> Unit, modifier: Modifier
                     Modifier
                         .fillMaxWidth()
                         .height(60.dp)
-                        .clip(RoundedCornerShape(4.dp)),
+                        .clip(
+                            RoundedCornerShape(
+                                RentalWheelsDesignSystem.CornerRadius
+                                    .extraSmall
+                            )
+                        ),
                     contentScale = ContentScale.Crop
                 )
 
@@ -241,7 +242,7 @@ private fun ComparisonCarItem(car: Car, onRemove: () -> Unit, modifier: Modifier
                     .align(Alignment.TopEnd)
                     .size(20.dp)
                     .background(
-                        color = Color.Black.copy(alpha = 0.6f),
+                        color = MaterialTheme.colorScheme.scrim,
                         shape = CircleShape
                     )
             ) {

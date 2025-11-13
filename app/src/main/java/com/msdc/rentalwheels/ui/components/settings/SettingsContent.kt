@@ -25,32 +25,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.msdc.rentalwheels.models.UserData
-import com.msdc.rentalwheels.ui.theme.Typography
+import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
 
 @Composable
-fun SettingsContent(
-    userData: UserData,
-    onEditProfileClick: () -> Unit,
-    onLogoutClick: () -> Unit
-) {
+fun SettingsContent(userData: UserData, onEditProfileClick: () -> Unit, onLogoutClick: () -> Unit) {
     var notificationsEnabled by remember { mutableStateOf(true) }
     var darkModeEnabled by remember { mutableStateOf(false) }
     var selectedLanguage by remember { mutableStateOf("English") }
     var biometricsEnabled by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(RentalWheelsDesignSystem.Spacing.medium),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Profile Section
         Box(
-            modifier = Modifier
-                .size(120.dp)
+            modifier =
+            Modifier
+                .size(RentalWheelsDesignSystem.Spacing.Huge * 1.88f)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
@@ -58,28 +55,22 @@ fun SettingsContent(
             Icon(
                 imageVector = Icons.Default.Person,
                 contentDescription = "Profile Picture",
-                modifier = Modifier.size(60.dp),
+                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 0.94f),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
 
         Text(
             text = "${userData.firstName} ${userData.lastName}",
-            style = Typography.headlineMedium,
+            style = RentalWheelsDesignSystem.Typography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(top = RentalWheelsDesignSystem.Spacing.medium)
         )
 
         Text(
             text = userData.email,
-            style = Typography.bodyLarge,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-
-        Text(
-            text = userData.phoneNumber,
-            style = Typography.bodyLarge,
-            modifier = Modifier.padding(top = 4.dp)
+            style = RentalWheelsDesignSystem.Typography.bodyLarge,
+            modifier = Modifier.padding(top = RentalWheelsDesignSystem.Spacing.extraSmall)
         )
 
         // Preferences Section
@@ -122,14 +113,8 @@ fun SettingsContent(
                 checked = biometricsEnabled,
                 onCheckedChange = { biometricsEnabled = it }
             )
-            SettingsItem(
-                text = "Change Password",
-                onClick = { /* Handle password change */ }
-            )
-            SettingsItem(
-                text = "Privacy Policy",
-                onClick = { /* Open privacy policy */ }
-            )
+            SettingsItem(text = "Change Password", onClick = { /* Handle password change */ })
+            SettingsItem(text = "Privacy Policy", onClick = { /* Open privacy policy */ })
         }
 
         // App Information
@@ -139,14 +124,8 @@ fun SettingsContent(
                 subtitle = "Check for updates",
                 onClick = { /* Handle update check */ }
             )
-            SettingsItem(
-                text = "Terms of Service",
-                onClick = { /* Open terms */ }
-            )
-            SettingsItem(
-                text = "Open Source Licenses",
-                onClick = { /* Open licenses */ }
-            )
+            SettingsItem(text = "Terms of Service", onClick = { /* Open terms */ })
+            SettingsItem(text = "Open Source Licenses", onClick = { /* Open licenses */ })
         }
 
         // Account Management
@@ -158,12 +137,11 @@ fun SettingsContent(
             )
             Button(
                 onClick = onLogoutClick,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            ) {
-                Text("Logout")
-            }
+                    .padding(vertical = RentalWheelsDesignSystem.Spacing.small)
+            ) { Text("Logout") }
         }
     }
 }
