@@ -18,33 +18,33 @@ fun rememberThemeState(initialTheme: ThemeMode = ThemeMode.System): ThemeState {
 
     val themeState = remember {
         val themeMode =
-                when (savedPreference) {
-                    ThemePreference.LIGHT -> ThemeMode.Light
-                    ThemePreference.DARK -> ThemeMode.Dark
-                    ThemePreference.SYSTEM_DEFAULT -> ThemeMode.System
-                }
+            when (savedPreference) {
+                ThemePreference.LIGHT -> ThemeMode.Light
+                ThemePreference.DARK -> ThemeMode.Dark
+                ThemePreference.SYSTEM_DEFAULT -> ThemeMode.System
+            }
         ThemeState(themeMode)
     }
 
     // Listen for SharedPreferences changes
     DisposableEffect(Unit) {
         val prefs =
-                context.getSharedPreferences("theme_prefs", android.content.Context.MODE_PRIVATE)
+            context.getSharedPreferences("theme_prefs", android.content.Context.MODE_PRIVATE)
         val listener =
-                SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-                    if (key == "theme_preference") {
-                        val newPreference = themePreferencesManager.getThemePreference()
-                        savedPreference = newPreference
+            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                if (key == "theme_preference") {
+                    val newPreference = themePreferencesManager.getThemePreference()
+                    savedPreference = newPreference
 
-                        val newThemeMode =
-                                when (newPreference) {
-                                    ThemePreference.LIGHT -> ThemeMode.Light
-                                    ThemePreference.DARK -> ThemeMode.Dark
-                                    ThemePreference.SYSTEM_DEFAULT -> ThemeMode.System
-                                }
-                        themeState.setTheme(newThemeMode)
-                    }
+                    val newThemeMode =
+                        when (newPreference) {
+                            ThemePreference.LIGHT -> ThemeMode.Light
+                            ThemePreference.DARK -> ThemeMode.Dark
+                            ThemePreference.SYSTEM_DEFAULT -> ThemeMode.System
+                        }
+                    themeState.setTheme(newThemeMode)
                 }
+            }
 
         prefs.registerOnSharedPreferenceChangeListener(listener)
 
