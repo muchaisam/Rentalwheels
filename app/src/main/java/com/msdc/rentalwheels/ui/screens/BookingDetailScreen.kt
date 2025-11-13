@@ -66,14 +66,14 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingDetailScreen(
-        bookingId: String,
-        onBackClick: () -> Unit,
-        onCarClick: (String) -> Unit,
-        onCancelBooking: (String) -> Unit,
-        onExtendBooking: (String) -> Unit,
-        onCallDriver: (String) -> Unit = {},
-        modifier: Modifier = Modifier,
-        viewModel: BookingDetailViewModel = hiltViewModel()
+    bookingId: String,
+    onBackClick: () -> Unit,
+    onCarClick: (String) -> Unit,
+    onCancelBooking: (String) -> Unit,
+    onExtendBooking: (String) -> Unit,
+    onCallDriver: (String) -> Unit = {},
+    modifier: Modifier = Modifier,
+    viewModel: BookingDetailViewModel = hiltViewModel()
 ) {
     val bookingState by viewModel.bookingState.collectAsState()
     var showCancelDialog by remember { mutableStateOf(false) }
@@ -82,57 +82,59 @@ fun BookingDetailScreen(
 
     Box(modifier = modifier.fillMaxSize()) {
         Scaffold(
-                topBar = {
-                    TopAppBar(
-                            title = {
-                                Text(
-                                        text = "Booking Details",
-                                        style = MaterialTheme.typography.headlineSmall,
-                                        fontWeight = FontWeight.Bold
-                                )
-                            },
-                            navigationIcon = {
-                                IconButton(onClick = onBackClick) {
-                                    Icon(
-                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                            contentDescription = "Back"
-                                    )
-                                }
-                            },
-                            actions = {
-                                IconButton(onClick = { /* Share booking details */}) {
-                                    Icon(
-                                            imageVector = Icons.Default.Share,
-                                            contentDescription = "Share"
-                                    )
-                                }
-                            },
-                            colors =
-                                    TopAppBarDefaults.topAppBarColors(
-                                            containerColor = Color.Transparent
-                                    )
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = "Booking Details",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onBackClick) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { /* Share booking details */ }) {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = "Share"
+                            )
+                        }
+                    },
+                    colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent
                     )
-                },
-                containerColor = Color.Transparent
+                )
+            },
+            containerColor = Color.Transparent
         ) { paddingValues ->
             when (val state = bookingState) {
                 is BookingDetailViewModel.BookingDetailState.Loading -> {
                     LoadingScreen()
                 }
+
                 is BookingDetailViewModel.BookingDetailState.Error -> {
                     ErrorScreen(
-                            message = state.message,
-                            onRetry = { viewModel.loadBooking(bookingId) }
+                        message = state.message,
+                        onRetry = { viewModel.loadBooking(bookingId) }
                     )
                 }
+
                 is BookingDetailViewModel.BookingDetailState.Success -> {
                     BookingDetailContent(
-                            booking = state.booking,
-                            onCarClick = onCarClick,
-                            onCancelClick = { showCancelDialog = true },
-                            onExtendClick = { onExtendBooking(bookingId) },
-                            onCallDriver = onCallDriver,
-                            modifier = Modifier.padding(paddingValues)
+                        booking = state.booking,
+                        onCarClick = onCarClick,
+                        onCancelClick = { showCancelDialog = true },
+                        onExtendClick = { onExtendBooking(bookingId) },
+                        onCallDriver = onCallDriver,
+                        modifier = Modifier.padding(paddingValues)
                     )
                 }
             }
@@ -142,19 +144,20 @@ fun BookingDetailScreen(
 
 @Composable
 private fun BookingDetailContent(
-        booking: Booking,
-        onCarClick: (String) -> Unit,
-        onCancelClick: () -> Unit,
-        onExtendClick: () -> Unit,
-        onCallDriver: (String) -> Unit,
-        modifier: Modifier = Modifier
+    booking: Booking,
+    onCarClick: (String) -> Unit,
+    onCancelClick: () -> Unit,
+    onExtendClick: () -> Unit,
+    onCallDriver: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
-            modifier =
-                    modifier.fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                            .padding(RentalWheelsDesignSystem.Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
+        modifier =
+        modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(RentalWheelsDesignSystem.Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.medium)
     ) {
         // Status Banner
         BookingStatusBanner(booking = booking)
@@ -168,8 +171,8 @@ private fun BookingDetailContent(
         // Driver Information (if applicable)
         booking.driverInfo?.let { driver ->
             DriverInformationCard(
-                    driver = driver,
-                    onCallDriver = { onCallDriver(driver.phoneNumber) }
+                driver = driver,
+                onCallDriver = { onCallDriver(driver.phoneNumber) }
             )
         }
 
@@ -178,9 +181,9 @@ private fun BookingDetailContent(
 
         // Action Buttons
         ActionButtonsSection(
-                booking = booking,
-                onCancelClick = onCancelClick,
-                onExtendClick = onExtendClick
+            booking = booking,
+            onCancelClick = onCancelClick,
+            onExtendClick = onExtendClick
         )
 
         Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.extraLarge * 1.33f))
@@ -192,37 +195,40 @@ private fun BookingStatusBanner(booking: Booking) {
     val statusColor = Color(android.graphics.Color.parseColor(booking.status.colorHex))
 
     Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = statusColor.copy(alpha = 0.1f)),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
-            elevation =
-                    CardDefaults.cardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
-                    )
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = statusColor.copy(alpha = 0.1f)),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Row(
-                modifier = Modifier.fillMaxWidth().padding(RentalWheelsDesignSystem.Spacing.medium),
-                verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(RentalWheelsDesignSystem.Spacing.medium),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
-                    modifier =
-                            Modifier.size(RentalWheelsDesignSystem.Spacing.small)
-                                    .background(statusColor, CircleShape)
+                modifier =
+                Modifier
+                    .size(RentalWheelsDesignSystem.Spacing.small)
+                    .background(statusColor, CircleShape)
             )
 
             Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                        text = booking.status.displayName,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = statusColor
+                    text = booking.status.displayName,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = statusColor
                 )
                 Text(
-                        text = "Reference: ${booking.referenceNumber}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "Reference: ${booking.referenceNumber}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -232,60 +238,61 @@ private fun BookingStatusBanner(booking: Booking) {
 @Composable
 private fun CarInformationCard(booking: Booking, onCarClick: () -> Unit) {
     Card(
-            onClick = onCarClick,
-            modifier = Modifier.fillMaxWidth(),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = RentalWheelsDesignSystem.Colors.Surface02
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
-            elevation =
-                    CardDefaults.cardElevation(
-                            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
-                    )
+        onClick = onCarClick,
+        modifier = Modifier.fillMaxWidth(),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = RentalWheelsDesignSystem.Colors.Surface02
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.Card),
+        elevation =
+        CardDefaults.cardElevation(
+            defaultElevation = RentalWheelsDesignSystem.Elevation.medium
+        )
     ) {
         Row(
-                modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
-                verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                    model = booking.car.imageUrl,
-                    contentDescription = "${booking.car.make} ${booking.car.model}",
-                    modifier =
-                            Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
-                                    .clip(
-                                            RoundedCornerShape(
-                                                    RentalWheelsDesignSystem.CornerRadius.medium
-                                            )
-                                    ),
-                    contentScale = ContentScale.Crop
+                model = booking.car.imageUrl,
+                contentDescription = "${booking.car.make} ${booking.car.model}",
+                modifier =
+                Modifier
+                    .size(RentalWheelsDesignSystem.Spacing.Huge * 1.25f)
+                    .clip(
+                        RoundedCornerShape(
+                            RentalWheelsDesignSystem.CornerRadius.medium
+                        )
+                    ),
+                contentScale = ContentScale.Crop
             )
 
             Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.medium))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                        text = "${booking.car.make} ${booking.car.model}",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                    text = "${booking.car.make} ${booking.car.model}",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
-                        text = "${booking.car.year} • ${booking.car.fuelType}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "${booking.car.year} • ${booking.car.fuelType}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                        text = "$${booking.car.pricePerDay}/day",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
+                    text = "$${booking.car.pricePerDay}/day",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
             Icon(
-                    imageVector = Icons.Default.DirectionsCar,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
+                imageVector = Icons.Default.DirectionsCar,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -294,56 +301,56 @@ private fun CarInformationCard(booking: Booking, onCarClick: () -> Unit) {
 @Composable
 private fun BookingDetailsCard(booking: Booking) {
     Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+        modifier = Modifier.fillMaxWidth(),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
         Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
-                    text = "Booking Details",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
+                text = "Booking Details",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
             )
 
             DetailRow(
-                    icon = Icons.Default.CalendarToday,
-                    label = "Start Date",
-                    value =
-                            booking.startDate.format(
-                                    DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' h:mm a")
-                            )
+                icon = Icons.Default.CalendarToday,
+                label = "Start Date",
+                value =
+                booking.startDate.format(
+                    DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' h:mm a")
+                )
             )
 
             DetailRow(
-                    icon = Icons.Default.Schedule,
-                    label = "End Date",
-                    value =
-                            booking.endDate.format(
-                                    DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' h:mm a")
-                            )
+                icon = Icons.Default.Schedule,
+                label = "End Date",
+                value =
+                booking.endDate.format(
+                    DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' h:mm a")
+                )
             )
 
             DetailRow(
-                    icon = Icons.Default.LocationOn,
-                    label = "Pickup Location",
-                    value = booking.pickupLocation
+                icon = Icons.Default.LocationOn,
+                label = "Pickup Location",
+                value = booking.pickupLocation
             )
 
             DetailRow(
-                    icon = Icons.Default.LocationOn,
-                    label = "Return Location",
-                    value = booking.returnLocation
+                icon = Icons.Default.LocationOn,
+                label = "Return Location",
+                value = booking.returnLocation
             )
 
             if (booking.specialRequests.isNotBlank()) {
                 DetailRow(
-                        icon = Icons.Default.Person,
-                        label = "Special Requests",
-                        value = booking.specialRequests
+                    icon = Icons.Default.Person,
+                    label = "Special Requests",
+                    value = booking.specialRequests
                 )
             }
         }
@@ -352,63 +359,64 @@ private fun BookingDetailsCard(booking: Booking) {
 
 @Composable
 private fun DriverInformationCard(
-        driver: com.msdc.rentalwheels.uistates.DriverInfo,
-        onCallDriver: () -> Unit
+    driver: com.msdc.rentalwheels.uistates.DriverInfo,
+    onCallDriver: () -> Unit
 ) {
     Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+        modifier = Modifier.fillMaxWidth(),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
         Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
-                    text = "Driver Information",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
+                text = "Driver Information",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
             )
 
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 AsyncImage(
-                        model = driver.imageUrl,
-                        contentDescription = driver.name,
-                        modifier =
-                                Modifier.size(RentalWheelsDesignSystem.Spacing.Huge * 0.94f)
-                                        .clip(CircleShape),
-                        contentScale = ContentScale.Crop
+                    model = driver.imageUrl,
+                    contentDescription = driver.name,
+                    modifier =
+                    Modifier
+                        .size(RentalWheelsDesignSystem.Spacing.Huge * 0.94f)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
                 )
 
                 Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.medium))
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                            text = driver.name,
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
+                        text = driver.name,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
-                            text = "${driver.experience} experience",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = "${driver.experience} experience",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                            text = "Rating: ${driver.rating}/5.0",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary
+                        text = "Rating: ${driver.rating}/5.0",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
 
                 IconButton(onClick = onCallDriver) {
                     Icon(
-                            imageVector = Icons.Default.Phone,
-                            contentDescription = "Call Driver",
-                            tint = MaterialTheme.colorScheme.primary
+                        imageVector = Icons.Default.Phone,
+                        contentDescription = "Call Driver",
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -419,53 +427,53 @@ private fun DriverInformationCard(
 @Composable
 private fun PaymentInformationCard(booking: Booking) {
     Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors =
-                    CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    ),
-            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+        modifier = Modifier.fillMaxWidth(),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
     ) {
         Column(modifier = Modifier.padding(RentalWheelsDesignSystem.Spacing.medium)) {
             Text(
-                    text = "Payment Information",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
+                text = "Payment Information",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = RentalWheelsDesignSystem.Spacing.small)
             )
 
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Total Amount:", style = MaterialTheme.typography.bodyLarge)
                 Text(
-                        text = "$${booking.totalCost}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
+                    text = "$${booking.totalCost}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
             Spacer(modifier = Modifier.height(RentalWheelsDesignSystem.Spacing.small))
 
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Payment Status:", style = MaterialTheme.typography.bodyMedium)
                 Text(
-                        text = booking.paymentStatus.displayName,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color =
-                                when (booking.paymentStatus) {
-                                    PaymentStatus.PAID -> Color(0xFF4CAF50)
-                                    PaymentStatus.PENDING -> Color(0xFFFF9800)
-                                    PaymentStatus.PARTIAL -> Color(0xFFFF9800)
-                                    PaymentStatus.FAILED -> Color(0xFFF44336)
-                                    PaymentStatus.REFUNDED -> Color(0xFF9C27B0)
-                                }
+                    text = booking.paymentStatus.displayName,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color =
+                    when (booking.paymentStatus) {
+                        PaymentStatus.PAID -> Color(0xFF4CAF50)
+                        PaymentStatus.PENDING -> Color(0xFFFF9800)
+                        PaymentStatus.PARTIAL -> Color(0xFFFF9800)
+                        PaymentStatus.FAILED -> Color(0xFFF44336)
+                        PaymentStatus.REFUNDED -> Color(0xFF9C27B0)
+                    }
                 )
             }
         }
@@ -474,33 +482,33 @@ private fun PaymentInformationCard(booking: Booking) {
 
 @Composable
 private fun ActionButtonsSection(
-        booking: Booking,
-        onCancelClick: () -> Unit,
-        onExtendClick: () -> Unit
+    booking: Booking,
+    onCancelClick: () -> Unit,
+    onExtendClick: () -> Unit
 ) {
     val canCancel = booking.status in listOf(BookingStatus.CONFIRMED, BookingStatus.PENDING)
     val canExtend = booking.status == BookingStatus.ACTIVE
 
     if (canCancel || canExtend) {
         Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
         ) {
             if (canCancel) {
                 PremiumButton(
-                        onClick = onCancelClick,
-                        variant = PremiumButtonVariant.Secondary,
-                        modifier = Modifier.weight(1f),
-                        leadingIcon = Icons.Default.Cancel
+                    onClick = onCancelClick,
+                    variant = PremiumButtonVariant.Secondary,
+                    modifier = Modifier.weight(1f),
+                    leadingIcon = Icons.Default.Cancel
                 ) { Text("Cancel") }
             }
 
             if (canExtend) {
                 PremiumButton(
-                        onClick = onExtendClick,
-                        variant = PremiumButtonVariant.Primary,
-                        modifier = Modifier.weight(1f),
-                        leadingIcon = Icons.Default.Schedule
+                    onClick = onExtendClick,
+                    variant = PremiumButtonVariant.Primary,
+                    modifier = Modifier.weight(1f),
+                    leadingIcon = Icons.Default.Schedule
                 ) { Text("Extend") }
             }
         }
@@ -510,30 +518,31 @@ private fun ActionButtonsSection(
 @Composable
 private fun DetailRow(icon: ImageVector, label: String, value: String) {
     Row(
-            modifier =
-                    Modifier.fillMaxWidth()
-                            .padding(vertical = RentalWheelsDesignSystem.Spacing.extraSmall),
-            verticalAlignment = Alignment.Top
+        modifier =
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = RentalWheelsDesignSystem.Spacing.extraSmall),
+        verticalAlignment = Alignment.Top
     ) {
         Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large),
-                tint = MaterialTheme.colorScheme.primary
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large),
+            tint = MaterialTheme.colorScheme.primary
         )
 
         Spacer(modifier = Modifier.width(RentalWheelsDesignSystem.Spacing.small))
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                    text = label,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = label,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                    text = value,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Medium
+                text = value,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Medium
             )
         }
     }
