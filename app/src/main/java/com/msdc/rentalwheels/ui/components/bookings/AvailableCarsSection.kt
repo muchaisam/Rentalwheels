@@ -307,9 +307,11 @@ private fun AvailableCarCard(
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             // Large Car Image with gradient overlay
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(220.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp)
+            ) {
                 AsyncImage(
                     model =
                     ImageRequest.Builder(LocalContext.current)
