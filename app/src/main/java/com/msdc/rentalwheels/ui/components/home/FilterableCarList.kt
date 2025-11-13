@@ -203,7 +203,6 @@ fun FilterableCarList(
                                     Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small),
                             contentPadding =
                                     PaddingValues(
-                                            horizontal = RentalWheelsDesignSystem.Spacing.medium,
                                             vertical = RentalWheelsDesignSystem.Spacing.medium
                                     ),
                     ) {
@@ -315,12 +314,6 @@ fun FilterableCarList(
                             LazyRow(
                                     state = lazyListState,
                                     flingBehavior = snapFlingBehavior,
-                                    contentPadding =
-                                            PaddingValues(
-                                                    horizontal =
-                                                            RentalWheelsDesignSystem.Spacing
-                                                                    .extraLarge
-                                            ),
                                     horizontalArrangement =
                                             Arrangement.spacedBy(
                                                     RentalWheelsDesignSystem.Spacing.medium
