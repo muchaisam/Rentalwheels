@@ -32,65 +32,65 @@ import com.msdc.rentalwheels.ui.theme.RentalWheelsDesignSystem
  */
 @Composable
 fun ComparisonFloatingButton(
-        selectedCount: Int,
-        onClick: () -> Unit,
-        modifier: Modifier = Modifier
+    selectedCount: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
-            visible = selectedCount > 0,
-            enter =
-                    expandVertically(
-                            animationSpec =
-                                    spring(
-                                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                                            stiffness = Spring.StiffnessMedium
-                                    )
-                    ) + fadeIn(),
-            exit = shrinkVertically() + fadeOut(),
-            modifier = modifier
+        visible = selectedCount > 0,
+        enter =
+        expandVertically(
+            animationSpec =
+            spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessMedium
+            )
+        ) + fadeIn(),
+        exit = shrinkVertically() + fadeOut(),
+        modifier = modifier
     ) {
         FloatingActionButton(
-                onClick = onClick,
-                modifier = Modifier,
-                containerColor = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
+            onClick = onClick,
+            modifier = Modifier,
+            containerColor = MaterialTheme.colorScheme.primary,
+            shape = RoundedCornerShape(RentalWheelsDesignSystem.CornerRadius.large)
         ) {
             Row(
-                    modifier =
-                            Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.large),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement =
-                            Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
+                modifier =
+                Modifier.padding(horizontal = RentalWheelsDesignSystem.Spacing.large),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement =
+                Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.small)
             ) {
                 BadgedBox(
-                        badge = {
-                            if (selectedCount > 0) {
-                                Badge(
-                                        containerColor = MaterialTheme.colorScheme.secondary,
-                                        contentColor = MaterialTheme.colorScheme.onSecondary
-                                ) {
-                                    Text(
-                                            text = selectedCount.toString(),
-                                            style = RentalWheelsDesignSystem.Typography.labelSmall,
-                                            fontWeight = FontWeight.Bold
-                                    )
-                                }
+                    badge = {
+                        if (selectedCount > 0) {
+                            Badge(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onSecondary
+                            ) {
+                                Text(
+                                    text = selectedCount.toString(),
+                                    style = RentalWheelsDesignSystem.Typography.labelSmall,
+                                    fontWeight = FontWeight.Bold
+                                )
                             }
                         }
+                    }
                 ) {
                     Icon(
-                            imageVector = Icons.Outlined.Compare,
-                            contentDescription = "Compare cars",
-                            modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large),
-                            tint = MaterialTheme.colorScheme.onPrimary
+                        imageVector = Icons.Outlined.Compare,
+                        contentDescription = "Compare cars",
+                        modifier = Modifier.size(RentalWheelsDesignSystem.Spacing.large),
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
 
                 Text(
-                        text = "Compare",
-                        style = RentalWheelsDesignSystem.Typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        fontWeight = FontWeight.SemiBold
+                    text = "Compare",
+                    style = RentalWheelsDesignSystem.Typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.SemiBold
                 )
             }
         }
