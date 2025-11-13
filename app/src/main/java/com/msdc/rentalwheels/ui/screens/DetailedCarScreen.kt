@@ -178,9 +178,11 @@ fun DetailedCarScreen(
         },
         containerColor = MaterialTheme.colorScheme.surface
     ) { padding ->
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
             item(key = "image") {
                 Box(
                     modifier =
