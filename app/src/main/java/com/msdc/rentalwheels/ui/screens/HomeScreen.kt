@@ -130,7 +130,9 @@ fun HomeScreen(viewModel: CarViewModel, onCarClick: (String) -> Unit) {
                                                                         .XXL // Space for bottom nav
                                         ),
                                 verticalArrangement =
-                                        Arrangement.spacedBy(RentalWheelsDesignSystem.Spacing.large)
+                                        Arrangement.spacedBy(
+                                                RentalWheelsDesignSystem.Spacing.medium
+                                        )
                         ) {
                             // Deals Section with staggered animation
                             if (state.deals.isNotEmpty()) {
